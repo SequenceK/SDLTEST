@@ -1,0 +1,50 @@
+void logSDLError(std::ostream &os, const std::string &msg){
+	os << msg << " error: " << SDL_GetError() << std::endl;
+}
+
+SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
+	
+	SDL_Texture *texture = nullptr;
+	SDL_Surface *loadedImage = SDL_LoadBMP(file.c_str());
+	if (loadedImage != nullptr) {
+		texture = SDL_CreateTextureFromSurface(ren, loadedImage);
+		SDL_FreeSurface(loadedImage);
+
+		if(texture == nullptr){
+			logSDLError(std::cout, "SDL_CreateTextureFromSurface");
+		}
+	}
+	else {
+		logSDLError(std::cout, "SDL_LoadBMP");
+	}
+	return texture;
+}
+
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+
+	SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+	SDL_RenderCopy(ren, tex, NULL, &dst);
+}
+
+bool init() {
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+		logSDLError(std::cout, "SDL_Init");
+		return false;
+	}
+	else
+		return true;
+}
+
+SDL_Window* createWindow(const char* title, int x, int y, int w, int h, Uint32 flags){
+	SDL_Window *window = SDL_CreateWindow(title, x, y, w, h, flags);
+	if (window == nullptr){
+		logSDLError(std::cout, "CreateWindow");
+		SDL_Quit();
+		return nullptr;
+	}
+	else
+		return window;
+}

@@ -1,0 +1,1034 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"std",
+				"std::cout"
+			],
+			[
+				"tex",
+				"textures"
+			],
+			[
+				"bin",
+				"binDIR"
+			],
+			[
+				"cha",
+				"changeDir"
+			],
+			[
+				"obj",
+				"objEnd"
+			],
+			[
+				"ob",
+				"objEnd"
+			],
+			[
+				"spr",
+				"spriteCS"
+			],
+			[
+				"cs",
+				"CS"
+			],
+			[
+				"off",
+				"offset"
+			],
+			[
+				"offse",
+				"offsetY"
+			],
+			[
+				"curr",
+				"currentFrame"
+			],
+			[
+				"curre",
+				"currentAnimation"
+			],
+			[
+				"cur",
+				"currentAnimation"
+			],
+			[
+				"cu",
+				"currentAnimation"
+			],
+			[
+				"fra",
+				"frames"
+			],
+			[
+				"Tim",
+				"Timer"
+			],
+			[
+				"frame",
+				"frameTimer"
+			],
+			[
+				"pla",
+				"playingAnimation"
+			],
+			[
+				"anim",
+				"animIt"
+			],
+			[
+				"play",
+				"playingAnimation"
+			],
+			[
+				"cli",
+				"clipRect"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
+				"max",
+				"maxSlice"
+			],
+			[
+				"ela",
+				"elapsed"
+			],
+			[
+				"Timer",
+				"Timer::elapsed"
+			],
+			[
+				"t",
+				"timePoint1"
+			],
+			[
+				"de",
+				"delay"
+			],
+			[
+				"end",
+				"endl"
+			],
+			[
+				"draw",
+				"drawRect"
+			],
+			[
+				"img",
+				"imgRect"
+			],
+			[
+				"move",
+				"moveC"
+			],
+			[
+				"CSYS",
+				"CSys"
+			],
+			[
+				"CS",
+				"CSys"
+			],
+			[
+				"ma",
+				"moveC_map"
+			],
+			[
+				"Move",
+				"moveC"
+			],
+			[
+				"Co",
+				"ComponentSystem"
+			],
+			[
+				"m",
+				"map	std::map"
+			],
+			[
+				"time",
+				"timePoint1"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"Sprite",
+				"SpriteComponent"
+			],
+			[
+				"vec",
+				"Vec2D"
+			],
+			[
+				"En",
+				"EntityId"
+			],
+			[
+				"wIND",
+				"Window"
+			],
+			[
+				"im",
+				"imgRect"
+			],
+			[
+				"SR",
+				"SRCDIR"
+			],
+			[
+				"SCRE",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"nu",
+				"nullptr"
+			],
+			[
+				"re",
+				"renderer"
+			],
+			[
+				"red",
+				"renderer"
+			],
+			[
+				"te",
+				"tex"
+			],
+			[
+				"SDL_REnder",
+				"SDL_RenderCopy"
+			],
+			[
+				"n",
+				"NULL"
+			],
+			[
+				"SDL_Texture",
+				"SDL_Texture"
+			],
+			[
+				"load",
+				"loadTexture"
+			],
+			[
+				"lo",
+				"logSDLError"
+			],
+			[
+				"sdl_crea",
+				"SDL_CreateTextureFromSurface"
+			],
+			[
+				"Crafty",
+				"crafty-release"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 631,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
+			"settings":
+			{
+				"buffer_size": 304,
+				"line_ending": "Windows",
+				"name": "untitled.sublime-build"
+			}
+		},
+		{
+			"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
+			"settings":
+			{
+				"buffer_size": 245,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main.cpp",
+			"settings":
+			{
+				"buffer_size": 1481,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/game.cpp",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/components.cpp",
+			"settings":
+			{
+				"buffer_size": 4115,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/entities.cpp",
+			"settings":
+			{
+				"buffer_size": 916,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/window.cpp",
+			"settings":
+			{
+				"buffer_size": 3114,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
+			"settings":
+			{
+				"buffer_size": 5298,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/system.cpp",
+			"settings":
+			{
+				"buffer_size": 158,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/components.h",
+			"settings":
+			{
+				"buffer_size": 1522,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/system.h",
+			"settings":
+			{
+				"buffer_size": 164,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/window.h",
+			"settings":
+			{
+				"buffer_size": 2762,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/entities.h",
+			"settings":
+			{
+				"buffer_size": 118,
+				"line_ending": "Windows",
+				"name": "#ifndef ENTITIES_H"
+			}
+		},
+		{
+			"file": "include/CS.h",
+			"settings":
+			{
+				"buffer_size": 527,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/User/myMake.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"clea",
+				"Build: Clean"
+			],
+			[
+				"cle",
+				"Build: Clean"
+			],
+			[
+				"clean",
+				"Build: Clean"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 371.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/dev/SDLTEST/include/cleanup.h",
+		"/C/Program Files (x86)/Sublime Text 2/Pristine Packages/Makefile.sublime-package",
+		"/C/Program Files/Sublime Text 3/Packages/Makefile.sublime-package",
+		"/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
+		"/C/dev/SDLTEST/src/window.cpp",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/clang_format_custom.sublime-settings",
+		"/C/dev/SDLTEST/include/window.h",
+		"/C/dev/SDLTEST/src/DELETED.cpp",
+		"/C/dev/SDLTEST/include/game.h",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/myMake.sublime-build",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/mingw32-make.sublime-build",
+		"/C/dev/SDLTEST/src/game.h",
+		"/C/dev/SDLTEST/src/cleanup.h",
+		"/C/dev/SDLTEST/src/window.h",
+		"/C/dev/SDLTEST/src/Makefile",
+		"/C/dev/SDLTEST/Makefile",
+		"/C/mathart.cpp",
+		"/C/MathPic.ppm",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/Distraction Free.sublime-settings",
+		"/C/Users/Omar/Desktop/SFMLTEST/main.cpp",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/SFML2_C++.sublime-build",
+		"/C/Users/Omar/myApp/game.js",
+		"/C/Users/Omar/Desktop/SFMLTEST/build&run.bat",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/C++/C++.sublime-build",
+		"/C/Users/Omar/Desktop/SFMLTEST/compile.sh",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/clangSFML.sublime-build",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/C++/old_C++.sublime-build",
+		"/C/Users/Omar/Desktop/EULER/P18.py",
+		"/C/Users/Omar/Desktop/P18.py",
+		"/C/Users/Omar/Desktop/htmlTest/test.html",
+		"/C/Users/Omar/Desktop/htmlTest/scripts/app.js",
+		"/C/Users/Omar/Desktop/craftyTest.html"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"C:\\dev\\SDLTEST\\bin"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"CSys",
+			"test",
+			"CSys::moveCS[test]",
+			"[1]",
+			"1",
+			".map",
+			"map",
+			"1",
+			"game.exe"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"CS",
+			"id",
+			"moveC",
+			"[test]",
+			"",
+			"SPEED"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								463,
+								463
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 304,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								245,
+								245
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 245,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								242,
+								20
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1481,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								503,
+								503
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/game.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/components.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4115,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1274,
+								1274
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 585.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/entities.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 916,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								443,
+								443
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/window.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								891,
+								891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5298,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2853,
+								2853
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/system.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 158,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								158,
+								158
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "include/components.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1522,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								903,
+								891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "include/system.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 164,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								164,
+								164
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "include/window.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2762,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2460,
+								2460
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "include/entities.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 118,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								110,
+								110
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#ifndef ENTITIES_H",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "include/CS.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								383,
+								338
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 156.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "project.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"cs",
+				"include\\CS.h"
+			],
+			[
+				"comp",
+				"C:\\Users\\Omar\\Desktop\\SFMLTEST\\src\\components.hpp"
+			],
+			[
+				"",
+				"src\\main.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 661.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/C/dev/SDLTEST/project.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 184.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
