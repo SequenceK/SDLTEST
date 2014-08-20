@@ -4,8 +4,132 @@
 		"selected_items":
 		[
 			[
+				"grid",
+				"gridH"
+			],
+			[
 				"std",
+				"std::endl"
+			],
+			[
+				"Q",
+				"QTs"
+			],
+			[
+				"re",
+				"rect"
+			],
+			[
+				"col",
+				"collisionCS"
+			],
+			[
+				"reu",
+				"return"
+			],
+			[
+				"max",
+				"maxV"
+			],
+			[
+				"spri",
+				"sprtieC"
+			],
+			[
+				"spr",
+				"spriteMap"
+			],
+			[
+				"SPr",
+				"SpriteComponent"
+			],
+			[
+				"get",
+				"getIndex"
+			],
+			[
+				"in",
+				"int"
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"st",
 				"std::cout"
+			],
+			[
+				"de",
+				"depth"
+			],
+			[
+				"scre",
+				"screenSurface"
+			],
+			[
+				"dra",
+				"draw"
+			],
+			[
+				"move",
+				"moveC"
+			],
+			[
+				"clea",
+				"clear"
+			],
+			[
+				"colli",
+				"collisionCS"
+			],
+			[
+				"collide",
+				"collidedWith"
+			],
+			[
+				"unsinged",
+				"unsigned"
+			],
+			[
+				"over",
+				"overlap"
+			],
+			[
+				"obj",
+				"objs"
+			],
+			[
+				"fits",
+				"fits"
+			],
+			[
+				"us",
+				"unsigned"
+			],
+			[
+				"collision",
+				"collisionUpdate"
+			],
+			[
+				"spirte",
+				"spriteMap"
+			],
+			[
+				"Move",
+				"MoveComponent"
+			],
+			[
+				"Co",
+				"CollisionComponent"
+			],
+			[
+				"Con",
+				"ControllerComponent"
+			],
+			[
+				"img",
+				"img"
 			],
 			[
 				"tex",
@@ -20,16 +144,8 @@
 				"changeDir"
 			],
 			[
-				"obj",
-				"objEnd"
-			],
-			[
 				"ob",
 				"objEnd"
-			],
-			[
-				"spr",
-				"spriteCS"
 			],
 			[
 				"cs",
@@ -92,10 +208,6 @@
 				"x"
 			],
 			[
-				"max",
-				"maxSlice"
-			],
-			[
 				"ela",
 				"elapsed"
 			],
@@ -108,24 +220,12 @@
 				"timePoint1"
 			],
 			[
-				"de",
-				"delay"
-			],
-			[
 				"end",
 				"endl"
 			],
 			[
 				"draw",
 				"drawRect"
-			],
-			[
-				"img",
-				"imgRect"
-			],
-			[
-				"move",
-				"moveC"
 			],
 			[
 				"CSYS",
@@ -138,14 +238,6 @@
 			[
 				"ma",
 				"moveC_map"
-			],
-			[
-				"Move",
-				"moveC"
-			],
-			[
-				"Co",
-				"ComponentSystem"
 			],
 			[
 				"m",
@@ -192,10 +284,6 @@
 				"nullptr"
 			],
 			[
-				"re",
-				"renderer"
-			],
-			[
 				"red",
 				"renderer"
 			],
@@ -239,32 +327,31 @@
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 631,
+				"buffer_size": 699,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
-			"settings":
-			{
-				"buffer_size": 304,
-				"line_ending": "Windows",
-				"name": "untitled.sublime-build"
-			}
-		},
-		{
-			"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
-			"settings":
-			{
-				"buffer_size": 245,
-				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "src/main.cpp",
 			"settings":
 			{
-				"buffer_size": 1481,
+				"buffer_size": 1490,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/components.cpp",
+			"settings":
+			{
+				"buffer_size": 5787,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/components.h",
+			"settings":
+			{
+				"buffer_size": 2081,
 				"line_ending": "Windows"
 			}
 		},
@@ -277,26 +364,10 @@
 			}
 		},
 		{
-			"file": "src/components.cpp",
-			"settings":
-			{
-				"buffer_size": 4115,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "src/entities.cpp",
 			"settings":
 			{
-				"buffer_size": 916,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/window.cpp",
-			"settings":
-			{
-				"buffer_size": 3114,
+				"buffer_size": 1298,
 				"line_ending": "Windows"
 			}
 		},
@@ -309,18 +380,18 @@
 			}
 		},
 		{
-			"file": "src/system.cpp",
+			"file": "include/CS.h",
 			"settings":
 			{
-				"buffer_size": 158,
+				"buffer_size": 642,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "include/components.h",
+			"file": "src/system.cpp",
 			"settings":
 			{
-				"buffer_size": 1522,
+				"buffer_size": 4131,
 				"line_ending": "Windows"
 			}
 		},
@@ -328,7 +399,15 @@
 			"file": "include/system.h",
 			"settings":
 			{
-				"buffer_size": 164,
+				"buffer_size": 942,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/window.cpp",
+			"settings":
+			{
+				"buffer_size": 3349,
 				"line_ending": "Windows"
 			}
 		},
@@ -336,7 +415,7 @@
 			"file": "include/window.h",
 			"settings":
 			{
-				"buffer_size": 2762,
+				"buffer_size": 2835,
 				"line_ending": "Windows"
 			}
 		},
@@ -348,14 +427,6 @@
 				"line_ending": "Windows",
 				"name": "#ifndef ENTITIES_H"
 			}
-		},
-		{
-			"file": "include/CS.h",
-			"settings":
-			{
-				"buffer_size": 527,
-				"line_ending": "Windows"
-			}
 		}
 	],
 	"build_system": "Packages/User/myMake.sublime-build",
@@ -365,35 +436,39 @@
 		"selected_items":
 		[
 			[
-				"clea",
-				"Build: Clean"
+				"pa",
+				"Package Control: Disable Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
 			],
 			[
 				"cle",
 				"Build: Clean"
 			],
 			[
-				"clean",
-				"Build: Clean"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Install Package"
-			],
-			[
 				"p",
 				"Package Control: Install Package"
 			],
 			[
-				"pa",
-				"Package Control: Install Package"
+				"Package Control: ",
+				"Package Control: Disable Package"
 			],
 			[
 				"pac",
 				"Package Control: Install Package"
+			],
+			[
+				"clea",
+				"Build: Clean"
+			],
+			[
+				"clean",
+				"Build: Clean"
 			]
 		],
-		"width": 400.0
+		"width": 664.0
 	},
 	"console":
 	{
@@ -414,6 +489,11 @@
 	},
 	"file_history":
 	[
+		"/C/dev/SDLTEST/data/hello.png",
+		"/C/dev/SDLTEST/bin/LICENSE.jpeg.txt",
+		"/C/dev/SDLTEST/data/gameover.bmp",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
 		"/C/dev/SDLTEST/include/cleanup.h",
 		"/C/Program Files (x86)/Sublime Text 2/Pristine Packages/Makefile.sublime-package",
 		"/C/Program Files/Sublime Text 3/Packages/Makefile.sublime-package",
@@ -450,13 +530,14 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"C:\\dev\\SDLTEST\\src",
 			"C:\\dev\\SDLTEST\\bin"
 		]
 	},
@@ -465,6 +546,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"depth < maxDepth",
+			"QTs.size() > 0",
+			"int",
+			"r.",
+			"Vec2<float>",
+			"maxVel",
+			"maxVel.y",
+			"maxVel.x",
+			"%10",
+			"x",
+			"->vec",
+			"vec",
+			"->x",
+			"->y",
+			"vx",
+			"vy",
 			"CSys",
 			"test",
 			"CSys::moveCS[test]",
@@ -481,6 +578,22 @@
 		"regex": false,
 		"replace_history":
 		[
+			"QTs[0] != nullptr",
+			"unsigned int",
+			"auto",
+			"r->",
+			"Vec2f",
+			"maxV",
+			"mVy",
+			"mVx",
+			"/RAND_MAX",
+			"y",
+			"->vel",
+			"vel",
+			"->pos.x",
+			"->pos.y",
+			"vec.x",
+			"vec.y",
 			"CS",
 			"id",
 			"moveC",
@@ -497,7 +610,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -506,15 +619,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 631,
+						"buffer_size": 699,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								463,
-								463
+								511,
+								511
 							]
 						],
 						"settings":
@@ -525,81 +638,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 304,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								245,
-								245
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 245,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								242,
-								20
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "src/main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1481,
+						"buffer_size": 1490,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								503,
-								503
+								905,
+								905
 							]
 						],
 						"settings":
@@ -608,10 +664,69 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 225.0,
+						"translation.y": 432.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/components.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5787,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4975,
+								4975
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3436.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "include/components.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2081,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1502,
+								1502
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 33.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -644,48 +759,19 @@
 				},
 				{
 					"buffer": 5,
-					"file": "src/components.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4115,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1274,
-								1274
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 585.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
 					"file": "src/entities.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 916,
+						"buffer_size": 1298,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								443,
-								443
+								719,
+								719
 							]
 						],
 						"settings":
@@ -697,41 +783,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "src/window.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3114,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								891,
-								891
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
+					"buffer": 6,
 					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
 					"semi_transient": false,
 					"settings":
@@ -743,8 +799,8 @@
 						"selection":
 						[
 							[
-								2853,
-								2853
+								162,
+								130
 							]
 						],
 						"settings":
@@ -753,84 +809,84 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "include/CS.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 642,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								466,
+								446
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 8,
 					"file": "src/system.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 158,
+						"buffer_size": 4131,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								158,
-								158
+								596,
+								596
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "include/components.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1522,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								903,
-								891
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 810.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
+					"buffer": 9,
 					"file": "include/system.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 164,
+						"buffer_size": 942,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								164,
-								164
+								725,
+								725
 							]
 						],
 						"settings":
@@ -838,27 +894,57 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 378.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "include/window.h",
+					"buffer": 10,
+					"file": "src/window.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2762,
+						"buffer_size": 3349,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2460,
-								2460
+								3304,
+								3304
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 519.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "include/window.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2835,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1902,
+								1902
 							]
 						],
 						"settings":
@@ -867,14 +953,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 315.0,
+						"translation.y": 756.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 12,
 					"file": "include/entities.h",
 					"semi_transient": false,
 					"settings":
@@ -899,36 +985,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "include/CS.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								383,
-								338
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 135.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 12,
 					"type": "text"
 				}
 			]
@@ -936,7 +993,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -967,16 +1024,24 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 156.0
+		"height": 245.0
 	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 100.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 100.0
+	},
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -984,6 +1049,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"com",
+				"src\\components.cpp"
+			],
 			[
 				"cs",
 				"include\\CS.h"
@@ -1026,7 +1095,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 184.0,
+	"side_bar_width": 142.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

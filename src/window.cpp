@@ -28,8 +28,8 @@ void Window::Init(std::string title){
 		throw std::runtime_error("TTF Init Failed");
 
     //Setup our window
-    mBox.x = 800;
-    mBox.y = 800;
+    mBox.x = 0;
+    mBox.y = 0;
     mBox.w = 800;
     mBox.h = 600;
     //Create our window
@@ -83,11 +83,18 @@ SDL_Texture* Window::RenderText(const std::string &message, const std::string &f
 
 	return texture;
 }
+void Window::DrawRect(const SDL_Rect* rect, Uint8 r, Uint8 g, Uint8 b){
+    SDL_SetRenderDrawColor(mRenderer.get(), r, g, b, 255);
+    SDL_RenderDrawRect(mRenderer.get(), rect);
+}
 void Window::Clear(){
+
     SDL_RenderClear(mRenderer.get());
 }
 void Window::Present(){
+
     SDL_RenderPresent(mRenderer.get());
+    SDL_SetRenderDrawColor(mRenderer.get(), 0, 0, 0, 0);
 }
 SDL_Rect Window::Box(){
     return mBox;

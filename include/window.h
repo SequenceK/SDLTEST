@@ -69,6 +69,8 @@ public:
 	static void Present();
 	///Get the window's box
 	static SDL_Rect Box();
+
+	static void DrawRect(const SDL_Rect* rect, Uint8 r, Uint8 g, Uint8 b);
 private:
 	static std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> mWindow;
 	static std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)> mRenderer;

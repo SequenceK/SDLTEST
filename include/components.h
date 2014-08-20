@@ -11,7 +11,6 @@
 //Entities are just an unsinged long
 typedef unsigned long eId;
 
-//Component map
 
 
 //Basic component
@@ -24,7 +23,11 @@ public:
 //Movemenet component
 class MoveComponent : public Component {
 public:
-	float x, y, vx, vy;
+	Vec2<float> pos;
+	Vec2<float> acc;
+	Vec2<float> vel;
+	Vec2<float> drag;
+	Vec2<float> maxV;
 	MoveComponent(float xx, float yy, eId id);
 
 	void update();
@@ -56,7 +59,7 @@ public:
 	Vec2<float> scale;
 	Vec2<float> offset;
 	Vec2<float> texSize;
-	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> moveMap, eId id);
+	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void draw();
 	void update();
@@ -65,14 +68,31 @@ public:
 	void playAnimation(std::vector<int> &frames, float speed=1, bool loop=false, bool force=false);
 };
 
+class CollisionComponent : public Component {
+public:
+
+	SDL_Rect rect;
+	MoveComponent* moveC;
+	SpriteComponent* spriteC;
+	std::map<unsigned int, bool> collideGroups;
+	std::map<eId, bool> collidedWith;
+	std::map<eId, SDL_Rect*> collidingWith;
+	bool collided;
+	bool solid;
+	std::vector<int> gridIndex;
+	CollisionComponent(int w, int h, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
+	CollisionComponent(std::map<eId, SpriteComponent*> &spriteMap, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
+
+	void update();
+	void getGridIndex(Grid &g);
+};
+
 class ControllerComponent : public Component {
 public:
 	MoveComponent* moveC;
-	ControllerComponent(std::map<eId, MoveComponent*> moveMap, eId id);
+	ControllerComponent(std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void eventUpdate(SDL_Event &e);
 };
-
-
 
 #endif

@@ -16,6 +16,7 @@
 using namespace std;
 
 
+
 int main(int argc, char **argv){
 	try {
 		Window::Init("GAME");
@@ -29,7 +30,6 @@ int main(int argc, char **argv){
 	TEST(0,0);
 
 	SDL_Event e;
-	int updates{1};
 	bool quit=false;
 	while(!quit){
 		
@@ -43,6 +43,15 @@ int main(int argc, char **argv){
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				mBox(e.button.x, e.button.y);
 			}
+			if (e.type == SDL_KEYDOWN){
+				switch(e.key.keysym.sym){
+					case SDLK_r:
+						CS::clear();
+						TEST(100,100);
+						break;
+				}
+			}
+
 			CS::eventUpdate(e);
 		}
 
@@ -52,6 +61,7 @@ int main(int argc, char **argv){
 			CS::update();
 		}
 		Window::Clear();
+		CS::collisionUpdate();
 		CS::draw();
 		Window::Present();
 		auto timePoint2(chrono::high_resolution_clock::now());
