@@ -8,6 +8,8 @@
 template<typename T>
 struct Vec2 {
 	T x, y;
+	Vec2<T> operator*(const T& n);
+	Vec2<float> operator*=(float const& n);
 };
 
 class Timer {
@@ -40,15 +42,19 @@ private:
 
 class Grid {
 public:
-	float gridX, gridY, gridW, gridH, cellSize;
-	Grid(int x, int y, int w, int h, int c): gridX(x), gridY(y), gridW(w), gridH(h), cellSize(c){};
+	float cellSize;
+	SDL_Rect bounds;
+	std::map<int, bool> activeIndexes;
+	Grid(int x, int y, int w, int h, int c): cellSize(c){bounds = { x, y, w, h};};
 	bool overlap(const unsigned long &id1,const unsigned long &id2, SDL_Rect* result);
 	std::vector<int> getIndex(unsigned long id);
 	void draw();
+	void clear();
 	SDL_Rect getRect(const int index);
 };
 
 bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result);
-bool outOfBounds(unsigned long id);
+bool outOfBounds(unsigned long id, SDL_Rect& bounds);
+void collideCheck(unsigned long e1, unsigned long e2);
 
 #endif

@@ -14,6 +14,43 @@ float Timer::elapsed{0};
 float Timer::frame{1000.f/60.f};
 float Timer::slice{0.f};
 
+template<>
+Vec2<float> Vec2<float>::operator*(float const& n){
+	x *= n;
+	y *= n;
+	return *this;
+}
+
+template<>
+Vec2<float> Vec2<float>::operator*=(float const& n){
+	x *= n;
+	y *= n;
+	return *this;
+}
+
+int DELTA = 8;
+bool outOfBounds(unsigned long id, SDL_Rect& bounds){
+	CollisionComponent* c = CS::collisionCS[id];
+	if(c->rect.x < bounds.x || c->rect.x + c->rect.w > bounds.x + bounds.w || c->rect.y < bounds.y || c->rect.y + c->rect.h > bounds.y + bounds.h){
+		if(c->rect.x < bounds.x){
+			c->moveC->pos.x = bounds.x+DELTA;
+			c->touching |= RIGHT;
+		} else if( c->rect.x + c->rect.w > bounds.x + bounds.w) {
+			c->moveC->pos.x = bounds.x + bounds.w - c->rect.w-DELTA;
+			c->touching |= LEFT;
+		}
+		if(c->rect.y < bounds.y){
+			c->moveC->pos.y = bounds.y+DELTA; 
+			c->touching |= TOP;
+		} else if( c->rect.y + c->rect.h > bounds.y + bounds.h) {
+			c->moveC->pos.y = bounds.y + bounds.h - c->rect.h-DELTA;
+			c->touching |= FLOOR;
+		}
+		return true;
+	}
+	return false;
+}
+
 bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result){
 	SDL_Rect r1, r2;
 	r1 = CS::collisionCS[id1]->rect;
@@ -24,17 +61,25 @@ bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result){
 
 }
 
+void Grid::clear(){
+	activeIndexes.clear();
+}
+
 void Grid::draw(){
 	SDL_Rect r;
-	for(int i =0; i<(gridW/cellSize)*(gridH/cellSize);i++)
+	for(int i =0; i<((bounds.w*bounds.h)/(cellSize*cellSize));i++){
 		r = getRect(i);
-		Window::DrawRect(&r, 225, 255, 255);
+		if(!activeIndexes[i])
+			Window::DrawRect(&r, 0, 0, 100);
+		else
+			Window::DrawRect(&r, 255, 0, 0);
+	}
 }
 
 SDL_Rect Grid::getRect(const int index){
 	SDL_Rect r;
-	r.x = cellSize*index;
-	r.y = (index/(gridW/cellSize))*cellSize;
+	r.x = cellSize*index - bounds.w*floor(index/(bounds.w/cellSize));
+	r.y = floor(index/(bounds.w/cellSize))*cellSize;
 	r.w = cellSize;
 	r.h = cellSize;
 	return r;
@@ -66,22 +111,23 @@ bool Grid::overlap(const unsigned long &id1,const unsigned long &id2, SDL_Rect* 
 std::vector<int> Grid::getIndex(unsigned long id){
 	SDL_Rect r1 = CS::collisionCS[id]->rect;
 	int xstart = int((floor(r1.x/cellSize)));
-	if(r1.x < gridX)
+	if(r1.x < bounds.x)
 		xstart = 0;
 	int xend = int((floor((r1.x+r1.w)/cellSize)));
 	int ystart = int((floor(r1.y/cellSize)));
-	if(r1.y < gridY)
+	if(r1.y < bounds.y)
 		ystart = 0;
 	int yend = int((floor((r1.y+r1.h)/cellSize)));
-	if(r1.x > gridX+gridW || r1.x +r1.w < gridX || r1.y > gridY+gridH || r1.y +r1.h < gridY){
+	if(r1.x > bounds.x+bounds.w || r1.x +r1.w < bounds.x || r1.y > bounds.y+bounds.h || r1.y +r1.h < bounds.y){
 		return std::vector<int>(1, -1);
 	}
 	std::vector<int> indexes;
-	int index = xstart + ystart*floor(gridW/cellSize);
+	int index = xstart + ystart*floor(bounds.w/cellSize);
 	//std::cout << index << std::endl;
 	for(int i=0; i<(yend-ystart+1); i++){
 		for(int g=0; g<(xend-xstart+1); g++){
-			index = xstart+g+ystart*floor(gridW/cellSize) + floor(gridW/cellSize)*i;
+			index = xstart+g+ystart*floor(bounds.w/cellSize) + floor(bounds.w/cellSize)*i;
+			activeIndexes[index] = true;
 			indexes.push_back(index);
 		}
 
@@ -206,7 +252,8 @@ bool QuadTree::getObject(unsigned long id){
 	}
 	if(QTs[0] != nullptr) {
 		std::cout << QTs[0] << std::endl;
-			if(QTs[0]->getObject(id) || QTs[1]->getObject(id) || QTs[2]->getObject(id) || QTs[3]->getObject(id))
+			if(QTs[0]->getObject(id) || QTs[1]->getObject(id) 
+					|| QTs[2]->getObject(id) || QTs[3]->getObject(id))
 				return true;
 	}
 	return false;
@@ -219,4 +266,51 @@ void QuadTree::draw(){
 		}
 	}
 	Window::DrawRect(&bounds, 225, 255, 255);
+}
+
+void collideCheck(eId e1, eId e2){
+	CollisionComponent* c1 = CS::collisionCS[e1];
+	CollisionComponent* c2 = CS::collisionCS[e2];
+
+	SDL_Rect r1, r2;
+	r1.x = (c1->moveC->pos.x > c1->moveC->deltaPos.x)?c1->moveC->deltaPos.x:c1->moveC->pos.x;
+	r2.x = (c2->moveC->pos.x > c2->moveC->deltaPos.x)?c2->moveC->pos.x:c2->moveC->deltaPos.x;
+	r1.y = (c1->moveC->pos.y > c1->moveC->deltaPos.y)?c1->moveC->deltaPos.y:c1->moveC->pos.y;
+	r2.y = (c2->moveC->pos.y > c2->moveC->deltaPos.y)?c2->moveC->pos.y:c2->moveC->deltaPos.y;
+	r1.w = (c1->moveC->pos.x > c1->moveC->deltaPos.x)?
+	(c1->rect.w+(c1->moveC->pos.x - c1->moveC->deltaPos.x)):(c1->rect.w+(c1->moveC->deltaPos.x - c1->moveC->pos.x));
+	r2.w = (c2->moveC->pos.x > c2->moveC->deltaPos.x)?
+	(c2->rect.w+(c2->moveC->pos.x - c2->moveC->deltaPos.x)):(c2->rect.w+(c2->moveC->deltaPos.x - c2->moveC->pos.x));
+	r1.h = (c1->moveC->pos.y > c1->moveC->deltaPos.y)?
+	(c1->rect.h+(c1->moveC->pos.y - c1->moveC->deltaPos.y)):(c1->rect.h+(c1->moveC->deltaPos.y - c1->moveC->pos.y));
+	r2.h = (c2->moveC->pos.y > c2->moveC->deltaPos.y)?
+	(c2->rect.h+(c2->moveC->pos.y - c2->moveC->deltaPos.y)):(c2->rect.h+(c2->moveC->deltaPos.y - c2->moveC->pos.y));
+	SDL_Rect overlapRect;
+	SDL_IntersectRect(&r1, &r2, &overlapRect);
+	float overlapX, overlapY;
+	if(r1.x < r2.x){
+		//SIDE TOUCHING CODE HERE
+		//c1 is touching left side
+		//c2 is touching right side
+		c1->touching |= LEFT;
+		c2->touching |= RIGHT;
+	} else if(r1.x > r2.x) {
+		//opposite
+		c1->touching |= RIGHT;
+		c2->touching |= LEFT;
+	}
+	if(r1.y < r2.y) {
+		//UP AND DOWN TOUCHING CODE
+		//c1 is touching down or floor
+		//c2 is touching up or ceiling
+		c1->touching |= FLOOR;
+		c1->touching |= TOP;
+	} else if (r1.y > r2.y) {
+		//opposite
+		c1->touching |= TOP;
+		c1->touching |= FLOOR;
+	}
+
+
+		
 }

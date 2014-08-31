@@ -18,9 +18,12 @@ CollisionComponent::CollisionComponent(std::map<eId, SpriteComponent*> &spriteMa
 	moveC = moveMap[id];
 	collided = false;
 	solid = s;
+	moveable = true;
+	touching = NONE;
 }
 
 void CollisionComponent::update(){
+	touching = NONE;
 	rect.x = moveC->pos.x;
 	rect.y = moveC->pos.y;
 	if(spriteC != nullptr){
@@ -38,7 +41,7 @@ ControllerComponent::ControllerComponent(std::map<eId, MoveComponent*> &moveMap,
 }
 
 void ControllerComponent::eventUpdate(SDL_Event &e){
-	float SPEED = 1;
+	float SPEED = 2;
 	if (e.type == SDL_KEYDOWN){
 		switch(e.key.keysym.sym){
 			case SDLK_d:
@@ -139,8 +142,8 @@ void SpriteComponent::setScale(float x, float y){
 	int w = clipRect.w, h = clipRect.h;
 	scale = {x,y};
 
-	clipRect.w = imgRect.w *= scale.x;
-	clipRect.h = imgRect.h *= scale.y;
+	imgRect.w *= scale.x;
+	imgRect.h *= scale.y;
 	setFrame(w, h);
 }
 
@@ -195,7 +198,7 @@ void MoveComponent::update(){
 	if (vel.y > maxV.y || vel.y < -maxV.y){
 		vel.y = (vel.y>0)?maxV.y:-maxV.y;
 	}
-
+	deltaPos = pos;
 	pos = {pos.x+vel.x, pos.y+vel.y};
 }
 
@@ -214,23 +217,59 @@ eId CS::createID(){
 	return _INDEX; 
 }
 
+
+Grid grid(0,0,800,600,50);
+std::map<eId, float> areas;
+int nc=0;
 void CS::collisionUpdate(){
-	Grid grid(0,0,800,600,100);
+	grid.clear();
+
 	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
 		it->second->getGridIndex(grid);
 	}
-	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		SDL_Rect area;
-		if(it->first == 1)
-			continue;
-		if(grid.overlap(1, it->first, &area))
-		{
-			//CS::moveCS[1]->vel = CS::moveCS[it->first]->vel;
-			//std::cout << "OVERLAP" << std::endl;
-			GAMEOVER();
+
+	SDL_Rect area;
+	int n=0;
+	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
+		outOfBounds(checking->first, grid.bounds);
+		//if(checking->first == 1)
+		for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
+			if(it->first == checking->first)
+				continue;
+			if(!it->second->moveable && !checking->second->moveable)
+				continue;
+			if(checking->second->collidedWith[it->first])
+				continue;
+			it->second->collidedWith[checking->first] = true;
+			if(grid.overlap(checking->first, it->first, &area))
+			{
+				areas[it->first] = area.w*area.h;
+				collideCheck(it->first, checking->first);
+				// CS::moveCS[it->first]->pos = CS::moveCS[it->first]->deltaPos;
+				// CS::moveCS[checking->first]->pos = CS::moveCS[checking->first]->deltaPos;
+				//std::cout << "OVERLAP" << std::endl;
+				//clear();
+				//return;
+			}
+			n++;	
+		}
+
+		if(checking->second->moveable){
+			if(checking->second->touching & (LEFT | RIGHT)){
+				CS::moveCS[checking->first]->acc.x *= -1;
+				CS::moveCS[checking->first]->vel.x *= -1;
+			}
+
+			if(checking->second->touching & (TOP | FLOOR)){
+				CS::moveCS[checking->first]->acc.y *= -1;
+				CS::moveCS[checking->first]->vel.y *= -1;
+			}
 		}
 	}
-	grid.draw();
+	
+	if(nc != n)
+	std::cout << n << std::endl;
+	nc = n;
 }
 
 void CS::eventUpdate(SDL_Event &e){
@@ -252,9 +291,14 @@ void CS::update(){
 }
 
 void CS::draw(){
+
 	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){
 		it->second->draw();
 	}
+	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
+		Window::DrawRect(&(it->second->rect), 100, 150, 100);
+	}
+	grid.draw();
 }
 
 void CS::clear(){

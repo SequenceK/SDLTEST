@@ -27,10 +27,17 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	TEST(0,0);
+	TEST(701,501);
 
 	SDL_Event e;
 	bool quit=false;
+	bool createBox = false;
+	int count = 0;
+	SDL_Rect r;
+	SDL_Texture* t;
+	t = Window::RenderText("FPS: " + std::to_string(1000/Timer::elapsed), "../data/fonts/PressSTart2P.ttf",{255,255,255,255}, 8);
+	SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
+	r.x=1;r.y=1;
 	while(!quit){
 		
 
@@ -42,6 +49,10 @@ int main(int argc, char **argv){
 				quit = true;
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				mBox(e.button.x, e.button.y);
+				createBox = true;
+			}
+			if(e.type == SDL_MOUSEBUTTONUP){
+				createBox = false;
 			}
 			if (e.type == SDL_KEYDOWN){
 				switch(e.key.keysym.sym){
@@ -54,14 +65,18 @@ int main(int argc, char **argv){
 
 			CS::eventUpdate(e);
 		}
+		//if(createBox)
+		//	mBox(rand()%800, rand()%600);
 
 		Timer::slice += Timer::elapsed;
+		Window::Clear();
 		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)
 		{
 			CS::update();
+			CS::collisionUpdate();
 		}
-		Window::Clear();
-		CS::collisionUpdate();
+		
+		Window::Draw(t, r);
 		CS::draw();
 		Window::Present();
 		auto timePoint2(chrono::high_resolution_clock::now());
@@ -75,8 +90,7 @@ int main(int argc, char **argv){
 		// 	for(int i=0;i<loops;i++){
 		// 		CS::update();
 		// 	}
-		// } else {
-		// 	int delay = maxTime - Timer::elapsed;
+		// } else {3
 		// 	SDL_Delay(delay);
 		// }
 	}

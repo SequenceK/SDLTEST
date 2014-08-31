@@ -7,11 +7,12 @@
 #include <memory>
 #include <SDL2/SDL.h>
 #include <iostream>
-#include "../include/system.h"
+//#include "../include/system.h"
 //Entities are just an unsinged long
 typedef unsigned long eId;
 
-
+//Enums
+enum Direction {UP = 0x0001, TOP = 0x0001, DOWN = 0x0010, FLOOR = 0x0010, LEFT = 0x0100, RIGHT = 0x1000, NONE = 0x000};
 
 //Basic component
 class Component {
@@ -24,6 +25,7 @@ public:
 class MoveComponent : public Component {
 public:
 	Vec2<float> pos;
+	Vec2<float> deltaPos;
 	Vec2<float> acc;
 	Vec2<float> vel;
 	Vec2<float> drag;
@@ -46,10 +48,9 @@ public:
 		bool played;
 	};
 
-	enum Facing { LEFT = false, RIGHT = true };
-
 	Animation currentAnimation;
-	bool playingAnimation, facing, render;
+	bool playingAnimation, render;
+	int facing;
 	float frameTimer;
 	int frameWidth, frameHight;
 	SDL_Texture* img;
@@ -71,6 +72,8 @@ public:
 class CollisionComponent : public Component {
 public:
 
+	
+
 	SDL_Rect rect;
 	MoveComponent* moveC;
 	SpriteComponent* spriteC;
@@ -79,6 +82,8 @@ public:
 	std::map<eId, SDL_Rect*> collidingWith;
 	bool collided;
 	bool solid;
+	bool moveable;
+	int touching;
 	std::vector<int> gridIndex;
 	CollisionComponent(int w, int h, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
 	CollisionComponent(std::map<eId, SpriteComponent*> &spriteMap, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
