@@ -27,8 +27,20 @@ Vec2<float> Vec2<float>::operator*=(float const& n){
 	y *= n;
 	return *this;
 }
+template<>
+Vec2<float> Vec2<float>::operator+=(Vec2<float> const& v){
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+template<>
+Vec2<float> Vec2<float>::operator-=(Vec2<float> const& v){
+	x -= v.x;
+	y -= v.y;
+	return *this;
+}
 
-int DELTA = 8;
+int DELTA = 0;
 bool outOfBounds(unsigned long id, SDL_Rect& bounds){
 	CollisionComponent* c = CS::collisionCS[id];
 	if(c->rect.x < bounds.x || c->rect.x + c->rect.w > bounds.x + bounds.w || c->rect.y < bounds.y || c->rect.y + c->rect.h > bounds.y + bounds.h){
@@ -268,49 +280,145 @@ void QuadTree::draw(){
 	Window::DrawRect(&bounds, 225, 255, 255);
 }
 
-void collideCheck(eId e1, eId e2){
+void collide(eId e1, eId e2){
 	CollisionComponent* c1 = CS::collisionCS[e1];
 	CollisionComponent* c2 = CS::collisionCS[e2];
+	if(!c1->moveable && !c2->moveable)
+	{
+		return;
+	}
 
+	//create 2 rects. They are used to determine which direction the collision has taken place.
 	SDL_Rect r1, r2;
-	r1.x = (c1->moveC->pos.x > c1->moveC->deltaPos.x)?c1->moveC->deltaPos.x:c1->moveC->pos.x;
-	r2.x = (c2->moveC->pos.x > c2->moveC->deltaPos.x)?c2->moveC->pos.x:c2->moveC->deltaPos.x;
-	r1.y = (c1->moveC->pos.y > c1->moveC->deltaPos.y)?c1->moveC->deltaPos.y:c1->moveC->pos.y;
-	r2.y = (c2->moveC->pos.y > c2->moveC->deltaPos.y)?c2->moveC->pos.y:c2->moveC->deltaPos.y;
-	r1.w = (c1->moveC->pos.x > c1->moveC->deltaPos.x)?
-	(c1->rect.w+(c1->moveC->pos.x - c1->moveC->deltaPos.x)):(c1->rect.w+(c1->moveC->deltaPos.x - c1->moveC->pos.x));
-	r2.w = (c2->moveC->pos.x > c2->moveC->deltaPos.x)?
-	(c2->rect.w+(c2->moveC->pos.x - c2->moveC->deltaPos.x)):(c2->rect.w+(c2->moveC->deltaPos.x - c2->moveC->pos.x));
-	r1.h = (c1->moveC->pos.y > c1->moveC->deltaPos.y)?
-	(c1->rect.h+(c1->moveC->pos.y - c1->moveC->deltaPos.y)):(c1->rect.h+(c1->moveC->deltaPos.y - c1->moveC->pos.y));
-	r2.h = (c2->moveC->pos.y > c2->moveC->deltaPos.y)?
-	(c2->rect.h+(c2->moveC->pos.y - c2->moveC->deltaPos.y)):(c2->rect.h+(c2->moveC->deltaPos.y - c2->moveC->pos.y));
-	SDL_Rect overlapRect;
-	SDL_IntersectRect(&r1, &r2, &overlapRect);
-	float overlapX, overlapY;
-	if(r1.x < r2.x){
-		//SIDE TOUCHING CODE HERE
-		//c1 is touching left side
-		//c2 is touching right side
-		c1->touching |= LEFT;
-		c2->touching |= RIGHT;
-	} else if(r1.x > r2.x) {
-		//opposite
-		c1->touching |= RIGHT;
-		c2->touching |= LEFT;
-	}
-	if(r1.y < r2.y) {
-		//UP AND DOWN TOUCHING CODE
-		//c1 is touching down or floor
-		//c2 is touching up or ceiling
-		c1->touching |= FLOOR;
-		c1->touching |= TOP;
-	} else if (r1.y > r2.y) {
-		//opposite
-		c1->touching |= TOP;
-		c1->touching |= FLOOR;
+	float dx1 = -c1->moveC->deltaPos.x + c1->moveC->pos.x;
+	float dy1 = -c1->moveC->deltaPos.y + c1->moveC->pos.y;
+	float dx2 = -c2->moveC->deltaPos.x + c2->moveC->pos.x;
+	float dy2 = -c2->moveC->deltaPos.y + c2->moveC->pos.y;
+	bool absDX1 = (dx1>0)?dx1:-dx1;
+	bool absDY1 = (dy1>0)?dy1:-dy1;
+	bool absDX2 = (dx2>0)?dx2:-dx2;
+	bool absDY2 = (dy2>0)?dy2:-dy2;
+	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);
+	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);
+	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);
+	r2.y = c2->moveC->pos.y - (dy2>0?dy2:0);
+	r1.w = c1->rect.w+absDX1;
+	r2.w = c2->rect.w+absDX2;
+	r1.h = c1->rect.h+absDY1;
+	r2.h = c2->rect.h+absDY2;
+
+	// SDL_Rect overlapRect;
+	// SDL_IntersectRect(&r1, &r2, &overlapRect);
+	float overlapX=0, overlapY=0;
+	int BIAS = 4;
+	
+	if(dx1 != dx2)
+	{
+		float maxOverlapX = absDX1 + absDX2 + BIAS;
+		if(dx1 > dx2)
+		{
+			overlapX = r1.x + r1.w - r2.x;
+			if(overlapX > maxOverlapX)
+				overlapX = 0;
+			else{
+				c1->touching |= LEFT;
+				c2->touching |= RIGHT;
+			}
+		} else  {
+			overlapX = -(r2.x + r2.w - r1.x);
+			if(-overlapX > maxOverlapX)
+				overlapX = 0;
+			else{
+				c1->touching |= RIGHT;
+				c2->touching |= LEFT;
+			}
+		}
+		//std::cout << maxOverlapX << " " << overlapX << std::endl;
 	}
 
+	if(overlapX != 0){
+		if(!c2->moveable){
+			c1->moveC->setPosition(c1->moveC->pos.x - overlapX, c1->moveC->pos.y);
+			c1->moveC->vel.x = c2->moveC->vel.x - c1->moveC->acc.x;
+		}
+		else if(!c1->moveable){
+			c2->moveC->setPosition(c2->moveC->pos.x + overlapX, c2->moveC->pos.y);
+			c2->moveC->vel.x = c1->moveC->vel.x - c2->moveC->acc.x;
+		}
+	}
 
+	if(dy1 != dy2)
+	{
+		float maxOverlapY = absDY1 + absDY2 + BIAS;
+		if(dy1 > dy2)
+		{
+			overlapY = r1.y + r1.h - r2.y;
+			if(overlapY > maxOverlapY)
+				overlapY = 0;
+			else{
+				c1->touching |= FLOOR;
+				c2->touching |= TOP;
+			}
+		} else  {
+			overlapY = -(r2.y + r2.h - r1.y);
+			if(-overlapY > maxOverlapY)
+				overlapY = 0;
+			else{
+				c1->touching |= TOP;
+				c2->touching |= FLOOR;
+			}
+		}
+		//std::cout << maxOverlapY << " " << overlapY << std::endl;
+	}
+
+	if(overlapY != 0){
+		if(!c2->moveable){
+			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);
+			c1->moveC->vel.y = c2->moveC->vel.y - c1->moveC->acc.y;
+		}
+		else if(!c1->moveable){
+			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);
+			c2->moveC->vel.y = c1->moveC->vel.y - c2->moveC->acc.y;
+		}
+	}
+	//c1->moveC->pos.y -= overlapY;
+	//c2->moveC->pos.x = ;
+	// if(r1.x < r2.x){
+	// 	//SIDE TOUCHING CODE HERE
+	// 	//c1 is touching left side
+	// 	//c2 is touching right side
+	// 	overlapX = overlapRect.w;
+	// 	c1->moveC->pos.x = 
 		
+	// } else if(r1.x > r2.x) {
+	// 	//opposite
+	// 	overlapX = -overlapRect.w;
+	// 	c1->touching |= RIGHT;
+	// 	c2->touching |= LEFT;
+	// }
+	// if(r1.y < r2.y) {
+	// 	//UP AND DOWN TOUCHING CODE
+	// 	//c1 is touching down or floor
+	// 	//c2 is touching up or ceiling
+	// 	overlapY = overlapRect.h;
+	// 	c1->touching |= FLOOR;
+	// 	c1->touching |= TOP;
+	// } else if (r1.y > r2.y) {
+	// 	//opposite
+	// 	overlapY = -overlapRect.h;
+	// 	c1->touching |= TOP;
+	// 	c1->touching |= FLOOR;
+	// }
+	// c1->moveC->pos = c1->moveC->deltaPos;
+	// c2->moveC->pos = c2->moveC->deltaPos;
+	// Vec2<float> placeholderVel = c1->moveC->vel;
+		
+}
+
+void seperateX(eId e1, eId e2){
+
+}
+
+void seperateY(eId e1, eId e2){
+
 }

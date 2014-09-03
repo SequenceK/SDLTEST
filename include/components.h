@@ -33,6 +33,7 @@ public:
 	MoveComponent(float xx, float yy, eId id);
 
 	void update();
+	void setPosition(float x, float y);
 };
 
 //Sprite component

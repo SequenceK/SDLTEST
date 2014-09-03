@@ -10,6 +10,8 @@ struct Vec2 {
 	T x, y;
 	Vec2<T> operator*(const T& n);
 	Vec2<float> operator*=(float const& n);
+	Vec2<float> operator-=(Vec2<float> const& v);
+	Vec2<float> operator+=(Vec2<float> const& v);
 };
 
 class Timer {
@@ -55,6 +57,6 @@ public:
 
 bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result);
 bool outOfBounds(unsigned long id, SDL_Rect& bounds);
-void collideCheck(unsigned long e1, unsigned long e2);
+void collide(unsigned long e1, unsigned long e2);
 
 #endif

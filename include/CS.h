@@ -15,6 +15,7 @@ public:
 	static std::map<eId, CollisionComponent*> collisionCS;
 	static std::map<const std::string, SDL_Texture*> textures;
 	static QuadTree qt;
+	static Grid grid;
 
 	static eId createID();
 

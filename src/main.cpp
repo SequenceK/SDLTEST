@@ -27,32 +27,28 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	TEST(701,501);
 
 	SDL_Event e;
 	bool quit=false;
-	bool createBox = false;
-	int count = 0;
-	SDL_Rect r;
-	SDL_Texture* t;
-	t = Window::RenderText("FPS: " + std::to_string(1000/Timer::elapsed), "../data/fonts/PressSTart2P.ttf",{255,255,255,255}, 8);
-	SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
-	r.x=1;r.y=1;
+	// SDL_Rect r;
+	// SDL_Texture* t;
+	// t = Window::RenderText("FPS: " + std::to_string(1000/Timer::elapsed), "../data/fonts/PressSTart2P.ttf",{255,255,255,255}, 8);
+	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
+	// r.x=1;r.y=1;
 	while(!quit){
 		
-
-
 		auto timePoint1(chrono::high_resolution_clock::now());
 
 		while (SDL_PollEvent(&e)){
 			if (e.type == SDL_QUIT)
 				quit = true;
 			if(e.type == SDL_MOUSEBUTTONDOWN){
-				mBox(e.button.x, e.button.y);
-				createBox = true;
+				if(e.button.button == SDL_BUTTON_LEFT)
+					mBox(e.button.x, e.button.y);
+				if(e.button.button == SDL_BUTTON_RIGHT)
+					TEST(e.button.x, e.button.y);
 			}
 			if(e.type == SDL_MOUSEBUTTONUP){
-				createBox = false;
 			}
 			if (e.type == SDL_KEYDOWN){
 				switch(e.key.keysym.sym){
@@ -76,7 +72,7 @@ int main(int argc, char **argv){
 			CS::collisionUpdate();
 		}
 		
-		Window::Draw(t, r);
+		//Window::Draw(t, r);
 		CS::draw();
 		Window::Present();
 		auto timePoint2(chrono::high_resolution_clock::now());
