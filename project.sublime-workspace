@@ -4,12 +4,28 @@
 		"selected_items":
 		[
 			[
-				"ove",
-				"overlapY"
+				"moc",
+				"moveC"
 			],
 			[
 				"dx",
-				"dx1"
+				"dx2"
+			],
+			[
+				"dy",
+				"dy2"
+			],
+			[
+				"ac",
+				"acc"
+			],
+			[
+				"move",
+				"moveC"
+			],
+			[
+				"ove",
+				"overlapY"
 			],
 			[
 				"std",
@@ -26,10 +42,6 @@
 			[
 				"maxa",
 				"maxArea"
-			],
-			[
-				"move",
-				"moveCS"
 			],
 			[
 				"colli",
@@ -78,10 +90,6 @@
 			[
 				"over",
 				"overlapX"
-			],
-			[
-				"dy",
-				"dy1"
 			],
 			[
 				"overa",
@@ -511,7 +519,7 @@
 			"file": "src/components.cpp",
 			"settings":
 			{
-				"buffer_size": 7240,
+				"buffer_size": 7242,
 				"line_ending": "Windows"
 			}
 		},
@@ -527,7 +535,7 @@
 			"file": "src/entities.cpp",
 			"settings":
 			{
-				"buffer_size": 1696,
+				"buffer_size": 1695,
 				"line_ending": "Windows"
 			}
 		},
@@ -548,13 +556,18 @@
 			}
 		},
 		{
-			"contents": "#include \"../include/system.h\"\n#include \"../include/window.h\"\n#include \"../include/CS.h\"\n#include <vector>\n#include <map>\n#include <algorithm>\n#include <cmath>\n#include <iostream>\n#include <SDL2/SDL.h>\n\nfloat Timer::start{0};\nfloat Timer::end{0};\nfloat Timer::elapsed{0};\nfloat Timer::frame{1000.f/60.f};\nfloat Timer::slice{0.f};\n\ntemplate<>\nVec2<float> Vec2<float>::operator*(float const& n){\n	x *= n;\n	y *= n;\n	return *this;\n}\n\ntemplate<>\nVec2<float> Vec2<float>::operator*=(float const& n){\n	x *= n;\n	y *= n;\n	return *this;\n}\ntemplate<>\nVec2<float> Vec2<float>::operator+=(Vec2<float> const& v){\n	x += v.x;\n	y += v.y;\n	return *this;\n}\ntemplate<>\nVec2<float> Vec2<float>::operator-=(Vec2<float> const& v){\n	x -= v.x;\n	y -= v.y;\n	return *this;\n}\n\nint DELTA = 0;\nbool outOfBounds(unsigned long id, SDL_Rect& bounds){\n	CollisionComponent* c = CS::collisionCS[id];\n	if(c->rect.x < bounds.x || c->rect.x + c->rect.w > bounds.x + bounds.w || c->rect.y < bounds.y || c->rect.y + c->rect.h > bounds.y + bounds.h){\n		if(c->rect.x < bounds.x){\n			c->moveC->pos.x = bounds.x+DELTA;\n			c->touching |= RIGHT;\n		} else if( c->rect.x + c->rect.w > bounds.x + bounds.w) {\n			c->moveC->pos.x = bounds.x + bounds.w - c->rect.w-DELTA;\n			c->touching |= LEFT;\n		}\n		if(c->rect.y < bounds.y){\n			c->moveC->pos.y = bounds.y+DELTA; \n			c->touching |= TOP;\n		} else if( c->rect.y + c->rect.h > bounds.y + bounds.h) {\n			c->moveC->pos.y = bounds.y + bounds.h - c->rect.h-DELTA;\n			c->touching |= FLOOR;\n		}\n		return true;\n	}\n	return false;\n}\n\nbool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result){\n	SDL_Rect r1, r2;\n	r1 = CS::collisionCS[id1]->rect;\n	r2 = CS::collisionCS[id2]->rect;\n	if(SDL_IntersectRect(&r1, &r2, result))\n			return true;\n	return false;\n\n}\n\nvoid Grid::clear(){\n	activeIndexes.clear();\n}\n\nvoid Grid::draw(){\n	SDL_Rect r;\n	for(int i =0; i<((bounds.w*bounds.h)/(cellSize*cellSize));i++){\n		r = getRect(i);\n		if(!activeIndexes[i])\n			Window::DrawRect(&r, 0, 0, 100);\n		else\n			Window::DrawRect(&r, 255, 0, 0);\n	}\n}\n\nSDL_Rect Grid::getRect(const int index){\n	SDL_Rect r;\n	r.x = cellSize*index - bounds.w*floor(index/(bounds.w/cellSize));\n	r.y = floor(index/(bounds.w/cellSize))*cellSize;\n	r.w = cellSize;\n	r.h = cellSize;\n	return r;\n}\n\nbool Grid::overlap(const unsigned long &id1,const unsigned long &id2, SDL_Rect* result){\n	std::vector<int> v1 = CS::collisionCS[id1]->gridIndex;\n	if(v1[0]==-1)\n		return false;\n	std::vector<int> v2 = CS::collisionCS[id2]->gridIndex;\n	if(v2[0]==-1)\n		return false;\n	std::sort(v1.begin(), v1.end());\n	std::sort(v2.begin(), v2.end());\n	std::vector<int> v3(v1.size()+v2.size(), -1);\n	std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());\n	if(v3[0]!=-1){\n		if(checkOverlap(id1, id2, result))\n			return true;\n	}\n	else{\n		return false;\n	}\n\n	return false;\n\n}\n\nstd::vector<int> Grid::getIndex(unsigned long id){\n	SDL_Rect r1 = CS::collisionCS[id]->rect;\n	int xstart = int((floor(r1.x/cellSize)));\n	if(r1.x < bounds.x)\n		xstart = 0;\n	int xend = int((floor((r1.x+r1.w)/cellSize)));\n	int ystart = int((floor(r1.y/cellSize)));\n	if(r1.y < bounds.y)\n		ystart = 0;\n	int yend = int((floor((r1.y+r1.h)/cellSize)));\n	if(r1.x > bounds.x+bounds.w || r1.x +r1.w < bounds.x || r1.y > bounds.y+bounds.h || r1.y +r1.h < bounds.y){\n		return std::vector<int>(1, -1);\n	}\n	std::vector<int> indexes;\n	int index = xstart + ystart*floor(bounds.w/cellSize);\n	//std::cout << index << std::endl;\n	for(int i=0; i<(yend-ystart+1); i++){\n		for(int g=0; g<(xend-xstart+1); g++){\n			index = xstart+g+ystart*floor(bounds.w/cellSize) + floor(bounds.w/cellSize)*i;\n			activeIndexes[index] = true;\n			indexes.push_back(index);\n		}\n\n	}\n\n	return indexes;\n}\n\nQuadTree::QuadTree(int x, int y, int w, int h, unsigned int d): QTs(4, nullptr){\n	bounds.x = x;\n	bounds.y = y;\n	bounds.w = w;\n	bounds.h = h;\n	depth = d;\n}\n\nvoid QuadTree::split(){\n		QTs[0] = new QuadTree(bounds.x, bounds.y, bounds.w/2, bounds.h/2, depth+1);\n		QTs[1] = new QuadTree(bounds.x+bounds.w/2, bounds.y, bounds.w/2, bounds.h/2, depth+1);\n		QTs[2] = new QuadTree(bounds.x, bounds.y+bounds.h/2, bounds.w/2, bounds.h/2, depth+1);\n		QTs[3] = new QuadTree(bounds.x+bounds.w/2, bounds.y+bounds.h/2, bounds.w/2, bounds.h/2, depth+1);\n\n};\n\nint QuadTree::getIndex(unsigned long id){\n	int index = -1;\n	SDL_Rect* r = &CS::collisionCS[id]->rect;\n	if(r->x < (bounds.x + bounds.w/2) && (r->x + r->w) < (bounds.x + bounds.w/2)){\n		if(r->y < bounds.y + bounds.h/2 && r->y + r->h < bounds.y + bounds.h/2)\n			index = 0;\n		else if(r->y < bounds.y + bounds.h && r->y + r->h < bounds.y + bounds.h && r->y > bounds.y + bounds.h/2)\n			index = 2;\n			\n	}\n	else if(r->x < bounds.x + bounds.w && r->x + r->w < bounds.x + bounds.w && r->x > (bounds.x + bounds.w/2)){\n		if(r->y < bounds.y + bounds.h/2 && r->y + r->h < bounds.y + bounds.h/2)\n			index = 1;\n		else if(r->y < bounds.y + bounds.h && r->y + r->h < bounds.y + bounds.h && r->y > bounds.y + bounds.h/2)\n			index = 3;\n	}\n	if((r->x < bounds.x && r->x + r->w < bounds.x) || (r->x > bounds.x + bounds.w))\n		index = -2;\n	if((r->y < bounds.y && r->y + r->h < bounds.y) || (r->y > bounds.y + bounds.h))\n		index = -2;\n\n	return index;\n}\n\nvoid QuadTree::insert(unsigned long id){\n	int index = getIndex(id);\n	if(QTs[0] != nullptr){\n		if(index != -1){\n				QTs[index]->insert(id);\n				return;\n		}\n	}\n	if(index != -2)\n	objs.push_back(id);\n	if(objs.size() > toSplit && depth < maxDepth){\n		if(QTs[0] == nullptr){\n			split();\n		}\n\n		for(unsigned int i = 0; i < objs.size(); i++){\n			index = getIndex(objs[i]);\n			if(index > -1 && objs[i] != 0){\n				QTs[index]->insert(objs[i]);\n				objs.erase(objs.begin()+i);\n				--i;\n			}\n		}\n	}\n}\n\nvoid QuadTree::remove(unsigned long id){\n	for(unsigned int i = 0; i < objs.size(); i++){\n		if(objs[i] == id){\n			objs.erase(objs.begin()+i);\n			return;\n		}\n	}\n	if(QTs[0] != nullptr){\n		for (unsigned int i=0;i<QTs.size();i++){\n			QTs[i]->remove(id);\n		}\n	}\n}\n\nvoid QuadTree::clear(){\n	if(QTs[0] != nullptr){\n		for (unsigned int i=0;i<QTs.size();i++){\n			QTs[i]->clear();\n			delete QTs[i];\n		}\n	}\n	objs.clear();\n}\n\nbool QuadTree::overlap(unsigned long id1, unsigned long id2, SDL_Rect* result){\n	\n	if(!getObject(id1)) return false;\n	if(!getObject(id2)) return false;\n	std::cout << \"ASFD\" << std::endl;\n	SDL_Rect *r1 = &CS::collisionCS[id1]->rect, *r2 = &CS::collisionCS[id2]->rect;\n	if(SDL_IntersectRect(r1, r2, result)){\n		std::cout << r1->x << std::endl;\n		return true;\n	}\n	else{\n		return false;\n\n	}\n}\n\nbool QuadTree::getObject(unsigned long id){\n	std::cout << objs.size() << std::endl;\n	for(unsigned int i = 0; i < objs.size(); i++){\n\n		if(objs[i] == id){\n			return true;\n		}\n	}\n	if(QTs[0] != nullptr) {\n		std::cout << QTs[0] << std::endl;\n			if(QTs[0]->getObject(id) || QTs[1]->getObject(id) \n					|| QTs[2]->getObject(id) || QTs[3]->getObject(id))\n				return true;\n	}\n	return false;\n}\n\nvoid QuadTree::draw(){\n	if(QTs[0] != nullptr) {\n		for (unsigned int i=0;i<QTs.size();i++){\n			QTs[i]->draw();\n		}\n	}\n	Window::DrawRect(&bounds, 225, 255, 255);\n}\n\nvoid collide(eId e1, eId e2){\n	CollisionComponent* c1 = CS::collisionCS[e1];\n	CollisionComponent* c2 = CS::collisionCS[e2];\n	if(!c1->moveable && !c2->moveable)\n	{\n		return;\n	}\n\n	//create 2 rects. They are used to determine which direction the collision has taken place.\n	SDL_Rect r1, r2;\n	float dx1 = c1->moveC->deltaPos.x - c1->moveC->pos.x;\n	float dy1 = c1->moveC->deltaPos.y - c1->moveC->pos.y;\n	float dx2 = c2->moveC->deltaPos.x - c2->moveC->pos.x;\n	float dy2 = c2->moveC->deltaPos.y - c2->moveC->pos.y;\n	bool absDX1 = (dx1>0)?dx1:-dx1;\n	bool absDY1 = (dy1>0)?dy1:-dy1;\n	bool absDX2 = (dx2>0)?dx2:-dx2;\n	bool absDY2 = (dy2>0)?dy2:-dy2;\n	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);\n	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);\n	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);\n	r2.y = c2->moveC->pos.y - (dy2>0?dy2:0);\n	r1.w = c1->rect.w+absDX1;\n	r2.w = c2->rect.w+absDX2;\n	r1.h = c1->rect.h+absDY1;\n	r2.h = c2->rect.h+absDY2;\n\n	// SDL_Rect overlapRect;\n	// SDL_IntersectRect(&r1, &r2, &overlapRect);\n	float overlapX=0, overlapY=0;\n	int BIAS = 4;\n	\n	if(r1.x != r2.x)\n	{\n		float maxOverlapX = absDX1 + absDX2 + BIAS;\n		if(r1.x < r2.x)\n		{\n			overlapX = r1.x + r1.w - r2.x;\n			if(overlapX > maxOverlapX)\n				overlapX = 0;\n			else{\n				c1->touching |= LEFT;\n				c2->touching |= RIGHT;\n			}\n		} else  {\n			overlapX = -(r2.x + r2.w - r1.x);\n			if(-overlapX > maxOverlapX)\n				overlapX = 0;\n			else{\n				c1->touching |= RIGHT;\n				c2->touching |= LEFT;\n			}\n		}\n		//std::cout << maxOverlapX << \" \" << overlapX << std::endl;\n	}\n\n	if(overlapX != 0){\n		if(!c2->moveable){\n			c1->moveC->setPosition(c1->moveC->pos.x - overlapX, c1->moveC->pos.y);\n			c1->moveC->vel.x = c2->moveC->vel.x - c1->moveC->acc.x;\n		}\n		else if(!c1->moveable){\n			c2->moveC->setPosition(c2->moveC->pos.x + overlapX, c2->moveC->pos.y);\n			c2->moveC->vel.x = c1->moveC->vel.x - c2->moveC->acc.x;\n		}\n	}\n\n	if(r1.y != r2.y)\n	{\n		float maxOverlapY = absDY1 + absDY2 + BIAS;\n		if(r1.y < r2.y)\n		{\n			overlapY = r1.y + r1.h - r2.y;\n			if(overlapY > maxOverlapY)\n				overlapY = 0;\n			else{\n				c1->touching |= FLOOR;\n				c2->touching |= TOP;\n			}\n		} else  {\n			overlapY = -(r2.y + r2.h - r1.y);\n			if(-overlapY > maxOverlapY)\n				overlapY = 0;\n			else{\n				c1->touching |= TOP;\n				c2->touching |= FLOOR;\n			}\n		}\n		//std::cout << maxOverlapY << \" \" << overlapY << std::endl;\n	}\n	std::cout << \"OVERLAPY: \" << overlapY << std::endl;\n\n	if(overlapY != 0){\n		if(!c2->moveable){\n			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);\n			c1->moveC->vel.y = c2->moveC->vel.y;// - c1->moveC->acc.y;\n		}\n		else if(!c1->moveable){\n			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);\n			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;\n		}\n	}\n	//c1->moveC->pos.y -= overlapY;\n	//c2->moveC->pos.x = ;\n	// if(r1.x < r2.x){\n	// 	//SIDE TOUCHING CODE HERE\n	// 	//c1 is touching left side\n	// 	//c2 is touching right side\n	// 	overlapX = overlapRect.w;\n	// 	c1->moveC->pos.x = \n		\n	// } else if(r1.x > r2.x) {\n	// 	//opposite\n	// 	overlapX = -overlapRect.w;\n	// 	c1->touching |= RIGHT;\n	// 	c2->touching |= LEFT;\n	// }\n	// if(r1.y < r2.y) {\n	// 	//UP AND DOWN TOUCHING CODE\n	// 	//c1 is touching down or floor\n	// 	//c2 is touching up or ceiling\n	// 	overlapY = overlapRect.h;\n	// 	c1->touching |= FLOOR;\n	// 	c1->touching |= TOP;\n	// } else if (r1.y > r2.y) {\n	// 	//opposite\n	// 	overlapY = -overlapRect.h;\n	// 	c1->touching |= TOP;\n	// 	c1->touching |= FLOOR;\n	// }\n	// c1->moveC->pos = c1->moveC->deltaPos;\n	// c2->moveC->pos = c2->moveC->deltaPos;\n	// Vec2<float> placeholderVel = c1->moveC->vel;\n		\n}\n\nvoid seperateX(eId e1, eId e2){\n\n}\n\nvoid seperateY(eId e1, eId e2){\n\n}",
 			"file": "src/system.cpp",
-			"file_size": 11069,
-			"file_write_time": 130541658943121429,
 			"settings":
 			{
-				"buffer_size": 10649,
+				"buffer_size": 10602,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
+			"settings":
+			{
+				"buffer_size": 13010,
 				"line_ending": "Windows"
 			}
 		},
@@ -690,6 +703,7 @@
 	],
 	"file_history":
 	[
+		"/C/dev/SDLTEST/project.sublime-project",
 		"/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
 		"/C/dev/SDLTEST/src/main.cpp",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/C++.sublime-settings",
@@ -890,7 +904,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -918,7 +932,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -944,10 +958,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 684.0,
+						"translation.y": 1062.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -956,15 +970,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7240,
+						"buffer_size": 7242,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4759,
-								4759
+								6764,
+								6764
 							]
 						],
 						"settings":
@@ -974,10 +988,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3257.0,
+						"translation.y": 4435.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1015,15 +1029,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1696,
+						"buffer_size": 1695,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								544,
-								544
+								865,
+								865
 							]
 						],
 						"settings":
@@ -1035,7 +1049,7 @@
 						"translation.y": 57.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1060,11 +1074,11 @@
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
+						"translation.x": 0.0,
 						"translation.y": 513.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1093,7 +1107,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1102,15 +1116,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10649,
+						"buffer_size": 10602,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8857,
-								8853
+								7603,
+								7603
 							]
 						],
 						"settings":
@@ -1118,7 +1132,7 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 6382.0,
+						"translation.y": 5404.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1126,6 +1140,35 @@
 				},
 				{
 					"buffer": 9,
+					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13010,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								642,
+								642
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1625.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
 					"file": "include/system.h",
 					"semi_transient": false,
 					"settings":
@@ -1150,11 +1193,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
 					"file": "src/window.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1180,11 +1223,11 @@
 						"translation.y": 551.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "include/window.h",
 					"semi_transient": false,
 					"settings":
@@ -1209,11 +1252,11 @@
 						"translation.y": 342.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 13,
 					"file": "include/entities.h",
 					"semi_transient": false,
 					"settings":
@@ -1238,7 +1281,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 13,
 					"type": "text"
 				}
 			]

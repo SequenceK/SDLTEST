@@ -41,7 +41,7 @@ ControllerComponent::ControllerComponent(std::map<eId, MoveComponent*> &moveMap,
 }
 
 void ControllerComponent::eventUpdate(SDL_Event &e){
-	float SPEED = 0.1;
+	float SPEED = 1;
 	if (e.type == SDL_KEYDOWN){
 		switch(e.key.keysym.sym){
 			case SDLK_d:
@@ -203,7 +203,7 @@ void MoveComponent::update(){
 }
 
 void MoveComponent::setPosition(float x, float y){
-	//deltaPos = pos;
+	deltaPos = pos;
 	pos = {x, y};
 }
 
@@ -224,7 +224,7 @@ eId CS::createID(){
 
 
 Grid CS::grid(0,0,800,600,50);
-std::map<eId, float> areas;
+std::map<float, eId> areas;
 int nc=0;
 void CS::collisionUpdate(){
 	CS::grid.clear();
@@ -254,7 +254,7 @@ void CS::collisionUpdate(){
 			it->second->collidedWith[checking->first] = true;
 			if(CS::grid.overlap(checking->first, it->first, &area))
 			{
-				if(it->second->moveable)
+				if((it->second->moveable))
 						collide(checking->first, it->first);
 				else{
 					if(area.w*area.h > maxArea){

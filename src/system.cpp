@@ -312,10 +312,10 @@ void collide(eId e1, eId e2){
 	float overlapX=0, overlapY=0;
 	int BIAS = 4;
 	
-	if(dx1 != dx2)
+	if(r1.x != r2.x)
 	{
 		float maxOverlapX = absDX1 + absDX2 + BIAS;
-		if(dx1 > dx2)
+		if(r2.x > r1.x)
 		{
 			overlapX = r1.x + r1.w - r2.x;
 			if(overlapX > maxOverlapX)
@@ -339,18 +339,18 @@ void collide(eId e1, eId e2){
 	if(overlapX != 0){
 		if(!c2->moveable){
 			c1->moveC->setPosition(c1->moveC->pos.x - overlapX, c1->moveC->pos.y);
-			c1->moveC->vel.x = c2->moveC->vel.x - c1->moveC->acc.x;
+			c1->moveC->vel.x = c2->moveC->vel.x ;//- c1->moveC->acc.x;
 		}
 		else if(!c1->moveable){
 			c2->moveC->setPosition(c2->moveC->pos.x + overlapX, c2->moveC->pos.y);
-			c2->moveC->vel.x = c1->moveC->vel.x - c2->moveC->acc.x;
+			c2->moveC->vel.x = c1->moveC->vel.x ;//- c2->moveC->acc.x;
 		}
 	}
 
-	if(dy1 != dy2)
+	if(r1.y != r2.y)
 	{
 		float maxOverlapY = absDY1 + absDY2 + BIAS;
-		if(dy1 > dy2)
+		if(r2.y > r1.y)
 		{
 			overlapY = r1.y + r1.h - r2.y;
 			if(overlapY > maxOverlapY)
@@ -374,11 +374,11 @@ void collide(eId e1, eId e2){
 	if(overlapY != 0){
 		if(!c2->moveable){
 			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);
-			c1->moveC->vel.y = c2->moveC->vel.y - c1->moveC->acc.y;
+			c1->moveC->vel.y = c2->moveC->vel.y;// - c1->moveC->acc.y;
 		}
 		else if(!c1->moveable){
 			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);
-			c2->moveC->vel.y = c1->moveC->vel.y - c2->moveC->acc.y;
+			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;
 		}
 	}
 	//c1->moveC->pos.y -= overlapY;

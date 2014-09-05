@@ -88,7 +88,7 @@ int main(int argc, char **argv){
 		// 	}
 		// } else {3
 		// 	SDL_Delay(delay);
-		// }
+		// }r
 	}
 	Window::Quit();
 	return 0;
