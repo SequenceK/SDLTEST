@@ -10,7 +10,7 @@ eId TEST(float x, float y) {
 	CS::moveCS[id] = new MoveComponent(x, y, id);
 	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
 	CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);
-	//CS::spriteCS[id]->setScale(0.2,0.2);
+	CS::spriteCS[id]->setScale(2,2);
 	CS::spriteCS[id]->setFrame(30,27);
 	std::vector<int> f = {1,2,3,4};
 	CS::spriteCS[id]->playAnimation(f, 8, true);

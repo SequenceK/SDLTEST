@@ -69,7 +69,7 @@ int main(int argc, char **argv){
 		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)
 		{
 			CS::update();
-			CS::collisionUpdate();
+			//CS::collisionUpdate();
 		}
 		
 		//Window::Draw(t, r);

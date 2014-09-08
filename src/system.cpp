@@ -310,11 +310,14 @@ void collide(eId e1, eId e2){
 	// SDL_Rect overlapRect;
 	// SDL_IntersectRect(&r1, &r2, &overlapRect);
 	float overlapX=0, overlapY=0;
-	int BIAS = 4;
-	
+	int BIAS = 8;
+	SDL_Rect a;
+
 	if(r1.x != r2.x)
 	{
 		float maxOverlapX = absDX1 + absDX2 + BIAS;
+		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) 
+			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))
 		if(r2.x > r1.x)
 		{
 			overlapX = r1.x + r1.w - r2.x;
@@ -350,6 +353,8 @@ void collide(eId e1, eId e2){
 	if(r1.y != r2.y)
 	{
 		float maxOverlapY = absDY1 + absDY2 + BIAS;
+		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) 
+			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))
 		if(r2.y > r1.y)
 		{
 			overlapY = r1.y + r1.h - r2.y;
@@ -381,6 +386,8 @@ void collide(eId e1, eId e2){
 			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;
 		}
 	}
+	Window::DrawRect(&r1, 255,255,0);
+	Window::DrawRect(&r2, 255,255,0);
 	//c1->moveC->pos.y -= overlapY;
 	//c2->moveC->pos.x = ;
 	// if(r1.x < r2.x){

@@ -32,6 +32,10 @@ void CollisionComponent::update(){
 	}
 }
 
+void CollisionComponent::CollideWith(eId e){
+	collidingWith.push_back(e);
+}
+
 void CollisionComponent::getGridIndex(Grid &g){
 	gridIndex = g.getIndex(owner);
 }
@@ -203,7 +207,7 @@ void MoveComponent::update(){
 }
 
 void MoveComponent::setPosition(float x, float y){
-	deltaPos = pos;
+	//deltaPos = pos;
 	pos = {x, y};
 }
 
@@ -224,7 +228,6 @@ eId CS::createID(){
 
 
 Grid CS::grid(0,0,800,600,50);
-std::map<float, eId> areas;
 int nc=0;
 void CS::collisionUpdate(){
 	CS::grid.clear();
@@ -235,39 +238,60 @@ void CS::collisionUpdate(){
 
 	SDL_Rect area;
 	int n=0;
-	float maxArea=0;
-	eId maxAreaID;
+
 	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
 		outOfBounds(checking->first, grid.bounds);
 		//if(checking->first == 1)
 		if(!checking->second->moveable)
 			continue;
 		bool collided = false;
-		maxArea = 0;
+		std::map<eId, float> areas;
+		float maxArea=0;
+		eId maxAreaID;
 		for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
 			if(it->first == checking->first)
 				continue;
 			if(!it->second->moveable && !checking->second->moveable)
 				continue;
+			else if(it->second->moveable && checking->second->moveable)
+				continue;
 			if(checking->second->collidedWith[it->first])
 				continue;
+
 			it->second->collidedWith[checking->first] = true;
 			if(CS::grid.overlap(checking->first, it->first, &area))
 			{
-				if((it->second->moveable))
-						collide(checking->first, it->first);
-				else{
-					if(area.w*area.h > maxArea){
-						maxAreaID = it->first;
-						maxArea = area.w*area.h;
-					}
-					collided = true;
-				}
+				// //collide(checking->first, it->first);
+				// if(area.w*area.h > maxArea){
+				// 	maxAreaID = it->first;
+				// 	maxArea = area.w*area.h;
+				// }
+				areas[it->first] = area.w*area.h;
+				collided = true;
 			}
 			n++;	
 		}
-		if(collided)
-			collide(checking->first, maxAreaID);
+		int done=0;
+		while(done!=2){
+			bool foundM = false;
+			done=1;
+			for(auto it = areas.begin(); it != areas.end(); it++){
+				if(it->second > maxArea){
+					maxAreaID = it->first;
+					maxArea = it->second;
+					foundM = true;
+				}
+				if(it->second != 0){
+					done--;
+				}
+			}
+			if(foundM){
+				collide(checking->first, maxAreaID);
+				areas[maxAreaID] = 0;
+				maxArea = 0;
+			}
+			done++;
+		}
 	}
 	
 	if(nc != n)
@@ -291,6 +315,7 @@ void CS::update(){
 	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){
 		it->second->update();
 	}
+	CS::collisionUpdate();
 }
 
 void CS::draw(){
@@ -299,7 +324,7 @@ void CS::draw(){
 		it->second->draw();
 	}
 	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		Window::DrawRect(&(it->second->rect), 100, 150, 100);
+		//Window::DrawRect(&(it->second->rect), 100, 150, 100);
 	}
 	//grid.draw();
 }

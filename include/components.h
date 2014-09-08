@@ -80,7 +80,7 @@ public:
 	SpriteComponent* spriteC;
 	std::map<unsigned int, bool> collideGroups;
 	std::map<eId, bool> collidedWith;
-	std::map<eId, SDL_Rect*> collidingWith;
+	std::vector<eId> collidingWith;
 	bool collided;
 	bool solid;
 	bool moveable;
@@ -91,6 +91,7 @@ public:
 
 	void update();
 	void getGridIndex(Grid &g);
+	void CollideWith(eId e);
 };
 
 class ControllerComponent : public Component {
