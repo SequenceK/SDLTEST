@@ -14,7 +14,7 @@ eId TEST(float x, float y) {
 	CS::spriteCS[id]->setFrame(30,27);
 	std::vector<int> f = {1,2,3,4};
 	CS::spriteCS[id]->playAnimation(f, 8, true);
-	CS::moveCS[id]->maxV = {4,4};
+	CS::moveCS[id]->maxV = {4,15};
 	//CS::moveCS[id]->drag = {0.1,0.1};
 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
 	CS::collisionCS[id]->moveable = true;

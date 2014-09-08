@@ -49,13 +49,15 @@ void ControllerComponent::eventUpdate(SDL_Event &e){
 	if (e.type == SDL_KEYDOWN){
 		switch(e.key.keysym.sym){
 			case SDLK_d:
+				CS::getSpriteC(owner)->facing = RIGHT;
 				moveC->acc.x = SPEED;break;
 			case SDLK_a:
+				CS::getSpriteC(owner)->facing = LEFT;
 				moveC->acc.x = -SPEED;break;
 			case SDLK_w:
-				moveC->acc.y = -SPEED;break;	
+				moveC->vel.y = -SPEED*100;break;	
 			case SDLK_s:
-				moveC->acc.y = SPEED;break;
+				moveC->vel.y = SPEED;break;
 		}
 	}
 	if (e.type == SDL_KEYUP){
@@ -66,12 +68,12 @@ void ControllerComponent::eventUpdate(SDL_Event &e){
 			case SDLK_a:
 				if(moveC->acc.x<0)
 					moveC->acc.x += SPEED;break;
-			case SDLK_w:
-				if(moveC->acc.y<0)
-					moveC->acc.y += SPEED;break;
-			case SDLK_s:
-				if(moveC->acc.y>0)
-					moveC->acc.y -= SPEED;break;
+			// case SDLK_w:
+			// 	if(moveC->acc.y<0)
+			// 		moveC->acc.y += SPEED;break;
+			// case SDLK_s:
+			// 	if(moveC->acc.y>0)
+			// 		moveC->acc.y -= SPEED;break;
 		}
 	}
 }
@@ -101,10 +103,11 @@ SpriteComponent::SpriteComponent(const std::string &file,
 	clipRect.x = 0;
 	clipRect.y = 0;
 	playingAnimation = false;
+	flip = SDL_FLIP_NONE;
 }
 
 void SpriteComponent::draw(){
-	Window::Draw(img, imgRect, &clipRect);
+	Window::Draw(img, imgRect, &clipRect, 0,0,0, flip);
 
 }
 
@@ -129,7 +132,12 @@ void SpriteComponent::update(){
 			frameTimer = 0;
 		}
 	}
-
+	if(facing == LEFT)
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+	} else if(facing == RIGHT) {
+		flip = SDL_FLIP_NONE;
+	}
 }
 
 void SpriteComponent::setFrame(int w, int h){
@@ -203,7 +211,7 @@ void MoveComponent::update(){
 		vel.y = (vel.y>0)?maxV.y:-maxV.y;
 	}
 	deltaPos = pos;
-	pos = {pos.x+vel.x, pos.y+vel.y};
+	pos += vel;
 }
 
 void MoveComponent::setPosition(float x, float y){
@@ -324,7 +332,7 @@ void CS::draw(){
 		it->second->draw();
 	}
 	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		//Window::DrawRect(&(it->second->rect), 100, 150, 100);
+		Window::DrawRect(&(it->second->rect), 100, 150, 100);
 	}
 	//grid.draw();
 }
@@ -336,4 +344,10 @@ void CS::clear(){
 	CS::collisionCS.clear();
 
 	CS::_INDEX = 0;
+}
+
+SpriteComponent* CS::getSpriteC(eId e){
+	if(spriteCS[e] != nullptr){
+		return spriteCS[e];
+	}
 }

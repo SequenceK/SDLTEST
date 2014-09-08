@@ -24,6 +24,7 @@ public:
 	static void draw();
 	static void collisionUpdate();
 	static void clear();
+	static SpriteComponent* getSpriteC(eId e);
 
 	static eId _INDEX;
 };

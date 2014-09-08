@@ -57,6 +57,7 @@ public:
 	SDL_Texture* img;
 	SDL_Rect imgRect;
 	SDL_Rect clipRect;
+	SDL_RendererFlip flip;
 	MoveComponent* moveC;
 	Vec2<float> scale;
 	Vec2<float> offset;

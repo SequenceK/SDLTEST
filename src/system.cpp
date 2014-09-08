@@ -242,7 +242,7 @@ bool QuadTree::overlap(unsigned long id1, unsigned long id2, SDL_Rect* result){
 	
 	if(!getObject(id1)) return false;
 	if(!getObject(id2)) return false;
-	std::cout << "ASFD" << std::endl;
+	
 	SDL_Rect *r1 = &CS::collisionCS[id1]->rect, *r2 = &CS::collisionCS[id2]->rect;
 	if(SDL_IntersectRect(r1, r2, result)){
 		std::cout << r1->x << std::endl;
@@ -294,10 +294,10 @@ void collide(eId e1, eId e2){
 	float dy1 = -c1->moveC->deltaPos.y + c1->moveC->pos.y;
 	float dx2 = -c2->moveC->deltaPos.x + c2->moveC->pos.x;
 	float dy2 = -c2->moveC->deltaPos.y + c2->moveC->pos.y;
-	bool absDX1 = (dx1>0)?dx1:-dx1;
-	bool absDY1 = (dy1>0)?dy1:-dy1;
-	bool absDX2 = (dx2>0)?dx2:-dx2;
-	bool absDY2 = (dy2>0)?dy2:-dy2;
+	float absDX1 = (dx1>0)?dx1:-dx1;
+	float absDY1 = (dy1>0)?dy1:-dy1;
+	float absDX2 = (dx2>0)?dx2:-dx2;
+	float absDY2 = (dy2>0)?dy2:-dy2;
 	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);
 	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);
 	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);
@@ -310,7 +310,7 @@ void collide(eId e1, eId e2){
 	// SDL_Rect overlapRect;
 	// SDL_IntersectRect(&r1, &r2, &overlapRect);
 	float overlapX=0, overlapY=0;
-	int BIAS = 8;
+	int BIAS = 4;
 	SDL_Rect a;
 
 	if(r1.x != r2.x)
@@ -349,7 +349,14 @@ void collide(eId e1, eId e2){
 			c2->moveC->vel.x = c1->moveC->vel.x ;//- c2->moveC->acc.x;
 		}
 	}
-
+	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);
+	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);
+	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);
+	r2.y = c2->moveC->pos.y - (dy2>0?dy2:0);
+	r1.w = c1->rect.w+absDX1;
+	r2.w = c2->rect.w+absDX2;
+	r1.h = c1->rect.h+absDY1;
+	r2.h = c2->rect.h+absDY2;
 	if(r1.y != r2.y)
 	{
 		float maxOverlapY = absDY1 + absDY2 + BIAS;
@@ -373,7 +380,7 @@ void collide(eId e1, eId e2){
 				c2->touching |= FLOOR;
 			}
 		}
-		//std::cout << maxOverlapY << " " << overlapY << std::endl;
+		//std::cout << absDY2 << "<-2 1->" << absDY1 << std::endl;
 	}
 
 	if(overlapY != 0){
