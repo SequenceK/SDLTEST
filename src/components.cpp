@@ -55,7 +55,7 @@ void ControllerComponent::eventUpdate(SDL_Event &e){
 				CS::getSpriteC(owner)->facing = LEFT;
 				moveC->acc.x = -SPEED;break;
 			case SDLK_w:
-				moveC->vel.y = -SPEED*100;break;	
+				moveC->vel.y = -20;break;	
 			case SDLK_s:
 				moveC->vel.y = SPEED;break;
 		}
@@ -175,13 +175,15 @@ MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
 	vel = {0.f,0.f};
 	acc = {0.f,0.f};
 	drag = {0.3f,0.3f};
-	maxV = {8,8};
+	maxV = {10,10};
+	terV = {10,10};
 }
 
 void MoveComponent::update(){
 	//vel = {vel.x+acc.x,vel.y+acc.y};
-	if(acc.x != 0){
+	if(acc.x != 0 && vel.x < terV.x){
 		vel.x += acc.x;
+
 	}
 	else if(drag.x != 0){
 		if(vel.x - drag.x > 0) {
@@ -192,7 +194,7 @@ void MoveComponent::update(){
 			vel.x = 0;
 		}
 	}
-	if(acc.y != 0){
+	if(acc.y != 0 && vel.y < terV.y){
 		vel.y += acc.y;
 	}
 	else if(drag.y != 0){
@@ -269,11 +271,6 @@ void CS::collisionUpdate(){
 			it->second->collidedWith[checking->first] = true;
 			if(CS::grid.overlap(checking->first, it->first, &area))
 			{
-				// //collide(checking->first, it->first);
-				// if(area.w*area.h > maxArea){
-				// 	maxAreaID = it->first;
-				// 	maxArea = area.w*area.h;
-				// }
 				areas[it->first] = area.w*area.h;
 				collided = true;
 			}

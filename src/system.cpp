@@ -313,12 +313,12 @@ void collide(eId e1, eId e2){
 	int BIAS = 4;
 	SDL_Rect a;
 
-	if(r1.x != r2.x)
+	if(dx1 != dx2)
 	{
 		float maxOverlapX = absDX1 + absDX2 + BIAS;
 		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) 
 			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))
-		if(r2.x > r1.x)
+		if(dx1 > dx2)
 		{
 			overlapX = r1.x + r1.w - r2.x;
 			if(overlapX > maxOverlapX)
@@ -357,12 +357,12 @@ void collide(eId e1, eId e2){
 	r2.w = c2->rect.w+absDX2;
 	r1.h = c1->rect.h+absDY1;
 	r2.h = c2->rect.h+absDY2;
-	if(r1.y != r2.y)
+	if(dy1 != dy2)
 	{
 		float maxOverlapY = absDY1 + absDY2 + BIAS;
 		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) 
 			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))
-		if(r2.y > r1.y)
+		if(dy1 > dy2)
 		{
 			overlapY = r1.y + r1.h - r2.y;
 			if(overlapY > maxOverlapY)
@@ -395,38 +395,6 @@ void collide(eId e1, eId e2){
 	}
 	Window::DrawRect(&r1, 255,255,0);
 	Window::DrawRect(&r2, 255,255,0);
-	//c1->moveC->pos.y -= overlapY;
-	//c2->moveC->pos.x = ;
-	// if(r1.x < r2.x){
-	// 	//SIDE TOUCHING CODE HERE
-	// 	//c1 is touching left side
-	// 	//c2 is touching right side
-	// 	overlapX = overlapRect.w;
-	// 	c1->moveC->pos.x = 
-		
-	// } else if(r1.x > r2.x) {
-	// 	//opposite
-	// 	overlapX = -overlapRect.w;
-	// 	c1->touching |= RIGHT;
-	// 	c2->touching |= LEFT;
-	// }
-	// if(r1.y < r2.y) {
-	// 	//UP AND DOWN TOUCHING CODE
-	// 	//c1 is touching down or floor
-	// 	//c2 is touching up or ceiling
-	// 	overlapY = overlapRect.h;
-	// 	c1->touching |= FLOOR;
-	// 	c1->touching |= TOP;
-	// } else if (r1.y > r2.y) {
-	// 	//opposite
-	// 	overlapY = -overlapRect.h;
-	// 	c1->touching |= TOP;
-	// 	c1->touching |= FLOOR;
-	// }
-	// c1->moveC->pos = c1->moveC->deltaPos;
-	// c2->moveC->pos = c2->moveC->deltaPos;
-	// Vec2<float> placeholderVel = c1->moveC->vel;
-		
 }
 
 void seperateX(eId e1, eId e2){

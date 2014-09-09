@@ -30,6 +30,7 @@ public:
 	Vec2<float> vel;
 	Vec2<float> drag;
 	Vec2<float> maxV;
+	Vec2<float> terV; // Terminal velocity
 	MoveComponent(float xx, float yy, eId id);
 
 	void update();
