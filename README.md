@@ -5,6 +5,8 @@ Testing SDL by making an engine
 
 TODO:
 -----
-* possible bug in collision update(slows down after 2000+ collision checks)
+* implement QuadTrees
+* more features
+
 
 ###### also markdown is awesome!
