@@ -8,10 +8,11 @@
 template<typename T>
 struct Vec2 {
 	T x, y;
-	Vec2<T> operator*(const T& n);
+	Vec2<T> 	operator*(const T& n);
 	Vec2<float> operator*=(float const& n);
 	Vec2<float> operator-=(Vec2<float> const& v);
 	Vec2<float> operator+=(Vec2<float> const& v);
+	bool 		operator==(Vec2<float> const& v);
 };
 
 class Timer {

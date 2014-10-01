@@ -39,6 +39,16 @@ Vec2<float> Vec2<float>::operator-=(Vec2<float> const& v){
 	y -= v.y;
 	return *this;
 }
+template<>
+bool Vec2<float>::operator==(Vec2<float> const& v){
+	return (x == v.x) && (y == v.y);
+}
+
+bool inCamBounds(Vec2<float> pos, Camera* c){
+	if(pos.x < c->pos.x || pos.x > c->pos.x + c->size.x || pos.y < c->pos.y || pos.y > c->pos.y + c->size.y)
+		return false;
+	return true;
+}
 
 int DELTA = 0;
 bool outOfBounds(unsigned long id, SDL_Rect& bounds){
@@ -393,8 +403,8 @@ void collide(eId e1, eId e2){
 			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;
 		}
 	}
-	Window::DrawRect(&r1, 255,255,0);
-	Window::DrawRect(&r2, 255,255,0);
+	//Window::DrawRect(&r1, 255,255,0);
+	//Window::DrawRect(&r2, 255,255,0);
 }
 
 void seperateX(eId e1, eId e2){

@@ -66,6 +66,7 @@ public:
 	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void draw();
+	void draw(Vec2<float> pos, Vec2<float> size, float zoom, Vec2<float> gamePos);
 	void update();
 	void setFrame(int Width, int Height);
 	void setScale(float x, float y);
@@ -86,6 +87,7 @@ public:
 	bool collided;
 	bool solid;
 	bool moveable;
+	bool debugDraw;
 	int touching;
 	std::vector<int> gridIndex;
 	CollisionComponent(int w, int h, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
@@ -102,6 +104,29 @@ public:
 	ControllerComponent(std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void eventUpdate(SDL_Event &e);
+};
+
+class FuncQComponent : public Component {
+public:
+	std::vector<void (*)(eId)> functions;
+	FuncQComponent(eId id);
+	void add(void (*f)(eId));
+	void update();
+};
+
+class Camera : public MoveComponent {
+public:
+	float zoom;
+	Vec2<float> winPos;
+	Vec2<float> winSize;
+	Vec2<float> size;
+	bool active;
+	MoveComponent* followC;
+	Camera(float x, float y, float w, float h, float z, eId id);
+	void update();
+	Vec2<float> getWorldPos(Vec2<float> p);
+	SDL_Rect getScreenRect(SDL_Rect r);
+	void follow(MoveComponent* mc);
 };
 
 #endif
