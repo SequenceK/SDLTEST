@@ -3,31 +3,142 @@
 #include "../include/entities.h"
 #include <cmath>
 
-void playerAnimationUpdate(eId id){
-	std::cout << CS::moveCS[id]->vel.y << std::endl;
-	if(CS::moveCS[id]->vel.x == 0 && CS::moveCS[id]->vel.y == 0){
-		std::vector<int> f = {0};
-		CS::spriteCS[id]->playAnimation(f, 8, false, true);
-	} else {
-		if(CS::moveCS[id]->vel.y > 0){
-
-		}
-		std::vector<int> f = {1,2,3,4};
-		CS::spriteCS[id]->playAnimation(f, 8, false);
+void playerUpdate(eId id){		
+	if(CS::moveCS[id]->vel.y > 0){
+		CS::spriteCS[id]->playAnimation(std::vector<int>{5}, 8, false, true);
 	}
+	else if(CS::moveCS[id]->vel.y < 0){
+		CS::spriteCS[id]->playAnimation(std::vector<int>{6}, 8, false, true);		
+	}
+	else {
+		if(CS::moveCS[id]->vel.x == 0){
+			CS::spriteCS[id]->playAnimation(std::vector<int>{0}, 8, false, true);
+		}
+		else {
+			CS::spriteCS[id]->playAnimation(std::vector<int>{1,2,3,4}, 8, false);
+		}
+	}
+	if(CS::propCS[id]->boolProps["shooting"])
+	{
+		bullet(CS::moveCS[id]->pos, id);
+		CS::propCS[id]->boolProps["shooting"] = false;
+	}
+}
+bool shooting = false;
+bool shot = false;
+void playerEventUpdate(eId id, SDL_Event &e){
+	float SPEED = 1;
 	
+	
+	if (e.type == SDL_KEYDOWN){
+		switch(e.key.keysym.sym){
+			case SDLK_d:
+				CS::spriteCS[id]->facing = RIGHT;
+				CS::moveCS[id]->acc.x = SPEED;break;
+			case SDLK_a:
+				CS::spriteCS[id]->facing = LEFT;
+				CS::moveCS[id]->acc.x = -SPEED;break;
+			case SDLK_w:
+				if(CS::collisionCS[id]->touching & FLOOR)
+					CS::moveCS[id]->vel.y = -20;break;	
+			case SDLK_s:
+				CS::moveCS[id]->vel.y = SPEED;break;
+			case SDLK_RETURN:
+				if(!shot){
+					CS::propCS[id]->boolProps["shooting"]=true;
+					shot=true;
+				}else{
+					CS::propCS[id]->boolProps["shooting"]=false;
+				}
+				break;
+		}
+	}
+	if (e.type == SDL_KEYUP){
+		switch(e.key.keysym.sym){
+			case SDLK_d:
+				if(CS::moveCS[id]->acc.x>0)
+					CS::moveCS[id]->acc.x -= SPEED;break;
+			case SDLK_a:
+				if(CS::moveCS[id]->acc.x<0)
+					CS::moveCS[id]->acc.x += SPEED;break;
+			case SDLK_RETURN:
+				if(shot)
+					shot=false;
+				break;
+		}
+	}
+	// if(shooting){
+	// 	bullet(CS::moveCS[id]->pos, id);
+	// 	shot = false;
+	// }
 }
 
-eId TEST(Vec2<float> const &pos) {
+bool testCollision(eId owner, eId id, std::string type){
+	if(CS::collisionCS[owner]->collided){
+		// if(CS::propCS[id] == nullptr)
+		// 	return false;
+		if(CS::collisionCS[owner]->collidedWith 
+					!= CS::propCS[owner]->entities["shooter"]){
+			if(CS::propCS[owner]->stringProps["type"] != type){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void bulletUpdate(eId id){
+	// eId firstColl = CS::collisionCS[id]->collidingWith[0];
+	// eId shooter = CS::propCS[id]->entities["shooter"];
+	if(CS::propCS[id]->fProps["duration"] < 0 
+			|| testCollision(id, CS::collisionCS[id]->collidedWith, "bullet")){
+		CS::deleteEntity(id);
+		return;
+	}
+	CS::propCS[id]->fProps["duration"] -= Timer::elapsed;
+}
+
+eId bullet(Vec2 const &pos, eId const &oid){
+	eId id = CS::createEntityID();
+	CS::moveCS[id] = new MoveComponent(pos.x + CS::spriteCS[oid]->imgRect.w/2,
+		pos.y + CS::spriteCS[oid]->imgRect.h/2, id);
+	CS::moveCS[id]->drag = {0,0};
+	CS::moveCS[id]->maxV.x = 20;
+	CS::moveCS[id]->terV.x = 20;
+	if(CS::spriteCS[oid]->facing == RIGHT)
+		CS::moveCS[id]->acc.x = 20;
+	else
+		CS::moveCS[id]->acc.x = -20;
+	CS::spriteCS[id] = new SpriteComponent("../data/hello.png", CS::moveCS, id);
+	CS::spriteCS[id]->setScale(0.5, 0.2);
+	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id]->entities["shooter"] = oid;
+	CS::propCS[id]->fProps["duration"] = 1*800;
+	CS::propCS[id]->stringProps["type"] == "bullet";
+	CS::funcQCS[id] = new FuncQComponent(id);
+	void (*Func)(eId) = bulletUpdate;
+	CS::funcQCS[id]->add(Func);
+	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::collisionCS[id]->moveable = true;
+	//CS::collisionCS[id]->debugDraw = true;
+}
+
+
+eId TEST(Vec2 const &pos) {
 	float x = pos.x;
 	float y = pos.y;
 	eId id = CS::createEntityID();
 	CS::moveCS[id] = new MoveComponent(x, y, id);
 	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
 	CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);
+	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id]->groups["bullets"] = std::vector<eId>{};
+	CS::propCS[id]->boolProps["shooting"] = false;
 	CS::funcQCS[id] = new FuncQComponent(id);
-	void (*pFunc)(eId) = playerAnimationUpdate;
+	void (*pFunc)(eId) = playerUpdate;
+	void (*pUpdate)(eId, SDL_Event&) = playerEventUpdate;
 	CS::funcQCS[id]->add(pFunc);
+	CS::funcQCS[id]->addEventFunc(pUpdate);
 	CS::spriteCS[id]->setScale(2,2);
 	CS::spriteCS[id]->setFrame(30,27);
 	// std::vector<int> f = {1,2,3,4};
@@ -37,7 +148,7 @@ eId TEST(Vec2<float> const &pos) {
 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
 	CS::collisionCS[id]->moveable = true;
 	CS::moveCS[id]->acc.y = 1;
-	CS::collisionCS[id]->debugDraw = true;
+	//CS::collisionCS[id]->debugDraw = true;
 	//CS::moveCS[id]->vel.y = sin(rand()%361)*CS::moveCS[id]->maxV.y;
 	//CS::moveCS[id]->vel.x = cos(rand()%361)*CS::moveCS[id]->maxV.x;
 
@@ -55,7 +166,7 @@ eId mBox(float x, float y){
 	//CS::spriteCS[id]->setScale(0.2,0.2);
 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
 	CS::collisionCS[id]->moveable = false;
-	CS::collisionCS[id]->debugDraw = true;
+	//CS::collisionCS[id]->debugDraw = true;
 	float grid = CS::collisionCS[id]->rect.w;
 	CS::moveCS[id]->pos = {floor(x/grid)*grid, floor(y/grid)*grid};
 	return id;
@@ -72,7 +183,7 @@ eId GAMEOVER(){
 
 eId createCamera(float x, float y){
 	eId id = CS::createCameraID();
-	CS::cameras[id] = new Camera(x, y, 400, 300, 1, id);
+	CS::cameras[id] = new Camera(x, y, 800, 600, 1, id);
 
 	return id;
 }

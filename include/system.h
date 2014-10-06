@@ -5,14 +5,13 @@
 #include <map>
 #include <SDL2/SDL.h>
 
-template<typename T>
 struct Vec2 {
-	T x, y;
-	Vec2<T> 	operator*(const T& n);
-	Vec2<float> operator*=(float const& n);
-	Vec2<float> operator-=(Vec2<float> const& v);
-	Vec2<float> operator+=(Vec2<float> const& v);
-	bool 		operator==(Vec2<float> const& v);
+	float x, y;
+	Vec2 operator*(const float& n);
+	Vec2 operator*=(float const& n);
+	Vec2 operator-=(Vec2 const& v);
+	Vec2 operator+=(Vec2 const& v);
+	bool operator==(Vec2 const& v);
 };
 
 class Timer {

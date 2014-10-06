@@ -11,6 +11,10 @@
 #include "../include/components.h"
 #include "../include/entities.h"
 
+PropertiesComponent::PropertiesComponent(eId id) : Component(id){
+
+}
+
 FuncQComponent::FuncQComponent(eId id) : Component(id){
 };
 
@@ -18,9 +22,19 @@ void FuncQComponent::add(void (*f)(eId)){
 	functions.push_back(f);
 }
 
+void FuncQComponent::addEventFunc(void (*f)(eId, SDL_Event&)){
+	eventFunctions.push_back(f);
+}
+
 void FuncQComponent::update(){
 	for(auto it = functions.begin(); it != functions.end(); ++it){
 		(*it)(owner);
+	}
+}
+
+void FuncQComponent::eventUpdate(SDL_Event &e){
+	for(auto it = eventFunctions.begin(); it != eventFunctions.end(); ++it){
+		(*it)(owner, e);
 	}
 }
 
@@ -34,6 +48,7 @@ CollisionComponent::CollisionComponent(std::map<eId, SpriteComponent*> &spriteMa
 	solid = s;
 	moveable = true;
 	touching = NONE;
+	collidedWith = 0;
 }
 
 void CollisionComponent::update(){
@@ -44,6 +59,13 @@ void CollisionComponent::update(){
 		rect.h = spriteC->imgRect.h;
 	}
 	touching = NONE;
+	collided = false;
+	collidingWith.clear();
+}
+
+void CollisionComponent::updatePosition(){
+	rect.x = moveC->pos.x;
+	rect.y = moveC->pos.y;
 }
 
 void CollisionComponent::CollideWith(eId e){
@@ -60,6 +82,7 @@ ControllerComponent::ControllerComponent(std::map<eId, MoveComponent*> &moveMap,
 
 void ControllerComponent::eventUpdate(SDL_Event &e){
 	float SPEED = 1;
+	bool shot;
 	if (e.type == SDL_KEYDOWN){
 		switch(e.key.keysym.sym){
 			case SDLK_d:
@@ -120,6 +143,7 @@ SpriteComponent::SpriteComponent(const std::string &file,
 	//imgRect.w *= 0.5;
 	//clipRect.w *= 0.5;
 	playingAnimation = false;
+	facing = RIGHT;
 	flip = SDL_FLIP_NONE;
 }
 
@@ -127,7 +151,7 @@ void SpriteComponent::draw(){
 	Window::Draw(img, imgRect, &clipRect, 0,0,0, flip);
 }
 
-void SpriteComponent::draw(Vec2<float> pos, Vec2<float> size, float zoom, Vec2<float> gamePos){
+void SpriteComponent::draw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 	SDL_Rect b1, b2, cBounds, area;
 	b1 = imgRect;
 	b2 = clipRect;
@@ -241,7 +265,7 @@ void SpriteComponent::setScale(float x, float y){
 	setFrame(w, h);
 }
 
-void SpriteComponent::playAnimation(std::vector<int> &frames, float speed, bool loop, bool force){
+void SpriteComponent::playAnimation(std::vector<int> frames, float speed, bool loop, bool force){
 	if(!playingAnimation | force){
 		currentAnimation.frames = frames;
 		currentAnimation.speed = speed;
@@ -305,155 +329,6 @@ void MoveComponent::setPosition(float x, float y){
 
 Component::Component(eId id) : owner(id){}
 
-//CS init
-
-eId CS::_E_INDEX{0};
-eId CS::_C_INDEX{0};
-std::map<eId, MoveComponent*> CS::moveCS{};
-std::map<eId, SpriteComponent*> CS::spriteCS{};
-std::map<eId, ControllerComponent*> CS::controllerCS{};
-std::map<eId, CollisionComponent*> CS::collisionCS{};
-std::map<eId, FuncQComponent*> CS::funcQCS{};
-std::map<const std::string, SDL_Texture*> CS::textures{};
-std::map<eId, Camera*> CS::cameras{};
-//QuadTree CS::qt(0,0,800,600);
-
-eId CS::createEntityID(){
-	_E_INDEX++;
-	return _E_INDEX; 
-}
-
-eId CS::createCameraID(){
-	_C_INDEX++;
-	return _C_INDEX;
-}
-
-Grid CS::grid(0,0,1000,1000,50);
-int nc=0;
-void CS::collisionUpdate(){
-	CS::grid.clear();
-
-	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		it->second->getGridIndex(CS::grid);
-	}
-
-	SDL_Rect area;
-	int n=0;
-
-	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
-		//outOfBounds(checking->first, grid.bounds);
-		//if(checking->first == 1)
-		if(!checking->second->moveable)
-			continue;
-		bool collided = false;
-		std::map<eId, float> areas;
-		float maxArea=0;
-		eId maxAreaID;
-		for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-			if(it->first == checking->first)
-				continue;
-			if(!it->second->moveable && !checking->second->moveable)
-				continue;
-			else if(it->second->moveable && checking->second->moveable)
-				continue;
-			if(checking->second->collidedWith[it->first])
-				continue;
-
-			it->second->collidedWith[checking->first] = true;
-			if(checkOverlap(checking->first, it->first, &area))
-			{
-				areas[it->first] = area.w*area.h;
-				collided = true;
-			}
-			n++;	
-		}
-		int done=0;
-		while(done!=2){
-			bool foundM = false;
-			done=1;
-			for(auto it = areas.begin(); it != areas.end(); it++){
-				if(it->second > maxArea){
-					maxAreaID = it->first;
-					maxArea = it->second;
-					foundM = true;
-				}
-				if(it->second != 0){
-					done--;
-				}
-			}
-			if(foundM){
-				collide(checking->first, maxAreaID);
-				areas[maxAreaID] = 0;
-				maxArea = 0;
-			}
-			done++;
-		}
-	}
-	
-	if(nc != n)
-	std::cout << n << std::endl;
-	nc = n;
-}
-
-void CS::eventUpdate(SDL_Event &e){
-	for(auto it = controllerCS.begin(); it != controllerCS.end(); it++){
-		it->second->eventUpdate(e);
-	}
-}
-
-void CS::update(){
-	for(auto it = funcQCS.begin(); it != funcQCS.end(); it++){
-		it->second->update();
-	}
-	for(auto it = moveCS.begin(); it != moveCS.end(); it++){
-		it->second->update();
-	}
-	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		it->second->update();
-	}
-	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){
-		it->second->update();
-	}
-	CS::collisionUpdate();
-	CS::cameraUpdate();
-}
-
-void CS::cameraUpdate(){
-	for(auto it = cameras.begin(); it != cameras.end(); it++){
-			it->second->update();
-	}
-}
-
-
-void CS::draw(){
-
-	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){		
-		if(cameras.size()>0){
-			for(auto cIt = cameras.begin(); cIt != cameras.end(); cIt++)
-				it->second->draw(cIt->second->winPos, cIt->second->size, cIt->second->zoom, cIt->second->pos);
-		} else
-			it->second->draw();
-	}
-	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-		if(it->second->debugDraw)
-			for(auto cIt = cameras.begin(); cIt != cameras.end(); cIt++){
-				SDL_Rect r = cameras.begin()->second->getScreenRect(it->second->rect);
-				Window::DrawRect(&r, 100, 150, 100);
-			}
-	}
-	//grid.draw();
-}
-
-void CS::clear(){
-	CS::moveCS.clear();
-	CS::spriteCS.clear();
-	CS::controllerCS.clear();
-	CS::collisionCS.clear();
-	CS::cameras.clear();
-
-	CS::_E_INDEX = 0;
-}
-
 SpriteComponent* CS::getSpriteC(eId e){
 	if(spriteCS[e] != nullptr){
 		return spriteCS[e];
@@ -462,6 +337,8 @@ SpriteComponent* CS::getSpriteC(eId e){
 		return nullptr;
 	}
 }
+
+
 
 CollisionComponent* CS::getCollisionC(eId e){
 	if(collisionCS[e] != nullptr){
@@ -477,14 +354,13 @@ Camera::Camera(float x, float y, float w, float h, float z, eId id) : MoveCompon
 	winPos = {x,y};
 	winSize = {w,h};
 	zoom = z;
-	followC = nullptr;
 }
 
-void Camera::follow(MoveComponent* mc){
-	followC = mc;
+void Camera::follow(eId id){
+	followE = id;
 }
 
-Vec2<float> Camera::getWorldPos(Vec2<float> p){
+Vec2 Camera::getWorldPos(Vec2 p){
 	return {((pos.x + p.x/zoom) - winPos.x), ((pos.y + p.y/zoom) - winPos.y)}; 
 }
 
@@ -500,8 +376,8 @@ SDL_Rect Camera::getScreenRect(SDL_Rect r){
 void Camera::update(){
 	size.x = winSize.x/zoom;
 	size.y = winSize.y/zoom;
-	if(followC != nullptr){
-		pos.x = followC->pos.x - winSize.x/(2*zoom);
-		pos.y = followC->pos.y - winSize.y/(2*zoom);
+	if(followE != NULL){
+		pos.x = CS::moveCS[followE]->pos.x + CS::collisionCS[followE]->rect.w/2 - winSize.x/(2*zoom);
+		pos.y = CS::moveCS[followE]->pos.y + CS::collisionCS[followE]->rect.h/2 - winSize.y/(2*zoom);
 	}
 }

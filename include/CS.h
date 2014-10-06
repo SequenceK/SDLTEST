@@ -14,6 +14,7 @@ public:
 	static std::map<eId, SpriteComponent*> spriteCS;
 	static std::map<eId, ControllerComponent*> controllerCS;
 	static std::map<eId, CollisionComponent*> collisionCS;
+	static std::map<eId, PropertiesComponent*> propCS;
 	static std::map<eId, FuncQComponent*> funcQCS;
 	static std::map<const std::string, SDL_Texture*> textures;
 	static std::map<eId, Camera*> cameras;
@@ -22,6 +23,7 @@ public:
 
 	static eId createEntityID();
 	static eId createCameraID();
+	static void deleteEntity(eId id);
 
 	static void eventUpdate(SDL_Event &e);
 	static void update();

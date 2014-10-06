@@ -4,12 +4,52 @@
 		"selected_items":
 		[
 			[
-				"Vec",
-				"Vec2"
+				"fol",
+				"followE"
 			],
 			[
-				"fol",
-				"followC"
+				"std",
+				"std::vector"
+			],
+			[
+				"cure",
+				"currentAnimation"
+			],
+			[
+				"frame",
+				"frames"
+			],
+			[
+				"mov",
+				"moveCS"
+			],
+			[
+				"pla",
+				"playerAnimationUpdate"
+			],
+			[
+				"player",
+				"playerAnimationUpdate"
+			],
+			[
+				"functio",
+				"functions"
+			],
+			[
+				"vec",
+				"vector"
+			],
+			[
+				"CAme",
+				"Camera"
+			],
+			[
+				"win",
+				"winSize"
+			],
+			[
+				"Vec",
+				"Vec2"
 			],
 			[
 				"move",
@@ -38,10 +78,6 @@
 			[
 				"game",
 				"gamePos"
-			],
-			[
-				"vec",
-				"Vec2"
 			],
 			[
 				"fl",
@@ -82,10 +118,6 @@
 			[
 				"Move",
 				"MoveComponent"
-			],
-			[
-				"std",
-				"std::map"
 			],
 			[
 				"img",
@@ -188,10 +220,6 @@
 				"moveCS"
 			],
 			[
-				"pla",
-				"placeholderVel"
-			],
-			[
 				"flo",
 				"float"
 			],
@@ -270,10 +298,6 @@
 			[
 				"gri",
 				"grid"
-			],
-			[
-				"mov",
-				"moveC"
 			],
 			[
 				"SDL_q",
@@ -472,10 +496,6 @@
 				"frames"
 			],
 			[
-				"frame",
-				"frameTimer"
-			],
-			[
 				"anim",
 				"animIt"
 			],
@@ -494,26 +514,6 @@
 			[
 				"ela",
 				"elapsed"
-			],
-			[
-				"Timer",
-				"Timer::elapsed"
-			],
-			[
-				"t",
-				"timePoint1"
-			],
-			[
-				"draw",
-				"drawRect"
-			],
-			[
-				"CSYS",
-				"CSys"
-			],
-			[
-				"CS",
-				"CSys"
 			]
 		]
 	},
@@ -539,23 +539,18 @@
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 171,
+				"buffer_size": 134,
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": "\n#include <stdexcept>\n#include <string>\n#include <sstream>\n#include <iostream>\n#include <chrono>\n\n#include <SDL2/SDL.h>\n#include \"../include/window.h\"\n#include \"../include/cleanup.h\"\n#include \"../include/CS.h\"\n#include \"../include/system.h\"\n#include \"../include/entities.h\"\n\n\nusing namespace std;\n\n\n\nint main(int argc, char **argv){\n	try {\n		Window::Init(\"GAME\");\n	}\n	catch (const std::runtime_error &e){\n		std::cout << e.what() << std::endl;\n		Window::Quit();\n		return -1;\n	}\n\n\n	SDL_Event e;\n	bool quit=false;\n	// SDL_Rect r;\n	// SDL_Texture* t;\n	// t = Window::RenderText(\"FPS: \" + std::to_string(1000/Timer::elapsed), \"../data/fonts/PressSTart2P.ttf\",{255,255,255,255}, 8);\n	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);\n	// r.x=1;r.y=1;\n	eId c = createCamera(0,0);\n	//eId c2 = createCamera(400,300);\n	while(!quit){\n		\n		auto timePoint1(chrono::high_resolution_clock::now());\n\n		while (SDL_PollEvent(&e)){\n			if (e.type == SDL_QUIT)\n				quit = true;\n			if(e.type == SDL_MOUSEWHEEL){\n				CS::cameras[c]->zoom += 0.5*e.wheel.y;\n			}\n			if(e.type == SDL_MOUSEBUTTONDOWN){\n				if(e.button.button == SDL_BUTTON_LEFT){\n					Vec2 p = CS::cameras[c]->getWorldPos({e.button.x, e.button.y});\n					mBox(p.x, p.y);\n				}\n				if(e.button.button == SDL_BUTTON_RIGHT){\n					CS::cameras[c]->follow(\n						TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y})));\n\n				}\n				\n			}\n			if(e.type == SDL_MOUSEBUTTONUP){\n			}\n			if (e.type == SDL_KEYDOWN){\n				switch(e.key.keysym.sym){\n					case SDLK_r:\n						CS::clear();\n						c = createCamera(0,0);\n						break;\n				}\n			}\n\n			CS::eventUpdate(e);\n		}\n		// if(createBox)\n		// mBox(rand()%800, rand()%600);\n		// std::cout << CS::_E_INDEX << std::endl;\n		Timer::slice += Timer::elapsed;\n		Window::Clear();\n		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)\n		{\n			CS::update();\n			//CS::collisionUpdate();\n		}\n		//Window::Draw(t, r);\n		CS::draw();\n		Window::Present();\n		auto timePoint2(chrono::high_resolution_clock::now());\n		auto elaspedTime(timePoint2 - timePoint1);\n\n		Timer::elapsed = chrono::duration_cast<\n			chrono::duration<float, milli>>(elaspedTime).count();\n		// std::cout << (1000.f/ft) << std::endl;\n		// if(Timer::elapsed > maxTime){\n		// 	int loops = Timer::elapsed/maxTime;\n		// 	for(int i=0;i<loops;i++){\n		// 		CS::update();\n		// 	}\n		// } else {3\n		// 	SDL_Delay(delay);\n		// }r\n	}\n	Window::Quit();\n	return 0;\n}",
 			"file": "src/main.cpp",
+			"file_size": 2491,
+			"file_write_time": 130568255480828216,
 			"settings":
 			{
-				"buffer_size": 2219,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/components.cpp",
-			"settings":
-			{
-				"buffer_size": 11143,
+				"buffer_size": 2394,
 				"line_ending": "Windows"
 			}
 		},
@@ -563,15 +558,7 @@
 			"file": "src/entities.cpp",
 			"settings":
 			{
-				"buffer_size": 1966,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "include/components.h",
-			"settings":
-			{
-				"buffer_size": 2794,
+				"buffer_size": 2569,
 				"line_ending": "Windows"
 			}
 		},
@@ -579,7 +566,7 @@
 			"file": "include/CS.h",
 			"settings":
 			{
-				"buffer_size": 942,
+				"buffer_size": 990,
 				"line_ending": "Windows"
 			}
 		},
@@ -587,7 +574,7 @@
 			"file": "include/entities.h",
 			"settings":
 			{
-				"buffer_size": 160,
+				"buffer_size": 189,
 				"line_ending": "Windows",
 				"name": "#ifndef ENTITIES_H"
 			}
@@ -596,7 +583,7 @@
 			"file": "src/system.cpp",
 			"settings":
 			{
-				"buffer_size": 10465,
+				"buffer_size": 10421,
 				"line_ending": "Windows"
 			}
 		},
@@ -609,18 +596,10 @@
 			}
 		},
 		{
-			"file": "include/system.h",
-			"settings":
-			{
-				"buffer_size": 1422,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "src/window.cpp",
 			"settings":
 			{
-				"buffer_size": 3349,
+				"buffer_size": 3354,
 				"line_ending": "Windows"
 			}
 		},
@@ -631,14 +610,42 @@
 				"buffer_size": 2835,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "include/system.h",
+			"settings":
+			{
+				"buffer_size": 1404,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/components.h",
+			"settings":
+			{
+				"buffer_size": 2947,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/components.cpp",
+			"settings":
+			{
+				"buffer_size": 12149,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "Packages/User/myMake.sublime-build",
 	"command_palette":
 	{
-		"height": 380.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
 			[
 				"packa",
 				"Package Control: Remove Package"
@@ -650,10 +657,6 @@
 			[
 				"disa",
 				"Package Control: Disable Package"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
 			],
 			[
 				"ins",
@@ -731,16 +734,23 @@
 	[
 		"/C/dev/SDLTEST",
 		"/C/dev/SDLTEST/bin",
-		"/C/dev/SDLTEST/data"
+		"/C/dev/SDLTEST/data",
+		"/C/dev/SDLTEST/obj"
 	],
 	"file_history":
 	[
+		"/C/dev/SDLTEST/data/player.png",
+		"/C/dev/SDLTEST/include/cleanup.h",
+		"/C/dev/SDLTEST/src/54dab505-fca9-4088-864e-1d5afaeb74ef.dmp",
+		"/C/dev/SDLTEST/5b408044-22d4-46d4-b960-9fe790b6acb4.dmp",
+		"/C/dev/SDLTEST/project.sublime-project",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
 		"/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
 		"/C/Users/Omar/Desktop/SFMLTEST/deleted",
 		"/C/dev/SDLTEST/data/fonts/FONTLOG.txt",
 		"/C/dev/SDLTEST/bin/terminal.glue",
 		"/C/dev/SDLTEST/bin/LICENSE.tiff.txt",
-		"/C/dev/SDLTEST/project.sublime-project",
 		"/C/Users/Omar/Desktop/SFMLTEST/src/game.cpp",
 		"/C/Users/Omar/Desktop/SFMLTEST/src/deleted controls code in update().txt",
 		"/C/Users/Omar/Desktop/smart sweepers - v1.0/main.cpp",
@@ -760,7 +770,6 @@
 		"/C/dev/SDLTEST/data/gameover.bmp",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
-		"/C/dev/SDLTEST/include/cleanup.h",
 		"/C/Program Files (x86)/Sublime Text 2/Pristine Packages/Makefile.sublime-package",
 		"/C/Program Files/Sublime Text 3/Packages/Makefile.sublime-package",
 		"/C/dev/SDLTEST/src/window.cpp",
@@ -802,6 +811,7 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"C:\\dev\\SDLTEST\\include",
 			"C:\\dev\\SDLTEST\\src",
 			"C:\\dev\\SDLTEST\\bin"
 		]
@@ -811,6 +821,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Vec2<float>",
+			"imgRect",
 			"{\n",
 			"x",
 			"w",
@@ -870,10 +882,12 @@
 		],
 		"highlight": true,
 		"in_selection": false,
-		"preserve_case": true,
+		"preserve_case": false,
 		"regex": false,
 		"replace_history":
 		[
+			"Vec2",
+			"result",
 			"y",
 			"h",
 			"y",
@@ -934,7 +948,7 @@
 	"groups":
 	[
 		{
-			"selected": 12,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -950,8 +964,8 @@
 						"selection":
 						[
 							[
-								363,
-								363
+								211,
+								211
 							]
 						],
 						"settings":
@@ -1000,15 +1014,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 171,
+						"buffer_size": 134,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7,
-								7
+								99,
+								99
 							]
 						],
 						"settings":
@@ -1019,7 +1033,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1028,15 +1042,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2219,
+						"buffer_size": 2394,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1102,
-								1102
+								1498,
+								1498
 							]
 						],
 						"settings":
@@ -1045,86 +1059,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 300.0,
+						"translation.y": 1404.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "src/components.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11143,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3000,
-								3000
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2127.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"file": "src/entities.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1966,
+						"buffer_size": 2569,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1945,
-								1945
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 600.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "include/components.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2794,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2750,
-								2750
+								2161,
+								2161
 							]
 						],
 						"settings":
@@ -1133,27 +1088,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2040.0,
+						"translation.y": 756.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 5,
 					"file": "include/CS.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 942,
+						"buffer_size": 990,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								156,
-								156
+								434,
+								388
 							]
 						],
 						"settings":
@@ -1162,27 +1117,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 540.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 6,
 					"file": "include/entities.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 160,
+						"buffer_size": 189,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								70,
-								70
+								74,
+								74
 							]
 						],
 						"settings":
@@ -1194,24 +1149,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 7,
 					"file": "src/system.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10465,
+						"buffer_size": 10421,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								747,
-								747
+								635,
+								635
 							]
 						],
 						"settings":
@@ -1220,14 +1175,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 960.0,
+						"translation.y": 324.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 8,
 					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1249,56 +1204,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3155.0,
+						"translation.y": 2844.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "include/system.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1422,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1235,
-								1235
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 720.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
+					"buffer": 9,
 					"file": "src/window.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3349,
+						"buffer_size": 3354,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1926,
-								1926
+								1342,
+								1342
 							]
 						],
 						"settings":
@@ -1307,15 +1233,15 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 720.0,
+						"translation.x": 8.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 10,
 					"file": "include/window.h",
 					"semi_transient": false,
 					"settings":
@@ -1337,10 +1263,104 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1200.0,
+						"translation.y": 785.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 11,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 11,
+					"file": "include/system.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1404,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								145,
+								145
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "include/components.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2640,
+								2640
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1602.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/components.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12149,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11950,
+								11950
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8528.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -1363,11 +1383,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1396,7 +1423,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 106.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1437,9 +1464,17 @@
 	},
 	"select_symbol":
 	{
-		"height": 104.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"",
+				"update"
+			],
+			[
+				"out",
+				"outOfBounds"
+			],
 			[
 				"draw",
 				"Draw"
@@ -1447,7 +1482,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},

@@ -36,7 +36,7 @@ int main(int argc, char **argv){
 	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
 	// r.x=1;r.y=1;
 	eId c = createCamera(0,0);
-	eId c2 = createCamera(400,300);
+	//eId c2 = createCamera(400,300);
 	while(!quit){
 		
 		auto timePoint1(chrono::high_resolution_clock::now());
@@ -45,15 +45,16 @@ int main(int argc, char **argv){
 			if (e.type == SDL_QUIT)
 				quit = true;
 			if(e.type == SDL_MOUSEWHEEL){
-				CS::cameras[c]->zoom += 0.1*e.wheel.y;
+				CS::cameras[c]->zoom += 0.5*e.wheel.y;
 			}
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				if(e.button.button == SDL_BUTTON_LEFT){
-					Vec2<float> p = CS::cameras[c]->getWorldPos({e.button.x, e.button.y});
+					Vec2 p = CS::cameras[c]->getWorldPos({e.button.x, e.button.y});
 					mBox(p.x, p.y);
 				}
 				if(e.button.button == SDL_BUTTON_RIGHT){
-					CS::cameras[c]->follow(CS::moveCS[TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y}))]);
+					CS::cameras[c]->follow(
+						TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y})));
 
 				}
 				
@@ -71,17 +72,16 @@ int main(int argc, char **argv){
 
 			CS::eventUpdate(e);
 		}
-		//if(createBox)
-		//	mBox(rand()%800, rand()%600);
-
+		// if(createBox)
+		// mBox(rand()%800, rand()%600);
+		// std::cout << CS::_E_INDEX << std::endl;
 		Timer::slice += Timer::elapsed;
 		Window::Clear();
 		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)
 		{
-			
+			CS::update();
 			//CS::collisionUpdate();
 		}
-		CS::update();
 		//Window::Draw(t, r);
 		CS::draw();
 		Window::Present();

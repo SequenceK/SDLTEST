@@ -33,14 +33,16 @@ void Window::Init(std::string title){
     mBox.w = 800;
     mBox.h = 600;
     //Create our window
-    mWindow.reset(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+    mWindow.reset(SDL_CreateWindow(title.c_str(),
+     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
         mBox.w, mBox.h, SDL_WINDOW_SHOWN));
     //Make sure it created ok
     if (mWindow == nullptr)
         throw std::runtime_error("Failed to create window");
 
     //Create the renderer
-    mRenderer.reset(SDL_CreateRenderer(mWindow.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+    mRenderer.reset(SDL_CreateRenderer(mWindow.get(), -1,
+     SDL_RENDERER_PRESENTVSYNC));
     //Make sure it created ok
     if (mRenderer == nullptr)
         throw std::runtime_error("Failed to create renderer");
@@ -49,8 +51,9 @@ void Window::Quit(){
     TTF_Quit();
     SDL_Quit();
 }
-void Window::Draw(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, float angle, 
-                  int xPivot, int yPivot, SDL_RendererFlip flip)
+void Window::Draw(SDL_Texture *tex, SDL_Rect &dstRect,
+                SDL_Rect *clip, float angle, 
+                int xPivot, int yPivot, SDL_RendererFlip flip)
 {
     //Convert pivot pos from relative to object's center to screen space
     xPivot += dstRect.w / 2;
@@ -67,7 +70,8 @@ SDL_Texture* Window::LoadImage(const std::string &file){
 		throw std::runtime_error("Failed to load image: " + file + IMG_GetError());
 	return tex;
 }
-SDL_Texture* Window::RenderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize){
+SDL_Texture* Window::RenderText(const std::string &message,
+         const std::string &fontFile, SDL_Color color, int fontSize){
     //Open the font
 	TTF_Font *font = nullptr;
 	font = TTF_OpenFont(fontFile.c_str(), fontSize);

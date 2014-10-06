@@ -24,13 +24,13 @@ public:
 //Movemenet component
 class MoveComponent : public Component {
 public:
-	Vec2<float> pos;
-	Vec2<float> deltaPos;
-	Vec2<float> acc;
-	Vec2<float> vel;
-	Vec2<float> drag;
-	Vec2<float> maxV;
-	Vec2<float> terV; // Terminal velocity
+	Vec2 pos;
+	Vec2 deltaPos;
+	Vec2 acc;
+	Vec2 vel;
+	Vec2 drag;
+	Vec2 maxV;
+	Vec2 terV; // Terminal velocity
 	MoveComponent(float xx, float yy, eId id);
 
 	void update();
@@ -60,17 +60,17 @@ public:
 	SDL_Rect clipRect;
 	SDL_RendererFlip flip;
 	MoveComponent* moveC;
-	Vec2<float> scale;
-	Vec2<float> offset;
-	Vec2<float> texSize;
+	Vec2 scale;
+	Vec2 offset;
+	Vec2 texSize;
 	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void draw();
-	void draw(Vec2<float> pos, Vec2<float> size, float zoom, Vec2<float> gamePos);
+	void draw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos);
 	void update();
 	void setFrame(int Width, int Height);
 	void setScale(float x, float y);
-	void playAnimation(std::vector<int> &frames, float speed=1, bool loop=false, bool force=false);
+	void playAnimation(std::vector<int> frames, float speed=1, bool loop=false, bool force=false);
 };
 
 class CollisionComponent : public Component {
@@ -82,8 +82,9 @@ public:
 	MoveComponent* moveC;
 	SpriteComponent* spriteC;
 	std::map<unsigned int, bool> collideGroups;
-	std::map<eId, bool> collidedWith;
+	std::map<eId, bool> checkedWith;
 	std::vector<eId> collidingWith;
+	eId collidedWith;
 	bool collided;
 	bool solid;
 	bool moveable;
@@ -94,6 +95,7 @@ public:
 	CollisionComponent(std::map<eId, SpriteComponent*> &spriteMap, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
 
 	void update();
+	void updatePosition();
 	void getGridIndex(Grid &g);
 	void CollideWith(eId e);
 };
@@ -109,24 +111,37 @@ public:
 class FuncQComponent : public Component {
 public:
 	std::vector<void (*)(eId)> functions;
+	std::vector<void (*)(eId, SDL_Event&)> eventFunctions;
 	FuncQComponent(eId id);
 	void add(void (*f)(eId));
+	void addEventFunc(void (*f)(eId, SDL_Event&));
 	void update();
+	void eventUpdate(SDL_Event &e);
+};
+
+class PropertiesComponent : public Component {
+public:
+	std::map<std::string, std::vector<eId>> groups;
+	std::map<std::string, eId> entities;
+	std::map<std::string, float> fProps;
+	std::map<std::string, bool> boolProps;
+	std::map<std::string, std::string> stringProps;
+	PropertiesComponent(eId id);
 };
 
 class Camera : public MoveComponent {
 public:
 	float zoom;
-	Vec2<float> winPos;
-	Vec2<float> winSize;
-	Vec2<float> size;
+	Vec2 winPos;
+	Vec2 winSize;
+	Vec2 size;
 	bool active;
-	MoveComponent* followC;
+	eId followE;
 	Camera(float x, float y, float w, float h, float z, eId id);
 	void update();
-	Vec2<float> getWorldPos(Vec2<float> p);
+	Vec2 getWorldPos(Vec2 p);
 	SDL_Rect getScreenRect(SDL_Rect r);
-	void follow(MoveComponent* mc);
+	void follow(eId mc);
 };
 
 #endif

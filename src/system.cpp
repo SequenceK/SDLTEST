@@ -14,37 +14,35 @@ float Timer::elapsed{0};
 float Timer::frame{1000.f/60.f};
 float Timer::slice{0.f};
 
-template<>
-Vec2<float> Vec2<float>::operator*(float const& n){
+Vec2 Vec2::operator*(float const& n){
 	x *= n;
 	y *= n;
 	return *this;
 }
 
-template<>
-Vec2<float> Vec2<float>::operator*=(float const& n){
+Vec2 Vec2::operator*=(float const& n){
 	x *= n;
 	y *= n;
 	return *this;
 }
-template<>
-Vec2<float> Vec2<float>::operator+=(Vec2<float> const& v){
+
+Vec2 Vec2::operator+=(Vec2 const& v){
 	x += v.x;
 	y += v.y;
 	return *this;
 }
-template<>
-Vec2<float> Vec2<float>::operator-=(Vec2<float> const& v){
+
+Vec2 Vec2::operator-=(Vec2 const& v){
 	x -= v.x;
 	y -= v.y;
 	return *this;
 }
-template<>
-bool Vec2<float>::operator==(Vec2<float> const& v){
+
+bool Vec2::operator==(Vec2 const& v){
 	return (x == v.x) && (y == v.y);
 }
 
-bool inCamBounds(Vec2<float> pos, Camera* c){
+bool inCamBounds(Vec2 pos, Camera* c){
 	if(pos.x < c->pos.x || pos.x > c->pos.x + c->size.x || pos.y < c->pos.y || pos.y > c->pos.y + c->size.y)
 		return false;
 	return true;
@@ -304,9 +302,9 @@ void collide(eId e1, eId e2){
 	float dy1 = -c1->moveC->deltaPos.y + c1->moveC->pos.y;
 	float dx2 = -c2->moveC->deltaPos.x + c2->moveC->pos.x;
 	float dy2 = -c2->moveC->deltaPos.y + c2->moveC->pos.y;
-	float absDX1 = (dx1>0)?dx1:-dx1;
+	float absDX1 = (dx1>0)?dx1:(-dx1);
 	float absDY1 = (dy1>0)?dy1:-dy1;
-	float absDX2 = (dx2>0)?dx2:-dx2;
+	float absDX2 = (dx2>0)?dx2:(-dx2);
 	float absDY2 = (dy2>0)?dy2:-dy2;
 	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);
 	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);
@@ -316,7 +314,8 @@ void collide(eId e1, eId e2){
 	r2.w = c2->rect.w+absDX2;
 	r1.h = c1->rect.h+absDY1;
 	r2.h = c2->rect.h+absDY2;
-
+	// Window::DrawRect(&r1, 255,255,0);
+	// Window::DrawRect(&r2, 255,255,0);
 	// SDL_Rect overlapRect;
 	// SDL_IntersectRect(&r1, &r2, &overlapRect);
 	float overlapX=0, overlapY=0;
@@ -351,11 +350,11 @@ void collide(eId e1, eId e2){
 
 	if(overlapX != 0){
 		if(!c2->moveable){
-			c1->moveC->setPosition(c1->moveC->pos.x - overlapX, c1->moveC->pos.y);
+			c1->moveC->pos.x = c1->moveC->pos.x - overlapX;
 			c1->moveC->vel.x = c2->moveC->vel.x ;//- c1->moveC->acc.x;
 		}
 		else if(!c1->moveable){
-			c2->moveC->setPosition(c2->moveC->pos.x + overlapX, c2->moveC->pos.y);
+			c2->moveC->pos.x = c2->moveC->pos.x + overlapX;
 			c2->moveC->vel.x = c1->moveC->vel.x ;//- c2->moveC->acc.x;
 		}
 	}
@@ -367,6 +366,7 @@ void collide(eId e1, eId e2){
 	r2.w = c2->rect.w+absDX2;
 	r1.h = c1->rect.h+absDY1;
 	r2.h = c2->rect.h+absDY2;
+
 	if(dy1 != dy2)
 	{
 		float maxOverlapY = absDY1 + absDY2 + BIAS;
@@ -403,8 +403,8 @@ void collide(eId e1, eId e2){
 			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;
 		}
 	}
-	//Window::DrawRect(&r1, 255,255,0);
-	//Window::DrawRect(&r2, 255,255,0);
+	c1->updatePosition();
+	c2->updatePosition();
 }
 
 void seperateX(eId e1, eId e2){
