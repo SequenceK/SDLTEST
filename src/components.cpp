@@ -134,6 +134,7 @@ SpriteComponent::SpriteComponent(const std::string &file,
 	moveC = moveMap[id];
 	imgRect.x = moveC->pos.x;
 	imgRect.y = moveC->pos.y;
+	color = {255,255,255};
 	scale = {1,1};
 	offset = {0,0};
 	clipRect.w = imgRect.w *= scale.x;
@@ -148,10 +149,12 @@ SpriteComponent::SpriteComponent(const std::string &file,
 }
 
 void SpriteComponent::draw(){
+	SDL_SetTextureColorMod(img, color.r, color.g, color.b);
 	Window::Draw(img, imgRect, &clipRect, 0,0,0, flip);
+	//SDL_SetTextureColorMod(img, 255, 255, 255);
 }
 
-void SpriteComponent::draw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
+void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 	SDL_Rect b1, b2, cBounds, area;
 	b1 = imgRect;
 	b2 = clipRect;
@@ -211,7 +214,8 @@ void SpriteComponent::draw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 		imgRect.y *= zoom;
 		imgRect.h *= zoom;
 		imgRect.w *= zoom;
-		Window::Draw(img, imgRect, &clipRect, 0,0,0,flip);
+		//Window::Draw(img, imgRect, &clipRect, 0,0,0,flip);
+		draw();
 	}
 	imgRect = b1;
 	clipRect = b2;
@@ -244,6 +248,10 @@ void SpriteComponent::update(){
 	} else if(facing == RIGHT) {
 		flip = SDL_FLIP_NONE;
 	}
+}
+
+void SpriteComponent::setColor(Uint8 r, Uint8 g, Uint8 b){
+	color = {r, g, b};
 }
 
 void SpriteComponent::setFrame(int w, int h){

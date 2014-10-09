@@ -50,11 +50,19 @@ public:
 		bool played;
 	};
 
+	struct Color
+	{
+		Uint8 r;
+		Uint8 g;
+		Uint8 b;
+	};
+
 	Animation currentAnimation;
 	bool playingAnimation, render;
 	int facing;
 	float frameTimer;
 	int frameWidth, frameHight;
+	Color color;
 	SDL_Texture* img;
 	SDL_Rect imgRect;
 	SDL_Rect clipRect;
@@ -66,10 +74,11 @@ public:
 	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> &moveMap, eId id);
 
 	void draw();
-	void draw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos);
+	void CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos);
 	void update();
 	void setFrame(int Width, int Height);
 	void setScale(float x, float y);
+	void setColor(Uint8 r, Uint8 g, Uint8 b);
 	void playAnimation(std::vector<int> frames, float speed=1, bool loop=false, bool force=false);
 };
 

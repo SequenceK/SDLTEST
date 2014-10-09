@@ -45,7 +45,7 @@ int main(int argc, char **argv){
 			if (e.type == SDL_QUIT)
 				quit = true;
 			if(e.type == SDL_MOUSEWHEEL){
-				CS::cameras[c]->zoom += 0.5*e.wheel.y;
+				CS::cameras[c]->zoom += 0.25*e.wheel.y;
 			}
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				if(e.button.button == SDL_BUTTON_LEFT){
