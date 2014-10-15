@@ -3,75 +3,6 @@
 #include "../include/entities.h"
 #include <cmath>
 
-float shootTimer = 0;
-void playerUpdate(eId id){		
-	if(CS::moveCS[id]->vel.y > 0){
-		CS::spriteCS[id]->playAnimation(std::vector<int>{6}, 8, false, true);
-	}
-	else if(CS::moveCS[id]->vel.y < 0){
-		CS::spriteCS[id]->playAnimation(std::vector<int>{5}, 8, false, true);		
-	}
-	else {
-		if(CS::moveCS[id]->vel.x == 0){
-			CS::spriteCS[id]->playAnimation(std::vector<int>{0}, 8, false, true);
-		}
-		else {
-			CS::spriteCS[id]->playAnimation(std::vector<int>{1,2,3,4}, 8, false);
-		}
-	}
-	if(CS::propCS[id]->boolProps["shooting"] && CS::propCS[id]->fProps["fireRate"] <= shootTimer)
-	{
-		bullet(CS::moveCS[id]->pos, id);
-		//CS::propCS[id]->boolProps["shooting"] = false;
-		shootTimer = 0;
-	}
-	shootTimer += Timer::elapsed;
-}
-bool shooting = false;
-bool shot = false;
-void playerEventUpdate(eId id, SDL_Event &e){
-	float SPEED = 1;
-	
-	if (e.type == SDL_KEYDOWN){
-		switch(e.key.keysym.sym){
-			case SDLK_d:
-				CS::spriteCS[id]->facing = RIGHT;
-				CS::moveCS[id]->acc.x = SPEED;break;
-			case SDLK_a:
-				CS::spriteCS[id]->facing = LEFT;
-				CS::moveCS[id]->acc.x = -SPEED;break;
-			case SDLK_w:
-				if(CS::collisionCS[id]->touching & FLOOR)
-					CS::moveCS[id]->vel.y = -20;break;	
-			case SDLK_s:
-				CS::moveCS[id]->vel.y = SPEED;break;
-			case SDLK_RETURN:
-				// if(shot){
-					CS::propCS[id]->boolProps["shooting"]=true;
-				// 	shot=true;
-				// }else{
-				// 	CS::propCS[id]->boolProps["shooting"]=false;
-				// }
-				break;
-		}
-	}
-	if (e.type == SDL_KEYUP){
-		switch(e.key.keysym.sym){
-			case SDLK_d:
-				if(CS::moveCS[id]->acc.x>0)
-					CS::moveCS[id]->acc.x -= SPEED;break;
-			case SDLK_a:
-				if(CS::moveCS[id]->acc.x<0)
-					CS::moveCS[id]->acc.x += SPEED;break;
-			case SDLK_RETURN:
-				// if(shot)
-				// 	shot=false;
-				CS::propCS[id]->boolProps["shooting"]=false;
-				break;
-		}
-	}
-}
-
 bool testCollision(eId owner, eId id, std::string type){
 	if(CS::collisionCS[owner]->collided){
 		// if(CS::propCS[id] == nullptr)
@@ -105,9 +36,9 @@ eId bullet(Vec2 const &pos, eId const &oid){
 	CS::moveCS[id] = new MoveComponent(pos.x,
 		pos.y + CS::spriteCS[oid]->imgRect.h/2, id);
 	CS::moveCS[id]->drag = {0,0};
-	CS::moveCS[id]->maxV = {10, 20};
-	CS::moveCS[id]->terV = {10, 20};
-	float speed = 1;
+	CS::moveCS[id]->maxV = {10, 10};
+	CS::moveCS[id]->terV = {10, 10};
+	float speed = 10;
 	f *= -1;
 	if(CS::spriteCS[oid]->facing == RIGHT){
 		CS::moveCS[id]->acc.x = speed;
@@ -118,8 +49,8 @@ eId bullet(Vec2 const &pos, eId const &oid){
 		CS::moveCS[id]->pos.x -= 20;
 	}
 	CS::spriteCS[id] = new SpriteComponent("../data/hello.png", CS::moveCS, id);
-	CS::spriteCS[id]->setScale(0.5, 0.2);
-	CS::spriteCS[id]->setColor(255, 0, 0);
+	CS::spriteCS[id]->setScale(0.25, 0.1);
+	//CS::spriteCS[id]->setColor(0, 0, 0);
 	CS::propCS[id] = new PropertiesComponent(id);
 	CS::propCS[id]->entities["shooter"] = oid;
 	CS::propCS[id]->fProps["duration"] = 1*1600;
@@ -133,6 +64,84 @@ eId bullet(Vec2 const &pos, eId const &oid){
 	//CS::collisionCS[id]->debugDraw = true;
 }
 
+float shootTimer = 0;
+bool holdFace = false;
+void playerUpdate(eId id){		
+	if(CS::moveCS[id]->vel.y > 0 && !(CS::collisionCS[id]->touching & FLOOR)){
+		CS::spriteCS[id]->playAnimation(std::vector<int>{6}, 8, false, true);
+	}
+	else if(CS::moveCS[id]->vel.y < 0){
+		CS::spriteCS[id]->playAnimation(std::vector<int>{5}, 8, false, true);		
+	}
+	else {
+		if(CS::moveCS[id]->vel.x == 0){
+			CS::spriteCS[id]->playAnimation(std::vector<int>{0}, 8, false, true);
+		}
+		else {
+			CS::spriteCS[id]->playAnimation(std::vector<int>{1,2,3,4}, 8, false);
+		}
+	}
+	if(CS::propCS[id]->boolProps["shooting"] && CS::propCS[id]->fProps["fireRate"] <= shootTimer)
+	{
+		bullet(CS::moveCS[id]->pos, id);
+		//CS::propCS[id]->boolProps["shooting"] = false;
+		shootTimer = 0;
+	}
+	shootTimer += Timer::elapsed;
+	CS::propCS[id]->boolProps["holdFace"] = false;
+}
+bool shooting = false;
+bool shot = false;
+
+void playerEventUpdate(eId id, SDL_Event &e){
+	float SPEED = 1;
+	if (e.type == SDL_KEYDOWN){
+		switch(e.key.keysym.sym){
+			case SDLK_d:
+				if(!holdFace)
+					CS::spriteCS[id]->facing = RIGHT;
+				CS::moveCS[id]->acc.x = SPEED;break;
+			case SDLK_a:
+				if(!holdFace)
+					CS::spriteCS[id]->facing = LEFT;
+				CS::moveCS[id]->acc.x = -SPEED;break;
+			case SDLK_SPACE:
+				if(CS::collisionCS[id]->touching & FLOOR)
+					CS::moveCS[id]->vel.y = -20;break;	
+			case SDLK_s:
+				CS::moveCS[id]->vel.y = SPEED;break;
+			case SDLK_RETURN:
+				// if(shot){
+					CS::propCS[id]->boolProps["shooting"]=true;
+				// 	shot=true;
+				// }else{
+				// 	CS::propCS[id]->boolProps["shooting"]=false;
+				// }
+				break;
+			case SDLK_LSHIFT:
+				holdFace = true;
+				break;
+		}
+	}
+	if (e.type == SDL_KEYUP){
+		switch(e.key.keysym.sym){
+			case SDLK_d:
+				if(CS::moveCS[id]->acc.x>0)
+					CS::moveCS[id]->acc.x -= SPEED;break;
+			case SDLK_a:
+				if(CS::moveCS[id]->acc.x<0)
+					CS::moveCS[id]->acc.x += SPEED;break;
+			case SDLK_RETURN:
+				// if(shot)
+				// 	shot=false;
+				CS::propCS[id]->boolProps["shooting"]=false;
+				break;
+			case SDLK_LSHIFT:
+				holdFace = false;
+				break;
+		}
+	}
+}
 
 eId TEST(Vec2 const &pos) {
 	float x = pos.x;
@@ -140,11 +149,15 @@ eId TEST(Vec2 const &pos) {
 	eId id = CS::createEntityID();
 	CS::moveCS[id] = new MoveComponent(x, y, id);
 	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
-	CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);
+	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::collisionCS[id]->moveable = true;
+	//CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);
 	CS::propCS[id] = new PropertiesComponent(id);
 	CS::propCS[id]->groups["bullets"] = std::vector<eId>{};
 	CS::propCS[id]->boolProps["shooting"] = false;
-	CS::propCS[id]->fProps["fireRate"] = 50;
+	CS::propCS[id]->fProps["fireRate"] = 100;
+	CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
+	CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
 	CS::funcQCS[id] = new FuncQComponent(id);
 	void (*pFunc)(eId) = playerUpdate;
 	void (*pUpdate)(eId, SDL_Event&) = playerEventUpdate;
@@ -156,13 +169,119 @@ eId TEST(Vec2 const &pos) {
 	// CS::spriteCS[id]->playAnimation(f, 8, true);
 	CS::moveCS[id]->maxV = {5,15};
 	CS::moveCS[id]->drag = {0.5,0.1};
-	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
-	CS::collisionCS[id]->moveable = true;
 	CS::moveCS[id]->acc.y = 1;
 	//CS::collisionCS[id]->debugDraw = true;
 	//CS::moveCS[id]->vel.y = sin(rand()%361)*CS::moveCS[id]->maxV.y;
 	//CS::moveCS[id]->vel.x = cos(rand()%361)*CS::moveCS[id]->maxV.x;
 
+
+	return id;
+};
+
+
+void enemyUpdate(eId id){
+	eId echecker = CS::propCS[id]->entities["edgeChecker"];
+	eId wchecker = CS::propCS[id]->entities["wallChecker"];
+	if(!CS::collisionCS[echecker]->overlaped || CS::collisionCS[wchecker]->overlaped){
+		CS::moveCS[id]->acc.x *= -1;
+	}
+	if(CS::moveCS[id]->vel.x > 0){
+		CS::spriteCS[id]->facing = RIGHT;
+	}else if(CS::moveCS[id]->vel.x < 0){
+		CS::spriteCS[id]->facing = LEFT;
+	}
+}
+
+void edgeCheckerUpdate(eId id){
+	eId parent = CS::propCS[id]->entities["parent"];
+	//MoveComponent* pMoveC = CS::moveCS[parent];
+	//CollisionComponent* pCollC = CS::collisionCS[parent];
+
+	if(CS::moveCS[parent]->acc.x > 0){
+		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x + 1;
+	} else if(CS::moveCS[parent]->acc.x < 0){
+		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x - CS::collisionCS[id]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x - 1;
+	}
+	CS::moveCS[id]->pos.y = CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.y + 1;
+}
+
+eId edgeChecker(eId parent){
+	Vec2 cPos = {CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w,
+	             CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h};
+	eId id = CS::createEntityID();
+	CS::moveCS[id] = new MoveComponent(cPos.x, cPos.y, id);
+	CS::collisionCS[id] = new CollisionComponent(4, 4, CS::moveCS, id, false);
+	//CS::collisionCS[id]->debugDraw = true;
+	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id]->entities["parent"] = parent;
+	CS::funcQCS[id] = new FuncQComponent(id);
+	void (*cFunc)(eId) = edgeCheckerUpdate; 
+	CS::funcQCS[id]->add(cFunc);
+
+	return id;
+}
+
+void wallCheckerUpdate(eId id){
+	eId parent = CS::propCS[id]->entities["parent"];
+	//MoveComponent* pMoveC = CS::moveCS[parent];
+	//CollisionComponent* pCollC = CS::collisionCS[parent];
+
+	if(CS::moveCS[parent]->acc.x > 0){
+		CS::moveCS[id]->pos = 
+		{CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w + 5,
+			CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h - CS::collisionCS[id]->rect.h - 1};
+	} else if(CS::moveCS[parent]->acc.x < 0){
+		CS::moveCS[id]->pos = 
+		{CS::moveCS[parent]->pos.x - CS::collisionCS[id]->rect.w - 5,
+			CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h - CS::collisionCS[id]->rect.h - 1};
+	}
+}
+
+
+eId wallChecker(eId parent){
+	eId id = CS::createEntityID();
+	Vec2 cPos =
+	{CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w,
+		CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h};
+	CS::moveCS[id] = new MoveComponent(cPos.x, cPos.y, id);
+	CS::collisionCS[id] = new CollisionComponent(1, 1, CS::moveCS, id, false);
+	//CS::collisionCS[id]->debugDraw = true;
+	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id]->entities["parent"] = parent;
+	CS::funcQCS[id] = new FuncQComponent(id);
+	void (*cFunc)(eId) = wallCheckerUpdate; 
+	CS::funcQCS[id]->add(cFunc);
+
+	return id;
+}
+
+eId ENEMY(Vec2 const &pos) {
+	float x = pos.x;
+	float y = pos.y;
+	eId id = CS::createEntityID();
+	CS::moveCS[id] = new MoveComponent(x, y, id);
+	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
+	CS::spriteCS[id]->setScale(2,2);
+	CS::spriteCS[id]->setFrame(30,27);
+	std::vector<int> f = {1,2,3,4};
+	CS::spriteCS[id]->playAnimation(f, 8, true);
+
+	CS::moveCS[id]->maxV = {5,15};
+	CS::moveCS[id]->drag = {0.5,0.1};
+	CS::moveCS[id]->acc = {1, 1};
+
+	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::collisionCS[id]->moveable = true;
+	//CS::collisionCS[id]->debugDraw = true;
+
+	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
+	CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
+
+	CS::funcQCS[id] = new FuncQComponent(id);
+	void (*eFunc)(eId) = enemyUpdate;
+	CS::funcQCS[id]->add(eFunc);
+	
 	return id;
 };
 

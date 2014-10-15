@@ -30,6 +30,7 @@ int main(int argc, char **argv){
 
 	SDL_Event e;
 	bool quit=false;
+	int controll = 1;
 	// SDL_Rect r;
 	// SDL_Texture* t;
 	// t = Window::RenderText("FPS: " + std::to_string(1000/Timer::elapsed), "../data/fonts/PressSTart2P.ttf",{255,255,255,255}, 8);
@@ -45,7 +46,7 @@ int main(int argc, char **argv){
 			if (e.type == SDL_QUIT)
 				quit = true;
 			if(e.type == SDL_MOUSEWHEEL){
-				CS::cameras[c]->zoom += 0.25*e.wheel.y;
+				CS::cameras[c]->zoom += 0.05*e.wheel.y;
 			}
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				if(e.button.button == SDL_BUTTON_LEFT){
@@ -53,9 +54,11 @@ int main(int argc, char **argv){
 					mBox(p.x, p.y);
 				}
 				if(e.button.button == SDL_BUTTON_RIGHT){
-					CS::cameras[c]->follow(
-						TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y})));
-
+					if(controll < 0)
+							ENEMY(CS::cameras[c]->getWorldPos({e.button.x, e.button.y}));
+					else
+						CS::cameras[c]->follow(
+							TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y})));
 				}
 				
 			}
@@ -66,6 +69,13 @@ int main(int argc, char **argv){
 					case SDLK_r:
 						CS::clear();
 						c = createCamera(0,0);
+						break;
+				}
+			}
+			if (e.type == SDL_KEYUP){
+				switch(e.key.keysym.sym){
+					case SDLK_e:
+						controll *= -1;
 						break;
 				}
 			}

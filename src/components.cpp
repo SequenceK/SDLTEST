@@ -4,12 +4,17 @@
 // #include <memory>
 // #include <cmath>
 #include <iostream>
+#include <cmath>
+#include <typeinfo>
 #include <SDL2/SDL.h>
 #include "../include/window.h"
 #include "../include/system.h"
 #include "../include/CS.h"
 #include "../include/components.h"
 #include "../include/entities.h"
+
+
+
 
 PropertiesComponent::PropertiesComponent(eId id) : Component(id){
 
@@ -45,6 +50,22 @@ CollisionComponent::CollisionComponent(std::map<eId, SpriteComponent*> &spriteMa
 	moveC = moveMap[id];
 	debugDraw = false;
 	collided = false;
+	overlaped = false;
+	solid = s;
+	moveable = true;
+	touching = NONE;
+	collidedWith = 0;
+}
+
+CollisionComponent::CollisionComponent(int w, int h,
+		std::map<eId, MoveComponent*> &moveMap, eId id, bool s = true) : Component(id){
+	spriteC = nullptr;
+	rect.w = w;
+	rect.h = h;
+	moveC = moveMap[id];
+	debugDraw = false;
+	collided = false;
+	overlaped = false;
 	solid = s;
 	moveable = true;
 	touching = NONE;
@@ -60,6 +81,7 @@ void CollisionComponent::update(){
 	}
 	touching = NONE;
 	collided = false;
+	overlaped = false;
 	collidingWith.clear();
 }
 
@@ -210,10 +232,11 @@ void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 				clipRect.h = area.h/scale.y;
 			}
 		}
-		imgRect.x *= zoom;
-		imgRect.y *= zoom;
-		imgRect.h *= zoom;
-		imgRect.w *= zoom;
+		imgRect.x = floor(imgRect.x*zoom);
+		imgRect.y = floor(imgRect.y*zoom);
+		imgRect.h = ceil(imgRect.h*zoom);
+		imgRect.w = ceil(imgRect.w*zoom);
+	
 		//Window::Draw(img, imgRect, &clipRect, 0,0,0,flip);
 		draw();
 	}
@@ -239,6 +262,8 @@ void SpriteComponent::update(){
 					playingAnimation = false;
 				}
 			}
+			// std::cout << "currentIT: " << currentAnimation.currentIt <<
+			//  "currentFrame: " << currentAnimation.currentFrame << "frames size: " << currentAnimation.frames.size() << std::endl;
 			frameTimer = 0;
 		}
 	}
@@ -275,7 +300,7 @@ void SpriteComponent::setScale(float x, float y){
 
 void SpriteComponent::playAnimation(std::vector<int> frames, float speed, bool loop, bool force){
 	if(!playingAnimation | force){
-		currentAnimation.frames = frames;
+		currentAnimation.frames.swap(frames);
 		currentAnimation.speed = speed;
 		currentAnimation.loop = loop;
 		currentAnimation.currentIt = 0;
@@ -335,6 +360,10 @@ void MoveComponent::setPosition(float x, float y){
 	pos = {x, y};
 }
 
+void MoveComponent::resetVel(){
+	vel = {0, 0};
+}
+
 Component::Component(eId id) : owner(id){}
 
 SpriteComponent* CS::getSpriteC(eId e){
@@ -374,10 +403,10 @@ Vec2 Camera::getWorldPos(Vec2 p){
 
 SDL_Rect Camera::getScreenRect(SDL_Rect r){
 	SDL_Rect result;
-	result.x = (r.x - pos.x)*zoom;
-	result.y = (r.y - pos.y)*zoom;
-	result.w = r.w*zoom;
-	result.h = r.h*zoom;
+	result.x = floor((r.x - pos.x)*zoom);
+	result.y = floor((r.y - pos.y)*zoom);
+	result.w = ceil(r.w*zoom);
+	result.h = ceil(r.h*zoom);
 	return result;
 }
 

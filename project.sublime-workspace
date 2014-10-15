@@ -4,8 +4,96 @@
 		"selected_items":
 		[
 			[
+				"reset",
+				"resetVel"
+			],
+			[
+				"move",
+				"moveCS"
+			],
+			[
+				"movem",
+				"movement"
+			],
+			[
+				"curre",
+				"currentIt"
+			],
+			[
+				"st",
+				"std::cout"
+			],
+			[
+				"spri",
+				"spriteC"
+			],
+			[
 				"std",
 				"std::endl"
+			],
+			[
+				"ve",
+				"vel"
+			],
+			[
+				"MO",
+				"MoveComponent"
+			],
+			[
+				"edg",
+				"edgeCheckerUpdate"
+			],
+			[
+				"ove",
+				"overlaped"
+			],
+			[
+				"overla",
+				"overlaped"
+			],
+			[
+				"grou",
+				"groups"
+			],
+			[
+				"collided",
+				"collided"
+			],
+			[
+				"typ",
+				"typeinfo"
+			],
+			[
+				"Func",
+				"FuncQComponent"
+			],
+			[
+				"Prop",
+				"PropertiesComponent"
+			],
+			[
+				"dele",
+				"deletedEntities"
+			],
+			[
+				"hold",
+				"holdFace"
+			],
+			[
+				"hodl",
+				"holdFace"
+			],
+			[
+				"hol",
+				"holdFace"
+			],
+			[
+				"bool",
+				"boolProps"
+			],
+			[
+				"Sprite",
+				"SpriteComponent"
 			],
 			[
 				"sh",
@@ -184,10 +272,6 @@
 				"Vec2"
 			],
 			[
-				"move",
-				"moveCS"
-			],
-			[
 				"foll",
 				"follow"
 			],
@@ -316,10 +400,6 @@
 				"acc"
 			],
 			[
-				"ove",
-				"overlapY"
-			],
-			[
 				"maxa",
 				"maxArea"
 			],
@@ -334,10 +414,6 @@
 			[
 				"flo",
 				"float"
-			],
-			[
-				"overla",
-				"overlapY"
 			],
 			[
 				"abs",
@@ -396,10 +472,6 @@
 				"CollisionComponent"
 			],
 			[
-				"collided",
-				"collidedWith"
-			],
-			[
 				"create",
 				"createBox"
 			],
@@ -436,84 +508,12 @@
 				"index"
 			],
 			[
-				"spri",
-				"spriteCS"
-			],
-			[
 				"h",
 				"h"
 			],
 			[
 				"G",
 				"GAMEOVER"
-			],
-			[
-				"it",
-				"intersection"
-			],
-			[
-				"begi",
-				"begin"
-			],
-			[
-				"inde",
-				"index"
-			],
-			[
-				"ind",
-				"index"
-			],
-			[
-				"re",
-				"return"
-			],
-			[
-				"using",
-				"unsigned"
-			],
-			[
-				"ce",
-				"cellSize"
-			],
-			[
-				"in",
-				"index"
-			],
-			[
-				"Q",
-				"QTs"
-			],
-			[
-				"reu",
-				"return"
-			],
-			[
-				"SPr",
-				"SpriteComponent"
-			],
-			[
-				"get",
-				"getIndex"
-			],
-			[
-				"st",
-				"std::cout"
-			],
-			[
-				"de",
-				"depth"
-			],
-			[
-				"scre",
-				"screenSurface"
-			],
-			[
-				"clea",
-				"clear"
-			],
-			[
-				"unsinged",
-				"unsigned"
 			]
 		]
 	},
@@ -547,7 +547,7 @@
 			"file": "src/main.cpp",
 			"settings":
 			{
-				"buffer_size": 2394,
+				"buffer_size": 2396,
 				"line_ending": "Windows"
 			}
 		},
@@ -555,15 +555,32 @@
 			"file": "src/entities.cpp",
 			"settings":
 			{
-				"buffer_size": 6080,
+				"buffer_size": 10494,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/entities.h",
+			"settings":
+			{
+				"buffer_size": 320,
+				"line_ending": "Windows",
+				"name": "#ifndef ENTITIES_H"
 			}
 		},
 		{
 			"file": "src/components.cpp",
 			"settings":
 			{
-				"buffer_size": 9094,
+				"buffer_size": 9874,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "include/components.h",
+			"settings":
+			{
+				"buffer_size": 3502,
 				"line_ending": "Windows"
 			}
 		},
@@ -571,7 +588,25 @@
 			"file": "src/CS.cpp",
 			"settings":
 			{
-				"buffer_size": 4219,
+				"buffer_size": 4517,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 9 files for \"spriteCS\"\n\nC:\\dev\\SDLTEST\\src\\components.cpp:\n  361  \n  362  SpriteComponent* CS::getSpriteC(eId e){\n  363: 	if(spriteCS[e] != nullptr){\n  364: 		return spriteCS[e];\n  365  	} else {\n  366  		throw \"spirte component not found\";\n\nC:\\dev\\SDLTEST\\src\\CS.cpp:\n   14  eId CS::_C_INDEX{0};\n   15  std::map<eId, MoveComponent*> CS::moveCS{};\n   16: std::map<eId, SpriteComponent*> CS::spriteCS{};\n   17  std::map<eId, ControllerComponent*> CS::controllerCS{};\n   18  std::map<eId, CollisionComponent*> CS::collisionCS{};\n   ..\n   42  void CS::clear(){\n   43  	CS::moveCS.clear();\n   44: 	CS::spriteCS.clear();\n   45  	CS::controllerCS.clear();\n   46  	CS::collisionCS.clear();\n   ..\n  144  	}\n  145  	CS::collisionUpdate();\n  146: 	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){\n  147  		it->second->update();\n  148  	}\n  ...\n  159  void CS::draw(){\n  160  \n  161: 	for(auto it = spriteCS.begin(); it != spriteCS.end(); it++){		\n  162  		if(cameras.size()>0){\n  163  			for(auto cIt = cameras.begin(); cIt != cameras.end(); cIt++)\n  ...\n  178  void CS::deleteEntity(eId id){\n  179  	CS::moveCS.erase(id);\n  180: 	CS::spriteCS.erase(id);\n  181  	CS::controllerCS.erase(id);\n  182  	CS::collisionCS.erase(id);\n\nC:\\dev\\SDLTEST\\src\\entities.cpp:\n    8  void playerUpdate(eId id){		\n    9  	if(CS::moveCS[id]->vel.y > 0 && !(CS::collisionCS[id]->touching & FLOOR)){\n   10: 		CS::spriteCS[id]->playAnimation(std::vector<int>{6}, 8, false, true);\n   11  	}\n   12  	else if(CS::moveCS[id]->vel.y < 0){\n   13: 		CS::spriteCS[id]->playAnimation(std::vector<int>{5}, 8, false, true);		\n   14  	}\n   15  	else {\n   16  		if(CS::moveCS[id]->vel.x == 0){\n   17: 			CS::spriteCS[id]->playAnimation(std::vector<int>{0}, 8, false, true);\n   18  		}\n   19  		else {\n   20: 			CS::spriteCS[id]->playAnimation(std::vector<int>{1,2,3,4}, 8, false);\n   21  		}\n   22  	}\n   ..\n   39  			case SDLK_d:\n   40  				if(!holdFace)\n   41: 					CS::spriteCS[id]->facing = RIGHT;\n   42  				CS::moveCS[id]->acc.x = SPEED;break;\n   43  			case SDLK_a:\n   44  				if(!holdFace)\n   45: 					CS::spriteCS[id]->facing = LEFT;\n   46  				CS::moveCS[id]->acc.x = -SPEED;break;\n   47  			case SDLK_SPACE:\n   ..\n  114  	eId id = CS::createEntityID();\n  115  	CS::moveCS[id] = new MoveComponent(pos.x,\n  116: 		pos.y + CS::spriteCS[oid]->imgRect.h/2, id);\n  117  	CS::moveCS[id]->drag = {0,0};\n  118  	CS::moveCS[id]->maxV = {10, 10};\n  ...\n  120  	float speed = 10;\n  121  	f *= -1;\n  122: 	if(CS::spriteCS[oid]->facing == RIGHT){\n  123  		CS::moveCS[id]->acc.x = speed;\n  124: 		CS::moveCS[id]->pos.x += CS::spriteCS[oid]->imgRect.w;\n  125  	}\n  126  	else{\n  ...\n  128  		CS::moveCS[id]->pos.x -= 20;\n  129  	}\n  130: 	CS::spriteCS[id] = new SpriteComponent(\"../data/hello.png\", CS::moveCS, id);\n  131: 	CS::spriteCS[id]->setScale(0.25, 0.1);\n  132: 	CS::spriteCS[id]->setColor(255, 0, 0);\n  133  	CS::propCS[id] = new PropertiesComponent(id);\n  134  	CS::propCS[id]->entities[\"shooter\"] = oid;\n  ...\n  139  	void (*Func)(eId) = bulletUpdate;\n  140  	CS::funcQCS[id]->add(Func);\n  141: 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,false);\n  142  	CS::collisionCS[id]->moveable = false;\n  143  	//CS::collisionCS[id]->debugDraw = true;\n  ...\n  150  	eId id = CS::createEntityID();\n  151  	CS::moveCS[id] = new MoveComponent(x, y, id);\n  152: 	CS::spriteCS[id] = new SpriteComponent(\"../data/player.png\", CS::moveCS, id);\n  153  	//CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);\n  154  	CS::propCS[id] = new PropertiesComponent(id);\n  ...\n  161  	CS::funcQCS[id]->add(pFunc);\n  162  	CS::funcQCS[id]->addEventFunc(pUpdate);\n  163: 	CS::spriteCS[id]->setScale(2,2);\n  164: 	CS::spriteCS[id]->setFrame(30,27);\n  165  	// std::vector<int> f = {1,2,3,4};\n  166: 	// CS::spriteCS[id]->playAnimation(f, 8, true);\n  167  	CS::moveCS[id]->maxV = {5,15};\n  168  	CS::moveCS[id]->drag = {0.5,0.1};\n  169: 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);\n  170  	CS::collisionCS[id]->moveable = true;\n  171  	CS::moveCS[id]->acc.y = 1;\n  ...\n  185  	}\n  186  	if(CS::moveCS[id]->vel > 0){\n  187: 		CS::spriteCS[id]\n  188  	}\n  189  }\n  ...\n  223  	eId id = CS::createEntityID();\n  224  	CS::moveCS[id] = new MoveComponent(x, y, id);\n  225: 	CS::spriteCS[id] = new SpriteComponent(\"../data/player.png\", CS::moveCS, id);\n  226: 	CS::spriteCS[id]->setScale(2,2);\n  227: 	CS::spriteCS[id]->setFrame(30,27);\n  228  	std::vector<int> f = {1,2,3,4};\n  229: 	CS::spriteCS[id]->playAnimation(f, 8, true);\n  230  \n  231  	CS::moveCS[id]->maxV = {5,15};\n  ...\n  233  	CS::moveCS[id]->acc = {1, 1};\n  234  \n  235: 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);\n  236  	CS::collisionCS[id]->moveable = true;\n  237  \n  ...\n  250  	eId id = CS::createEntityID();\n  251  	CS::moveCS[id] = new MoveComponent(x, y, id);\n  252: 	CS::spriteCS[id] = new SpriteComponent(\"../data/hello.png\", CS::moveCS, id);\n  253  	//CS::moveCS[id]->vel.y = sin(rand()%361)*CS::moveCS[id]->maxV.y;\n  254  	//CS::moveCS[id]->vel.x = cos(rand()%361)*CS::moveCS[id]->maxV.x;\n  255  	//CS::moveCS[id]->maxV = {3,3};\n  256: 	//CS::spriteCS[id]->setScale(0.2,0.2);\n  257: 	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);\n  258  	CS::collisionCS[id]->moveable = false;\n  259  	//CS::collisionCS[id]->debugDraw = true;\n  ...\n  266  	eId id = CS::createEntityID();\n  267  	CS::moveCS[id] = new MoveComponent(0, 0, id);\n  268: 	CS::spriteCS[id] = new SpriteComponent(\"../data/gameover.bmp\", CS::moveCS, id);\n  269  \n  270  \n\n37 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 5623,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "include/CS.h",
+			"settings":
+			{
+				"buffer_size": 1217,
 				"line_ending": "Windows"
 			}
 		},
@@ -604,31 +639,6 @@
 			"settings":
 			{
 				"buffer_size": 1404,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "include/components.h",
-			"settings":
-			{
-				"buffer_size": 3347,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "include/entities.h",
-			"settings":
-			{
-				"buffer_size": 234,
-				"line_ending": "Windows",
-				"name": "#ifndef ENTITIES_H"
-			}
-		},
-		{
-			"file": "include/CS.h",
-			"settings":
-			{
-				"buffer_size": 1077,
 				"line_ending": "Windows"
 			}
 		},
@@ -817,6 +827,7 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"C:\\dev\\SDLTEST\\src",
 			"C:\\dev\\SDLTEST\\include",
 			"C:\\dev\\SDLTEST\\src",
 			"C:\\dev\\SDLTEST\\bin"
@@ -827,6 +838,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"spriteCS",
+			"moveCS[id]",
 			"timer",
 			"el",
 			"elaps",
@@ -898,6 +911,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"COMP[moveC][id]",
 			"CS::moveCS[id]",
 			"Vec2",
 			"result",
@@ -961,7 +975,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -990,7 +1004,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
@@ -1018,7 +1032,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
@@ -1046,7 +1060,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1055,15 +1069,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2394,
+						"buffer_size": 2396,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1845,
-								1845
+								638,
+								638
 							]
 						],
 						"settings":
@@ -1072,10 +1086,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1275.0,
+						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1084,45 +1098,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6080,
+						"buffer_size": 10494,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4302,
-								4302
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 2451.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/components.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9094,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1125,
-								1125
+								7265,
+								7265
 							]
 						],
 						"settings":
@@ -1132,27 +1116,121 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 664.0,
+						"translation.y": 4034.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "include/entities.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 320,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								312,
+								312
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#ifndef ENTITIES_H",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
+					"file": "data/player.png",
+					"semi_transient": true,
+					"stack_index": 2,
+					"type": "image"
+				},
+				{
 					"buffer": 6,
-					"file": "src/CS.cpp",
+					"file": "src/components.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4219,
+						"buffer_size": 9874,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2128,
-								2128
+								8653,
+								8653
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6314.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "include/components.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								765,
+								765
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/CS.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4517,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3140,
+								3140
 							]
 						],
 						"settings":
@@ -1161,14 +1239,233 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1254.0,
+						"translation.y": 2248.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5623,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										135,
+										143
+									],
+									[
+										176,
+										184
+									],
+									[
+										401,
+										409
+									],
+									[
+										608,
+										616
+									],
+									[
+										762,
+										770
+									],
+									[
+										786,
+										794
+									],
+									[
+										910,
+										918
+									],
+									[
+										934,
+										942
+									],
+									[
+										1147,
+										1155
+									],
+									[
+										1404,
+										1412
+									],
+									[
+										1537,
+										1545
+									],
+									[
+										1685,
+										1693
+									],
+									[
+										1792,
+										1800
+									],
+									[
+										1949,
+										1957
+									],
+									[
+										2091,
+										2099
+									],
+									[
+										2312,
+										2320
+									],
+									[
+										2488,
+										2496
+									],
+									[
+										2599,
+										2607
+									],
+									[
+										2715,
+										2723
+									],
+									[
+										2800,
+										2808
+									],
+									[
+										2847,
+										2855
+									],
+									[
+										3128,
+										3136
+									],
+									[
+										3366,
+										3374
+									],
+									[
+										3671,
+										3679
+									],
+									[
+										3712,
+										3720
+									],
+									[
+										3801,
+										3809
+									],
+									[
+										3980,
+										3988
+									],
+									[
+										4157,
+										4165
+									],
+									[
+										4300,
+										4308
+									],
+									[
+										4386,
+										4394
+									],
+									[
+										4427,
+										4435
+									],
+									[
+										4510,
+										4518
+									],
+									[
+										4707,
+										4715
+									],
+									[
+										4902,
+										4910
+									],
+									[
+										5177,
+										5185
+									],
+									[
+										5267,
+										5275
+									],
+									[
+										5504,
+										5512
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "include/CS.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1217,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								583,
+								583
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 25.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "src/system.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1180,8 +1477,8 @@
 						"selection":
 						[
 							[
-								5443,
-								5443
+								386,
+								386
 							]
 						],
 						"settings":
@@ -1189,15 +1486,15 @@
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 342.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 12,
 					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1222,11 +1519,11 @@
 						"translation.y": 3002.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 13,
 					"file": "src/window.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1238,8 +1535,8 @@
 						"selection":
 						[
 							[
-								1323,
-								1323
+								848,
+								848
 							]
 						],
 						"settings":
@@ -1249,14 +1546,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 456.0,
+						"translation.y": 513.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 14,
 					"file": "include/system.h",
 					"semi_transient": false,
 					"settings":
@@ -1281,98 +1578,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "include/components.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3347,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1867,
-								1862
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1311.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "include/entities.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 234,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								119,
-								119
-							]
-						],
-						"settings":
-						{
-							"auto_name": "#ifndef ENTITIES_H",
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "include/CS.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1077,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								722,
-								722
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 225.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 15,
 					"file": "include/window.h",
 					"semi_transient": false,
 					"settings":
@@ -1384,8 +1594,8 @@
 						"selection":
 						[
 							[
-								1902,
-								1902
+								2727,
+								2727
 							]
 						],
 						"settings":
@@ -1394,10 +1604,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 792.0,
+						"translation.y": 544.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 14,
 					"type": "text"
 				}
 			]
@@ -1453,7 +1663,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":

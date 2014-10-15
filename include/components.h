@@ -11,6 +11,8 @@
 //Entities are just an unsinged long
 typedef unsigned long eId;
 
+
+
 //Enums
 enum Direction {UP = 0x0001, TOP = 0x0001, DOWN = 0x0010, FLOOR = 0x0010, LEFT = 0x0100, RIGHT = 0x1000, NONE = 0x000};
 
@@ -35,6 +37,7 @@ public:
 
 	void update();
 	void setPosition(float x, float y);
+	void resetVel();
 };
 
 //Sprite component
@@ -84,9 +87,7 @@ public:
 
 class CollisionComponent : public Component {
 public:
-
 	
-
 	SDL_Rect rect;
 	MoveComponent* moveC;
 	SpriteComponent* spriteC;
@@ -94,6 +95,7 @@ public:
 	std::map<eId, bool> checkedWith;
 	std::vector<eId> collidingWith;
 	eId collidedWith;
+	bool overlaped;
 	bool collided;
 	bool solid;
 	bool moveable;
@@ -152,5 +154,7 @@ public:
 	SDL_Rect getScreenRect(SDL_Rect r);
 	void follow(eId mc);
 };
+
+
 
 #endif
