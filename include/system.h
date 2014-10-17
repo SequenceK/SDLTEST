@@ -14,6 +14,7 @@ struct Vec2 {
 	bool operator==(Vec2 const& v);
 };
 
+
 class Timer {
 public:
 	static float start, end, elapsed, frame, slice;

@@ -70,11 +70,11 @@ public:
 	SDL_Rect imgRect;
 	SDL_Rect clipRect;
 	SDL_RendererFlip flip;
-	MoveComponent* moveC;
+	std::shared_ptr<MoveComponent> moveC;
 	Vec2 scale;
 	Vec2 offset;
 	Vec2 texSize;
-	SpriteComponent(const std::string &file, std::map<eId, MoveComponent*> &moveMap, eId id);
+	SpriteComponent(const std::string &file, std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id);
 
 	void draw();
 	void CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos);
@@ -89,11 +89,12 @@ class CollisionComponent : public Component {
 public:
 	
 	SDL_Rect rect;
-	MoveComponent* moveC;
-	SpriteComponent* spriteC;
+	std::shared_ptr<MoveComponent> moveC;
+	std::shared_ptr<SpriteComponent> spriteC;
 	std::map<unsigned int, bool> collideGroups;
 	std::map<eId, bool> checkedWith;
 	std::vector<eId> collidingWith;
+	std::map<eId, float> overlapingWith;
 	eId collidedWith;
 	bool overlaped;
 	bool collided;
@@ -102,10 +103,12 @@ public:
 	bool debugDraw;
 	int touching;
 	std::vector<int> gridIndex;
-	CollisionComponent(int w, int h, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
-	CollisionComponent(std::map<eId, SpriteComponent*> &spriteMap, std::map<eId, MoveComponent*> &moveMap, eId id, bool s);
+	CollisionComponent(int w, int h, std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id, bool s);
+	CollisionComponent(std::map<eId, std::shared_ptr<SpriteComponent>> &spriteMap,
+	 std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id, bool s);
 
 	void update();
+	void postUpdate();
 	void updatePosition();
 	void getGridIndex(Grid &g);
 	void CollideWith(eId e);
@@ -113,8 +116,8 @@ public:
 
 class ControllerComponent : public Component {
 public:
-	MoveComponent* moveC;
-	ControllerComponent(std::map<eId, MoveComponent*> &moveMap, eId id);
+	std::shared_ptr<MoveComponent> moveC;
+	ControllerComponent(std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id);
 
 	void eventUpdate(SDL_Event &e);
 };
@@ -137,7 +140,11 @@ public:
 	std::map<std::string, float> fProps;
 	std::map<std::string, bool> boolProps;
 	std::map<std::string, std::string> stringProps;
+	std::vector<std::string> types;
 	PropertiesComponent(eId id);
+
+	std::string getType();
+	void setType();
 };
 
 class Camera : public MoveComponent {

@@ -33,8 +33,8 @@ void bulletUpdate(eId id){
 
 eId bullet(Vec2 const &pos, eId const &oid){
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(pos.x,
-		pos.y + CS::spriteCS[oid]->imgRect.h/2, id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(pos.x,
+		pos.y + CS::spriteCS[oid]->imgRect.h/2, id));
 	CS::moveCS[id]->drag = {0,0};
 	CS::moveCS[id]->maxV = {10, 10};
 	CS::moveCS[id]->terV = {10, 10};
@@ -48,18 +48,18 @@ eId bullet(Vec2 const &pos, eId const &oid){
 		CS::moveCS[id]->acc.x = -speed;
 		CS::moveCS[id]->pos.x -= 20;
 	}
-	CS::spriteCS[id] = new SpriteComponent("../data/hello.png", CS::moveCS, id);
+	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/hello.png", CS::moveCS, id));
 	CS::spriteCS[id]->setScale(0.25, 0.1);
-	//CS::spriteCS[id]->setColor(0, 0, 0);
-	CS::propCS[id] = new PropertiesComponent(id);
+	CS::spriteCS[id]->setColor(255, 100, 255);
+	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["shooter"] = oid;
 	CS::propCS[id]->fProps["duration"] = 1*1600;
 	CS::propCS[id]->fProps["flip"] = 1*f;
 	CS::propCS[id]->stringProps["type"] == "bullet";
-	CS::funcQCS[id] = new FuncQComponent(id);
+	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));
 	void (*Func)(eId) = bulletUpdate;
 	CS::funcQCS[id]->add(Func);
-	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,false);
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(CS::spriteCS,CS::moveCS,id,false));
 	CS::collisionCS[id]->moveable = false;
 	//CS::collisionCS[id]->debugDraw = true;
 }
@@ -147,18 +147,18 @@ eId TEST(Vec2 const &pos) {
 	float x = pos.x;
 	float y = pos.y;
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(x, y, id);
-	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
-	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(x, y, id));
+	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/player.png", CS::moveCS, id));
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(CS::spriteCS,CS::moveCS,id,true));
 	CS::collisionCS[id]->moveable = true;
 	//CS::controllerCS[id] = new ControllerComponent(CS::moveCS, id);
-	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->groups["bullets"] = std::vector<eId>{};
 	CS::propCS[id]->boolProps["shooting"] = false;
 	CS::propCS[id]->fProps["fireRate"] = 100;
-	CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
-	CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
-	CS::funcQCS[id] = new FuncQComponent(id);
+	//CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
+	//CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
+	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;
 	void (*pFunc)(eId) = playerUpdate;
 	void (*pUpdate)(eId, SDL_Event&) = playerEventUpdate;
 	CS::funcQCS[id]->add(pFunc);
@@ -180,11 +180,12 @@ eId TEST(Vec2 const &pos) {
 
 
 void enemyUpdate(eId id){
-	eId echecker = CS::propCS[id]->entities["edgeChecker"];
-	eId wchecker = CS::propCS[id]->entities["wallChecker"];
-	if(!CS::collisionCS[echecker]->overlaped || CS::collisionCS[wchecker]->overlaped){
-		CS::moveCS[id]->acc.x *= -1;
-	}
+	// eId echecker = CS::propCS[id]->entities["edgeChecker"];
+	// eId wchecker = CS::propCS[id]->entities["wallChecker"];
+	// if(!CS::collisionCS[echecker]->overlaped || CS::collisionCS[wchecker]->overlaped){
+	// 	CS::moveCS[id]->acc.x *= -1;
+	// 	CS::moveCS[id]->vel.x = 0;
+	// }
 	if(CS::moveCS[id]->vel.x > 0){
 		CS::spriteCS[id]->facing = RIGHT;
 	}else if(CS::moveCS[id]->vel.x < 0){
@@ -196,25 +197,28 @@ void edgeCheckerUpdate(eId id){
 	eId parent = CS::propCS[id]->entities["parent"];
 	//MoveComponent* pMoveC = CS::moveCS[parent];
 	//CollisionComponent* pCollC = CS::collisionCS[parent];
-
+	if(!CS::collisionCS[id]->overlaped){
+		CS::moveCS[parent]->acc.x *= -1;
+		CS::moveCS[parent]->vel.x = 0;
+	}
 	if(CS::moveCS[parent]->acc.x > 0){
 		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x + 1;
 	} else if(CS::moveCS[parent]->acc.x < 0){
 		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x - CS::collisionCS[id]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x - 1;
 	}
-	CS::moveCS[id]->pos.y = CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.y + 1;
+	CS::moveCS[id]->pos.y = CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h + CS::moveCS[id]->acc.y + CS::moveCS[id]->vel.y + 1;
 }
 
 eId edgeChecker(eId parent){
 	Vec2 cPos = {CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w,
 	             CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h};
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(cPos.x, cPos.y, id);
-	CS::collisionCS[id] = new CollisionComponent(4, 4, CS::moveCS, id, false);
-	//CS::collisionCS[id]->debugDraw = true;
-	CS::propCS[id] = new PropertiesComponent(id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(cPos.x, cPos.y, id));
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(4, 4, CS::moveCS, id, false));
+	CS::collisionCS[id]->debugDraw = true;
+	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["parent"] = parent;
-	CS::funcQCS[id] = new FuncQComponent(id);
+	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;
 	void (*cFunc)(eId) = edgeCheckerUpdate; 
 	CS::funcQCS[id]->add(cFunc);
 
@@ -225,16 +229,18 @@ void wallCheckerUpdate(eId id){
 	eId parent = CS::propCS[id]->entities["parent"];
 	//MoveComponent* pMoveC = CS::moveCS[parent];
 	//CollisionComponent* pCollC = CS::collisionCS[parent];
-
-	if(CS::moveCS[parent]->acc.x > 0){
-		CS::moveCS[id]->pos = 
-		{CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w + 5,
-			CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h - CS::collisionCS[id]->rect.h - 1};
-	} else if(CS::moveCS[parent]->acc.x < 0){
-		CS::moveCS[id]->pos = 
-		{CS::moveCS[parent]->pos.x - CS::collisionCS[id]->rect.w - 5,
-			CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h - CS::collisionCS[id]->rect.h - 1};
+	if(CS::collisionCS[id]->overlaped){
+		//CS::moveCS[parent]->acc.x *= -1;
+		//CS::moveCS[parent]->vel.x = 0;
+		if(CS::collisionCS[parent]->touching & FLOOR)
+					CS::moveCS[parent]->vel.y = -20;
 	}
+	if(CS::moveCS[parent]->vel.x > 0){
+		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x + 5;
+	} else if(CS::moveCS[parent]->vel.x < 0){
+		CS::moveCS[id]->pos.x = CS::moveCS[parent]->pos.x - CS::collisionCS[id]->rect.w + CS::moveCS[id]->acc.x + CS::moveCS[id]->vel.x - 5;
+	}
+	CS::moveCS[id]->pos.y = CS::moveCS[parent]->pos.y + CS::moveCS[id]->acc.y + CS::moveCS[id]->vel.y - 1;
 }
 
 
@@ -243,12 +249,12 @@ eId wallChecker(eId parent){
 	Vec2 cPos =
 	{CS::moveCS[parent]->pos.x + CS::collisionCS[parent]->rect.w,
 		CS::moveCS[parent]->pos.y + CS::collisionCS[parent]->rect.h};
-	CS::moveCS[id] = new MoveComponent(cPos.x, cPos.y, id);
-	CS::collisionCS[id] = new CollisionComponent(1, 1, CS::moveCS, id, false);
-	//CS::collisionCS[id]->debugDraw = true;
-	CS::propCS[id] = new PropertiesComponent(id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(cPos.x, cPos.y, id));
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(1, CS::collisionCS[parent]->rect.h - 1, CS::moveCS, id, false));
+	CS::collisionCS[id]->debugDraw = true;
+	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["parent"] = parent;
-	CS::funcQCS[id] = new FuncQComponent(id);
+	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;
 	void (*cFunc)(eId) = wallCheckerUpdate; 
 	CS::funcQCS[id]->add(cFunc);
 
@@ -259,8 +265,8 @@ eId ENEMY(Vec2 const &pos) {
 	float x = pos.x;
 	float y = pos.y;
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(x, y, id);
-	CS::spriteCS[id] = new SpriteComponent("../data/player.png", CS::moveCS, id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(x, y, id));
+	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/player.png", CS::moveCS, id));
 	CS::spriteCS[id]->setScale(2,2);
 	CS::spriteCS[id]->setFrame(30,27);
 	std::vector<int> f = {1,2,3,4};
@@ -270,15 +276,15 @@ eId ENEMY(Vec2 const &pos) {
 	CS::moveCS[id]->drag = {0.5,0.1};
 	CS::moveCS[id]->acc = {1, 1};
 
-	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(CS::spriteCS,CS::moveCS,id,true));
 	CS::collisionCS[id]->moveable = true;
 	//CS::collisionCS[id]->debugDraw = true;
 
-	CS::propCS[id] = new PropertiesComponent(id);
+	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
 	CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
 
-	CS::funcQCS[id] = new FuncQComponent(id);
+	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;
 	void (*eFunc)(eId) = enemyUpdate;
 	CS::funcQCS[id]->add(eFunc);
 	
@@ -288,24 +294,25 @@ eId ENEMY(Vec2 const &pos) {
 
 eId mBox(float x, float y){
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(x, y, id);
-	CS::spriteCS[id] = new SpriteComponent("../data/hello.png", CS::moveCS, id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(x, y, id));
+	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/hello.png", CS::moveCS, id));
 	//CS::moveCS[id]->vel.y = sin(rand()%361)*CS::moveCS[id]->maxV.y;
 	//CS::moveCS[id]->vel.x = cos(rand()%361)*CS::moveCS[id]->maxV.x;
 	//CS::moveCS[id]->maxV = {3,3};
-	//CS::spriteCS[id]->setScale(0.2,0.2);
-	CS::collisionCS[id] = new CollisionComponent(CS::spriteCS,CS::moveCS,id,true);
+	CS::spriteCS[id]->setScale(0.1,0.1);
+	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(CS::spriteCS,CS::moveCS,id,true));
 	CS::collisionCS[id]->moveable = false;
 	//CS::collisionCS[id]->debugDraw = true;
-	float grid = CS::collisionCS[id]->rect.w;
+	float grid = CS::spriteCS[id]->imgRect.w;
 	CS::moveCS[id]->pos = {floor(x/grid)*grid, floor(y/grid)*grid};
+	CS::setGroup(id, "tiles");
 	return id;
 }
 
 eId GAMEOVER(){
 	eId id = CS::createEntityID();
-	CS::moveCS[id] = new MoveComponent(0, 0, id);
-	CS::spriteCS[id] = new SpriteComponent("../data/gameover.bmp", CS::moveCS, id);
+	CS::moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(0, 0, id));
+	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/gameover.bmp", CS::moveCS, id));
 
 
 	return id;
@@ -313,7 +320,7 @@ eId GAMEOVER(){
 
 eId createCamera(float x, float y){
 	eId id = CS::createCameraID();
-	CS::cameras[id] = new Camera(x, y, 800, 600, 1, id);
+	CS::cameras[id] = std::shared_ptr<Camera>(new Camera(x, y, 800, 600, 1, id));
 
 	return id;
 }

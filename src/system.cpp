@@ -50,7 +50,7 @@ bool inCamBounds(Vec2 pos, Camera* c){
 
 int DELTA = 0;
 bool outOfBounds(unsigned long id, SDL_Rect& bounds){
-	CollisionComponent* c = CS::collisionCS[id];
+	std::shared_ptr<CollisionComponent> c = CS::collisionCS[id];
 	if(c->rect.x < bounds.x || c->rect.x + c->rect.w > bounds.x + bounds.w || c->rect.y < bounds.y || c->rect.y + c->rect.h > bounds.y + bounds.h){
 		if(c->rect.x < bounds.x){
 			c->moveC->pos.x = bounds.x+DELTA;
@@ -289,8 +289,8 @@ void QuadTree::draw(){
 }
 
 void collide(eId e1, eId e2){
-	CollisionComponent* c1 = CS::collisionCS[e1];
-	CollisionComponent* c2 = CS::collisionCS[e2];
+	std::shared_ptr<CollisionComponent> c1 = CS::collisionCS[e1];
+	std::shared_ptr<CollisionComponent> c2 = CS::collisionCS[e2];
 	if(!c1->moveable && !c2->moveable)
 	{
 		return;

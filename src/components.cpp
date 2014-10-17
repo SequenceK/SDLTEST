@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cmath>
 #include <typeinfo>
+#include <memory>
 #include <SDL2/SDL.h>
 #include "../include/window.h"
 #include "../include/system.h"
@@ -43,8 +44,8 @@ void FuncQComponent::eventUpdate(SDL_Event &e){
 	}
 }
 
-CollisionComponent::CollisionComponent(std::map<eId, SpriteComponent*> &spriteMap,
-		std::map<eId, MoveComponent*> &moveMap, eId id, bool s = true) : Component(id){
+CollisionComponent::CollisionComponent(std::map<eId, std::shared_ptr<SpriteComponent>> &spriteMap,
+		std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id, bool s = true) : Component(id){
 	spriteC = spriteMap[id];
 	rect = spriteMap[id]->imgRect;
 	moveC = moveMap[id];
@@ -58,7 +59,7 @@ CollisionComponent::CollisionComponent(std::map<eId, SpriteComponent*> &spriteMa
 }
 
 CollisionComponent::CollisionComponent(int w, int h,
-		std::map<eId, MoveComponent*> &moveMap, eId id, bool s = true) : Component(id){
+		std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id, bool s = true) : Component(id){
 	spriteC = nullptr;
 	rect.w = w;
 	rect.h = h;
@@ -82,7 +83,14 @@ void CollisionComponent::update(){
 	touching = NONE;
 	collided = false;
 	overlaped = false;
+	overlapingWith.clear();
 	collidingWith.clear();
+}
+
+void CollisionComponent::postUpdate(){
+	float maxArea;
+	for(auto it = overlapingWith.begin(); it != overlapingWith.end(); it++){
+	}
 }
 
 void CollisionComponent::updatePosition(){
@@ -98,7 +106,7 @@ void CollisionComponent::getGridIndex(Grid &g){
 	gridIndex = g.getIndex(owner);
 }
 
-ControllerComponent::ControllerComponent(std::map<eId, MoveComponent*> &moveMap, eId id) : Component(id){
+ControllerComponent::ControllerComponent(std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id) : Component(id){
 	moveC = moveMap[id];
 }
 
@@ -139,7 +147,7 @@ void ControllerComponent::eventUpdate(SDL_Event &e){
 }
 
 SpriteComponent::SpriteComponent(const std::string &file, 
-		std::map<eId, MoveComponent*> &moveMap, eId id) : Component(id){
+		std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id) : Component(id){
 	if(CS::textures[file] == nullptr){
 
 		img = Window::LoadImage(file);
@@ -169,6 +177,7 @@ SpriteComponent::SpriteComponent(const std::string &file,
 	facing = RIGHT;
 	flip = SDL_FLIP_NONE;
 }
+
 
 void SpriteComponent::draw(){
 	SDL_SetTextureColorMod(img, color.r, color.g, color.b);
@@ -243,6 +252,7 @@ void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 	imgRect = b1;
 	clipRect = b2;
 }
+
 
 void SpriteComponent::update(){
 	imgRect.x = moveC->pos.x + offset.x;
@@ -366,25 +376,6 @@ void MoveComponent::resetVel(){
 
 Component::Component(eId id) : owner(id){}
 
-SpriteComponent* CS::getSpriteC(eId e){
-	if(spriteCS[e] != nullptr){
-		return spriteCS[e];
-	} else {
-		throw "spirte component not found";
-		return nullptr;
-	}
-}
-
-
-
-CollisionComponent* CS::getCollisionC(eId e){
-	if(collisionCS[e] != nullptr){
-		return collisionCS[e];
-	} else {
-		throw "collision component not found";
-		return nullptr;
-	}
-}
 
 Camera::Camera(float x, float y, float w, float h, float z, eId id) : MoveComponent(0, 0, id) {
 	size = {w, h};
@@ -413,7 +404,7 @@ SDL_Rect Camera::getScreenRect(SDL_Rect r){
 void Camera::update(){
 	size.x = winSize.x/zoom;
 	size.y = winSize.y/zoom;
-	if(followE != NULL){
+	if(followE != 0){
 		pos.x = CS::moveCS[followE]->pos.x + CS::collisionCS[followE]->rect.w/2 - winSize.x/(2*zoom);
 		pos.y = CS::moveCS[followE]->pos.y + CS::collisionCS[followE]->rect.h/2 - winSize.y/(2*zoom);
 	}

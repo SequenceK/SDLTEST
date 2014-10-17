@@ -66,10 +66,7 @@ int main(int argc, char **argv){
 			}
 			if (e.type == SDL_KEYDOWN){
 				switch(e.key.keysym.sym){
-					case SDLK_r:
-						CS::clear();
-						c = createCamera(0,0);
-						break;
+					
 				}
 			}
 			if (e.type == SDL_KEYUP){
@@ -77,13 +74,17 @@ int main(int argc, char **argv){
 					case SDLK_e:
 						controll *= -1;
 						break;
+					case SDLK_r:
+						CS::clear();
+						c = createCamera(0,0);
+						break;
 				}
 			}
 
 			CS::eventUpdate(e);
 		}
-		// if(createBox)
-		// mBox(rand()%800, rand()%600);
+		//if(rand()%10 > 5)
+		mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;
 		Timer::slice += Timer::elapsed;
 		Window::Clear();
