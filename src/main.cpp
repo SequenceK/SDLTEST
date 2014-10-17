@@ -84,7 +84,7 @@ int main(int argc, char **argv){
 			CS::eventUpdate(e);
 		}
 		//if(rand()%10 > 5)
-		mBox(rand()%800, rand()%600);
+		//mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;
 		Timer::slice += Timer::elapsed;
 		Window::Clear();

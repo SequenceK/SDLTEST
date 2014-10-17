@@ -299,7 +299,7 @@ eId mBox(float x, float y){
 	//CS::moveCS[id]->vel.y = sin(rand()%361)*CS::moveCS[id]->maxV.y;
 	//CS::moveCS[id]->vel.x = cos(rand()%361)*CS::moveCS[id]->maxV.x;
 	//CS::moveCS[id]->maxV = {3,3};
-	CS::spriteCS[id]->setScale(0.1,0.1);
+	//CS::spriteCS[id]->setScale(0.1,0.1);
 	CS::collisionCS[id] = std::shared_ptr<CollisionComponent>(new CollisionComponent(CS::spriteCS,CS::moveCS,id,true));
 	CS::collisionCS[id]->moveable = false;
 	//CS::collisionCS[id]->debugDraw = true;
