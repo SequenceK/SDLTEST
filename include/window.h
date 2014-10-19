@@ -31,7 +31,8 @@ public:
 	* Initialize SDL, setup the window and renderer
 	* @param title The window title
 	*/
-	static void Init(std::string title = "Window");
+	static void Init(std::string title = "Window", bool fullscreen = false,
+	 int x = 480, int y = 80, int w = 800, int h = 600);
 	///Quit SDL and destroy the window and renderer
 	static void Quit();
 	/**
@@ -71,7 +72,6 @@ public:
 	static SDL_Rect Box();
 
 	static void DrawRect(const SDL_Rect* rect, Uint8 r, Uint8 g, Uint8 b);
-private:
 	static std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> mWindow;
 	static std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)> mRenderer;
 	static SDL_Rect mBox;

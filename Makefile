@@ -1,11 +1,15 @@
 CXX = g++
 SDL_LIB = -LC:\SDL\x86_64-w64-mingw32\lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 SDL_INCLUDE = -IC:\SDL\x86_64-w64-mingw32\include
+LUA_LIB = -LC:\lua\lib -llua
+LUA_INCLUDE = -IC:\lua\include
+SGS_INCLUDE = -IC:\sgscript\src -IC:\sgscript\ext
+SGS_LIB = -Lbin -lsgscript
 SDL_LIB32 = -LC:\SDL\i686-w64-mingw32\lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 SDL_INCLUDE32 = -IC:\SDL\i686-w64-mingw32\include
-CXXFLAGS = -Wall -c -std=c++11 $(SDL_INCLUDE)
+CXXFLAGS = -Wall -c -std=c++11 $(SDL_INCLUDE) $(SGS_INCLUDE)
 CXXFLAGS32 = -Wall -m32 -c -std=c++11 $(SDL_INCLUDE32)
-LDFLAGS = -lmingw32 -mwindows -mconsole $(SDL_LIB)
+LDFLAGS = -lmingw32 -mwindows -mconsole $(SDL_LIB) $(SGS_LIB)
 LDFLAGS32 = -lmingw32 -mwindows -mconsole -m32 $(SDL_LIB32)
 ODIR = obj/
 ODIR32 = obj32/
@@ -14,7 +18,8 @@ IDIR = include/
 EXE = bin/game.exe
 EXE32 = bin32/game.exe
 binDIR = bin/
-changeDir = cd bin
+binDIR32 = bin32/
+changeDir = cd 
 OBJS := $(patsubst $(SDIR)%.cpp,$(ODIR)%.o,$(wildcard $(SDIR)*.cpp))
 OBJS32 := $(patsubst $(SDIR)%.cpp,$(ODIR32)%.o,$(wildcard $(SDIR)*.cpp))
 INCLUDES := $(wildcard $(IDIR)*.h)
@@ -39,8 +44,11 @@ $(ODIR)%.o: $(SDIR)%.cpp $(INCLUDES)
 
 # RUN 
 run: $(binDIR)game.exe $(OBJS)
-	$(changeDir) & game.exe
+	$(changeDir) $(binDIR) & game.exe
+
+run32: $(binDIR32)game.exe $(OBJS32)
+	$(changeDir) $(binDIR32) & game.exe	
 
 # CLEAN
 clean:
-	del obj\*.o && del bin\*.exe
+	del obj\*.o && del bin\*.exe && del obj32\*.o && del bin32\*.exe

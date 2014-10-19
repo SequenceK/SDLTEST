@@ -6,28 +6,42 @@
 #include <chrono>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #include "../include/window.h"
 #include "../include/cleanup.h"
 #include "../include/CS.h"
 #include "../include/system.h"
 #include "../include/entities.h"
+#include "../include/SimpleIni.h"
 
 
 using namespace std;
 
-
+bool strToBool(std::string str){
+	if(str == "False" || str == "0" || str == "false")
+		return false;
+	else if(str == "True" || str == "1" || str == "true")
+		return true;
+	else{
+		std::cout << "Value recieved not true nor false! returning false" << std::endl;
+		return false;
+	}
+}
 
 int main(int argc, char **argv){
+	CSimpleIniA ini;
+	ini.SetUnicode();
+	ini.LoadFile("../config.ini");
+	const char* title = ini.GetValue("window","title",NULL);
+	bool fullscreen = strToBool(ini.GetValue("window","fullscreen",NULL));
 	try {
-		Window::Init("GAME");
+		Window::Init(title, fullscreen);
 	}
 	catch (const std::runtime_error &e){
 		std::cout << e.what() << std::endl;
 		Window::Quit();
 		return -1;
 	}
-
-
 	SDL_Event e;
 	bool quit=false;
 	int controll = 1;
@@ -37,9 +51,13 @@ int main(int argc, char **argv){
 	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
 	// r.x=1;r.y=1;
 	eId c = createCamera(0,0);
+	SDL_Rect textrect = {0,0,400,100};
 	//eId c2 = createCamera(400,300);
+	SDL_StartTextInput();
+	//SDL_SetTextInputRect(&textrect);
+	std::string text = "";
 	while(!quit){
-		
+		text = "";
 		auto timePoint1(chrono::high_resolution_clock::now());
 
 		while (SDL_PollEvent(&e)){
@@ -66,7 +84,8 @@ int main(int argc, char **argv){
 			}
 			if (e.type == SDL_KEYDOWN){
 				switch(e.key.keysym.sym){
-					
+					case SDLK_ESCAPE:
+						quit = true;break;
 				}
 			}
 			if (e.type == SDL_KEYUP){
@@ -80,9 +99,13 @@ int main(int argc, char **argv){
 						break;
 				}
 			}
+			if(e.type == SDL_TEXTINPUT){
+				text = e.text.text;
+			}
 
 			CS::eventUpdate(e);
 		}
+		std::cout << text << std::endl;
 		//if(rand()%10 > 5)
 		//mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;
@@ -114,3 +137,42 @@ int main(int argc, char **argv){
 	Window::Quit();
 	return 0;
 }
+
+// int main(int argc, char *argv[])
+// {
+//    // InitVideo();
+//     /* ... */
+// 	SDL_Event event;
+//     SDL_StartTextInput();
+//     char* text;
+//     char* ptext;
+//     while (true)
+//     {
+//         if (SDL_PollEvent(&event))
+//         {
+//             switch (event.type)
+//             {
+//                 case SDL_TEXTINPUT:
+//                     /* Add new text onto the end of our text */
+//                     strcat(text, event.text.text);
+//                     break;
+//                 case SDL_TEXTEDITING:
+                    
+//                     Update the composition text.
+//                     Update the cursor position.
+//                     Update the selection length (if any).
+                    
+//                     composition = event.edit.text;
+//                     cursor = event.edit.start;
+//                     selection_len = event.edit.length;
+//                     break;
+//             }
+//         }
+//         if(text == ptext){
+//         	std::string str = text;
+//         	std::cout << str << std::endl;
+//         }
+//         ptext = text;
+//        // Redraw();
+//     }
+// }

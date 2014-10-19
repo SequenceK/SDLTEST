@@ -20,29 +20,32 @@ Window::Window(){
 }
 Window::~Window(){
 }
-void Window::Init(std::string title){
+void Window::Init(std::string title, bool fullscreen, int x, int y, int w, int h){
     //initialize all SDL subsystems
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		throw std::runtime_error("SDL Init Failed");
     if (TTF_Init() == -1)
 		throw std::runtime_error("TTF Init Failed");
 
-    //Setup our window
-    mBox.x = 0;
-    mBox.y = 0;
-    mBox.w = 800;
-    mBox.h = 600;
+    //Setup our windo
+    mBox.x = x;
+    mBox.y = y;
+    mBox.w = w;
+    mBox.h = h;
     //Create our window
     mWindow.reset(SDL_CreateWindow(title.c_str(),
-     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-        mBox.w, mBox.h, SDL_WINDOW_SHOWN));
+     mBox.x, mBox.y, 
+        mBox.w, mBox.h, SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI));
+    if(fullscreen){
+        SDL_SetWindowFullscreen(mWindow.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+    }
     //Make sure it created ok
     if (mWindow == nullptr)
         throw std::runtime_error("Failed to create window");
 
     //Create the renderer
     mRenderer.reset(SDL_CreateRenderer(mWindow.get(), -1,
-     SDL_RENDERER_PRESENTVSYNC));
+     SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED));
     //Make sure it created ok
     if (mRenderer == nullptr)
         throw std::runtime_error("Failed to create renderer");
@@ -98,7 +101,7 @@ void Window::Clear(){
 void Window::Present(){
 
     SDL_RenderPresent(mRenderer.get());
-    SDL_SetRenderDrawColor(mRenderer.get(), 0, 0, 0, 0);
+    SDL_SetRenderDrawColor(mRenderer.get(), 255, 255, 255, 255);
 }
 SDL_Rect Window::Box(){
     return mBox;

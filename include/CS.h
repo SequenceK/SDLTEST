@@ -10,10 +10,10 @@
 #include "../include/system.h"
 #include "../include/components.h"
 
+extern std::map<eId, std::shared_ptr<MoveComponent>> moveCS;
 
 class CS {
 public:
-	static std::map<eId, std::shared_ptr<MoveComponent>> moveCS;
 	static std::map<eId, std::shared_ptr<SpriteComponent>> spriteCS;
 	static std::map<eId, std::shared_ptr<ControllerComponent>> controllerCS;
 	static std::map<eId, std::shared_ptr<CollisionComponent>> collisionCS;
@@ -28,6 +28,7 @@ public:
 
 	static eId createEntityID();
 	static eId createCameraID();
+	static void createMoveC(float xx, float yy, const eId &id);
 	static void deleteEntity(eId id);
 	static void setGroup(const eId &id, const std::string &s);
 
@@ -45,7 +46,6 @@ public:
 	static eId _E_INDEX; //entities index
 	static eId _C_INDEX; //cameras index
 };
-
 
 
 

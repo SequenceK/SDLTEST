@@ -5,22 +5,22 @@ Making a component system 2D game engine for a learning experience.
 
 Components:
 -----------
-* ###MoveComponent
+* MoveComponent
 >Component that handles position, velocity, and acceleration
 
-* ###SpriteComponent
+* SpriteComponent
 >Component that handles sprites and drawing
 
-* ###CollisionComponent
+* CollisionComponent
 >Component that handles collision
 
-* ###PropsComponent
+* PropsComponent
 >Handles properties
 
-* ###FuncQComponent
+* FuncQComponent
 >handles function queues
 
-* ###Camera
+* Camera
 >Camera with zoom, position, and size in addition to screen position and screen size
 
 TODO:

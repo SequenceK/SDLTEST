@@ -258,24 +258,26 @@ void SpriteComponent::update(){
 	imgRect.x = moveC->pos.x + offset.x;
 	imgRect.y = moveC->pos.y + offset.y;
 	if(playingAnimation){
-		frameTimer += Timer::frame;
-		if(frameTimer >= 1000/currentAnimation.speed){
-			currentAnimation.currentFrame = currentAnimation.frames[currentAnimation.currentIt];
-			currentAnimation.currentIt++;
-			int fY = int(currentAnimation.currentFrame/(texSize.x/(clipRect.w/scale.x)));
+		if(frameTimer < 1000/currentAnimation.speed && !currentAnimation.played){
+			currentAnimation.currentFrame = currentAnimation.frames.at(currentAnimation.currentIt);
+			int fY = floor(currentAnimation.currentFrame/(texSize.x/(clipRect.w/scale.x)));
 			clipRect.x = currentAnimation.currentFrame*clipRect.w;
 			clipRect.y = fY*clipRect.h;
-			if(currentAnimation.currentIt >= currentAnimation.frames.size())
+			currentAnimation.currentIt++;
+			currentAnimation.played = true;
+		}
+		else if(frameTimer > 1000/currentAnimation.speed && currentAnimation.played){
+			currentAnimation.played = false;
+			frameTimer = 0;
+			if(currentAnimation.currentIt == currentAnimation.frames.size())
 			{
 				currentAnimation.currentIt = 0;
 				if(!currentAnimation.loop) {
 					playingAnimation = false;
 				}
 			}
-			// std::cout << "currentIT: " << currentAnimation.currentIt <<
-			//  "currentFrame: " << currentAnimation.currentFrame << "frames size: " << currentAnimation.frames.size() << std::endl;
-			frameTimer = 0;
 		}
+		frameTimer += Timer::frame;
 	}
 	if(facing == LEFT)
 	{
@@ -309,12 +311,13 @@ void SpriteComponent::setScale(float x, float y){
 }
 
 void SpriteComponent::playAnimation(std::vector<int> frames, float speed, bool loop, bool force){
-	if(!playingAnimation | force){
+	if(frames != currentAnimation.frames || force){
 		currentAnimation.frames.swap(frames);
 		currentAnimation.speed = speed;
 		currentAnimation.loop = loop;
 		currentAnimation.currentIt = 0;
-		frameTimer = 1000/speed;
+		currentAnimation.played = false;
+		frameTimer = 0;
 		playingAnimation = true;
 	}
 }
@@ -382,6 +385,7 @@ Camera::Camera(float x, float y, float w, float h, float z, eId id) : MoveCompon
 	winPos = {x,y};
 	winSize = {w,h};
 	zoom = z;
+	followE = NULL;
 }
 
 void Camera::follow(eId id){
@@ -404,8 +408,8 @@ SDL_Rect Camera::getScreenRect(SDL_Rect r){
 void Camera::update(){
 	size.x = winSize.x/zoom;
 	size.y = winSize.y/zoom;
-	if(followE != 0){
-		pos.x = CS::moveCS[followE]->pos.x + CS::collisionCS[followE]->rect.w/2 - winSize.x/(2*zoom);
-		pos.y = CS::moveCS[followE]->pos.y + CS::collisionCS[followE]->rect.h/2 - winSize.y/(2*zoom);
+	if(followE != NULL){
+		pos.x = moveCS[followE]->pos.x + CS::collisionCS[followE]->rect.w/2 - winSize.x/(2*zoom);
+		pos.y = moveCS[followE]->pos.y + CS::collisionCS[followE]->rect.h/2 - winSize.y/(2*zoom);
 	}
 }

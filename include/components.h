@@ -7,6 +7,7 @@
 #include <memory>
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <functional>
 //#include "../include/system.h"
 //Entities are just an unsinged long
 typedef unsigned long eId;
@@ -17,15 +18,13 @@ typedef unsigned long eId;
 enum Direction {UP = 0x0001, TOP = 0x0001, DOWN = 0x0010, FLOOR = 0x0010, LEFT = 0x0100, RIGHT = 0x1000, NONE = 0x000};
 
 //Basic component
-class Component {
-public:
+struct Component {
 	Component(eId id);
 	eId owner;
 };
 
 //Movemenet component
-class MoveComponent : public Component {
-public:
+struct MoveComponent : public Component {
 	Vec2 pos;
 	Vec2 deltaPos;
 	Vec2 acc;
@@ -41,9 +40,7 @@ public:
 };
 
 //Sprite component
-class SpriteComponent : public Component {
-public:
-
+struct SpriteComponent : public Component {
 	struct Animation {
 		std::vector<int> frames;
 		int currentFrame;
@@ -85,9 +82,7 @@ public:
 	void playAnimation(std::vector<int> frames, float speed=1, bool loop=false, bool force=false);
 };
 
-class CollisionComponent : public Component {
-public:
-	
+struct CollisionComponent : public Component {
 	SDL_Rect rect;
 	std::shared_ptr<MoveComponent> moveC;
 	std::shared_ptr<SpriteComponent> spriteC;
@@ -114,16 +109,14 @@ public:
 	void CollideWith(eId e);
 };
 
-class ControllerComponent : public Component {
-public:
+struct ControllerComponent : public Component {
 	std::shared_ptr<MoveComponent> moveC;
 	ControllerComponent(std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id);
 
 	void eventUpdate(SDL_Event &e);
 };
 
-class FuncQComponent : public Component {
-public:
+struct FuncQComponent : public Component {
 	std::vector<void (*)(eId)> functions;
 	std::vector<void (*)(eId, SDL_Event&)> eventFunctions;
 	FuncQComponent(eId id);
@@ -133,8 +126,7 @@ public:
 	void eventUpdate(SDL_Event &e);
 };
 
-class PropertiesComponent : public Component {
-public:
+struct PropertiesComponent : public Component {
 	std::map<std::string, std::vector<eId>> groups;
 	std::map<std::string, eId> entities;
 	std::map<std::string, float> fProps;
@@ -147,8 +139,7 @@ public:
 	void setType();
 };
 
-class Camera : public MoveComponent {
-public:
+struct Camera : public MoveComponent {
 	float zoom;
 	Vec2 winPos;
 	Vec2 winSize;
