@@ -10,10 +10,11 @@
 
 
 
-//CS init
-
+//CS INIT//
 eId CS::_E_INDEX{0};
 eId CS::_C_INDEX{0};
+Vec2 CS::worldMax{0,0};
+Vec2 CS::worldMin{0,0};
 std::map<eId, std::shared_ptr<MoveComponent>> moveCS{};
 std::map<eId, std::shared_ptr<SpriteComponent>> CS::spriteCS{};
 std::map<eId, std::shared_ptr<ControllerComponent>> CS::controllerCS{};
@@ -25,7 +26,9 @@ std::map<const std::string, SDL_Texture*> CS::textures{};
 std::map<eId, std::shared_ptr<Camera>> CS::cameras{};
 std::vector<eId> CS::deletedEntities{};
 //QuadTree CS::qt(0,0,800,600);
+//CS INIT//
 
+//CS CREATE//
 eId CS::createEntityID(){
 	if(deletedEntities.empty()){
 		_E_INDEX++;
@@ -44,6 +47,7 @@ eId CS::createCameraID(){
 void CS::createMoveC(float xx, float yy, const eId &id){
 	moveCS[id] = std::shared_ptr<MoveComponent>(new MoveComponent(xx, yy, id));
 }
+//CS CREATE//
 
 
 void CS::clear(){
@@ -58,17 +62,22 @@ void CS::clear(){
 	CS::groups.clear();
 	CS::_E_INDEX = 0;
 	CS::_C_INDEX = 0;
+	worldMin = {0,0};
+	worldMax = {0,0};
 }
 
-Grid CS::grid(0,0,1000,1000,50);
+//Grid CS::grid(0,0,1000,1000,50);
 int nc=0;
 void CS::collisionUpdate(){
-	// CS::grid.clear();
-
-	// for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-	// 	it->second->getGridIndex(CS::grid);
-	// }
-
+	SDL_Rect worldArea;
+	worldArea.x = worldMin.x;
+	worldArea.y = worldMin.y;
+	worldArea.w = worldMax.x - worldMin.x;
+	worldArea.h = worldMax.y - worldMin.y;
+	QuadTree qt{worldArea.x, worldArea.y, worldArea.w, worldArea.h};
+	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
+		qt.insert(checking->first);
+	}
 	SDL_Rect area;
 	int n=0;
 	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
@@ -84,7 +93,7 @@ void CS::collisionUpdate(){
 				continue;
 
 			it->second->checkedWith[checking->first] = true;
-			if(checkOverlap(checking->first, it->first, &area))
+			if(qt.overlap(checking->first, it->first, &area))
 			{
 				checking->second->overlaped = true;
 				it->second->overlaped = true;
@@ -121,7 +130,9 @@ void CS::collisionUpdate(){
 			done++;
 		}
 	}
-	
+	qt.draw();
+	qt.clear();
+	Window::DrawRect(&worldArea, 255, 0, 0);
 	if(nc != n)
 	std::cout << n << std::endl;
 	nc = n;
@@ -134,7 +145,9 @@ void CS::eventUpdate(SDL_Event &e){
 }
 
 void CS::update(){
-	
+	for(auto it = funcQCS.begin(); it != funcQCS.end(); it++){
+		it->second->update();
+	}
 	for(auto it = moveCS.begin(); it != moveCS.end(); it++){
 		it->second->update();
 	}
@@ -149,9 +162,6 @@ void CS::update(){
 		it->second->update();
 	}
 	CS::cameraUpdate();
-	for(auto it = funcQCS.begin(); it != funcQCS.end(); it++){
-		it->second->update();
-	}
 }
 
 void CS::cameraUpdate(){

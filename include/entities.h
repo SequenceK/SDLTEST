@@ -11,4 +11,7 @@ eId createCamera(float x, float y);
 eId edgeChecker(eId parent);
 eId wallChecker(eId parent);
 
+//*CONSTANTS*//
+extern float P_firerate;
+
 #endif

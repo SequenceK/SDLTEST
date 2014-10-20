@@ -2,7 +2,7 @@
 #define CONSOLE_H
 
 extern bool consoleActive;
-extern std::string currentCommand;
+extern std::string stringBuffer;
 
 void ConsoleUpdate();
 

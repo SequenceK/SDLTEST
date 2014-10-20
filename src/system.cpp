@@ -248,8 +248,8 @@ void QuadTree::clear(){
 
 bool QuadTree::overlap(unsigned long id1, unsigned long id2, SDL_Rect* result){
 	
-	if(!getObject(id1)) return false;
-	if(!getObject(id2)) return false;
+	//if(!getObject(id1)) return false;
+	//if(!getObject(id2)) return false;
 	
 	SDL_Rect *r1 = &CS::collisionCS[id1]->rect, *r2 = &CS::collisionCS[id2]->rect;
 	if(SDL_IntersectRect(r1, r2, result)){
@@ -413,4 +413,15 @@ void seperateX(eId e1, eId e2){
 
 void seperateY(eId e1, eId e2){
 
+}
+
+bool strToBool(std::string str){
+	if(str == "False" || str == "0" || str == "false")
+		return false;
+	else if(str == "True" || str == "1" || str == "true")
+		return true;
+	else{
+		std::cout << "Value recieved not true nor false! returning false" << std::endl;
+		return false;
+	}
 }

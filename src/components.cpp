@@ -64,6 +64,16 @@ CollisionComponent::CollisionComponent(int w, int h,
 	rect.w = w;
 	rect.h = h;
 	moveC = moveMap[id];
+	if(moveC->pos.x < CS::worldMin.x){
+		CS::worldMin.x = moveC->pos.x;
+	} else if(moveC->pos.x + rect.w > CS::worldMax.x){
+		CS::worldMax.x = moveC->pos.x + rect.w;
+	}
+	if(moveC->pos.y < CS::worldMin.y){
+		CS::worldMin.y = moveC->pos.y;
+	} else if(moveC->pos.y + rect.h > CS::worldMax.y){
+		CS::worldMax.y = moveC->pos.y + rect.h;
+	}
 	debugDraw = false;
 	collided = false;
 	overlaped = false;
@@ -74,6 +84,16 @@ CollisionComponent::CollisionComponent(int w, int h,
 }
 
 void CollisionComponent::update(){
+	if(moveC->pos.x < CS::worldMin.x){
+		CS::worldMin.x = moveC->pos.x;
+	} else if(moveC->pos.x + rect.w > CS::worldMax.x){
+		CS::worldMax.x = moveC->pos.x + rect.w;
+	}
+	if(moveC->pos.y < CS::worldMin.y){
+		CS::worldMin.y = moveC->pos.y;
+	} else if(moveC->pos.y + rect.h > CS::worldMax.y){
+		CS::worldMax.y = moveC->pos.y + rect.h;
+	}
 	rect.x = moveC->pos.x;
 	rect.y = moveC->pos.y;
 	if(spriteC != nullptr){
@@ -243,8 +263,8 @@ void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 		}
 		imgRect.x = floor(imgRect.x*zoom);
 		imgRect.y = floor(imgRect.y*zoom);
-		imgRect.h = ceil(imgRect.h*zoom);
-		imgRect.w = ceil(imgRect.w*zoom);
+		imgRect.h = floor(imgRect.h*zoom);
+		imgRect.w = floor(imgRect.w*zoom);
 	
 		//Window::Draw(img, imgRect, &clipRect, 0,0,0,flip);
 		draw();
@@ -333,7 +353,7 @@ MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
 
 void MoveComponent::update(){
 	//vel = {vel.x+acc.x,vel.y+acc.y};
-	if(acc.x != 0 && vel.x < terV.x){
+	if(acc.x != 0 && abs(vel.x) < abs(terV.x)){
 		vel.x += acc.x;
 
 	}
@@ -346,7 +366,7 @@ void MoveComponent::update(){
 			vel.x = 0;
 		}
 	}
-	if(acc.y != 0 && vel.y < terV.y){
+	if(acc.y != 0 && abs(vel.y) < abs(terV.y)){
 		vel.y += acc.y;
 	}
 	else if(drag.y != 0){
@@ -400,8 +420,8 @@ SDL_Rect Camera::getScreenRect(SDL_Rect r){
 	SDL_Rect result;
 	result.x = floor((r.x - pos.x)*zoom);
 	result.y = floor((r.y - pos.y)*zoom);
-	result.w = ceil(r.w*zoom);
-	result.h = ceil(r.h*zoom);
+	result.w = floor(r.w*zoom);
+	result.h = floor(r.h*zoom);
 	return result;
 }
 

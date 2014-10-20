@@ -60,4 +60,7 @@ bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result);
 bool outOfBounds(unsigned long id, SDL_Rect& bounds);
 void collide(unsigned long e1, unsigned long e2);
 
+//TEXT operations
+bool strToBool(std::string str);
+
 #endif

@@ -17,16 +17,6 @@
 
 using namespace std;
 
-bool strToBool(std::string str){
-	if(str == "False" || str == "0" || str == "false")
-		return false;
-	else if(str == "True" || str == "1" || str == "true")
-		return true;
-	else{
-		std::cout << "Value recieved not true nor false! returning false" << std::endl;
-		return false;
-	}
-}
 
 int main(int argc, char **argv){
 	CSimpleIniA ini;
@@ -34,6 +24,7 @@ int main(int argc, char **argv){
 	ini.LoadFile("../config.ini");
 	const char* title = ini.GetValue("window","title",NULL);
 	bool fullscreen = strToBool(ini.GetValue("window","fullscreen",NULL));
+	P_firerate = ::atof(ini.GetValue("player","firerate",NULL));
 	try {
 		Window::Init(title, fullscreen);
 	}
@@ -64,7 +55,7 @@ int main(int argc, char **argv){
 			if (e.type == SDL_QUIT)
 				quit = true;
 			if(e.type == SDL_MOUSEWHEEL){
-				CS::cameras[c]->zoom += 0.05*e.wheel.y;
+				CS::cameras[c]->zoom += 0.5*e.wheel.y;
 			}
 			if(e.type == SDL_MOUSEBUTTONDOWN){
 				if(e.button.button == SDL_BUTTON_LEFT){
@@ -105,7 +96,7 @@ int main(int argc, char **argv){
 
 			CS::eventUpdate(e);
 		}
-		std::cout << text << std::endl;
+		//std::cout << text << std::endl;
 		//if(rand()%10 > 5)
 		//mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;

@@ -4,57 +4,55 @@
 #include "../include/window.h"
 #include <cmath>
 
-bool testCollision(eId owner, eId id, std::string type){
-	if(CS::collisionCS[owner]->collided){
+float P_firerate{};
+
+bool testCollision(eId owner, std::string type){
+	if(CS::collisionCS[owner]->overlaped){
 		// if(CS::propCS[id] == nullptr)
 		// 	return false;
-		if(CS::collisionCS[owner]->collidedWith 
-					!= CS::propCS[owner]->entities["shooter"]){
-			if(CS::propCS[owner]->stringProps["type"] != type){
+
 				return true;
-			}
-		}
+			
 	}
 	return false;
 }
-int f = 1;
 void bulletUpdate(eId id){
 	// eId firstColl = CS::collisionCS[id]->collidingWith[0];
 	// eId shooter = CS::propCS[id]->entities["shooter"];
 	const eId shooter = CS::propCS[id]->entities["shooter"];
 	int flip = CS::propCS[id]->fProps["flip"];
-	moveCS[id]->vel.y = flip*cos(CS::propCS[id]->fProps["duration"]*0.01)*4;// - 3.14/2*flip;
-	if(CS::propCS[id]->fProps["duration"] < 0 ){
-		//	|| testCollision(id, CS::collisionCS[id]->collidedWith, "bullet")){
+	//moveCS[id]->vel.y = flip*cos(CS::propCS[id]->fProps["duration"]*0.01)*4;// - 3.14/2*flip;
+	if(CS::propCS[id]->fProps["duration"] < 0 
+			|| testCollision(id, "bullet")){
 		CS::deleteEntity(id);
 		return;
 	}
-	CS::propCS[id]->fProps["duration"] -= Timer::elapsed;
+	CS::propCS[id]->fProps["duration"] -= Timer::frame;
 }
 
 eId bullet(Vec2 const &pos, eId const &oid){
 	eId id = CS::createEntityID();
 	CS::createMoveC(pos.x, pos.y + CS::spriteCS[oid]->imgRect.h/2, id);
-	moveCS[id]->drag = {0,0};
-	moveCS[id]->maxV = {10, 10};
+	//moveCS[id]->vel = moveCS[oid]->vel;
+	moveCS[id]->drag = {1,1};
+	moveCS[id]->maxV = {100, 100};
 	moveCS[id]->terV = {10, 10};
-	float speed = 10;
-	f *= -1;
+	float speed =0.8;
 	if(CS::spriteCS[oid]->facing == RIGHT){
 		moveCS[id]->acc.x = speed;
 		moveCS[id]->pos.x += CS::spriteCS[oid]->imgRect.w;
 	}
 	else{
 		moveCS[id]->acc.x = -speed;
-		moveCS[id]->pos.x -= 20;
+		moveCS[id]->pos.x -= 0;
 	}
 	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/hello.png", moveCS, id));
-	CS::spriteCS[id]->setScale(1, 1);
+	CS::spriteCS[id]->setScale(0.1, 0.1);
 	CS::spriteCS[id]->setColor(255, 100, 255);
 	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["shooter"] = oid;
 	CS::propCS[id]->fProps["duration"] = 1*1600;
-	CS::propCS[id]->fProps["flip"] = 1*f;
+	CS::propCS[id]->fProps["flip"] = 1;
 	CS::propCS[id]->stringProps["type"] == "bullet";
 	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));
 	void (*Func)(eId) = bulletUpdate;
@@ -91,7 +89,7 @@ void playerUpdate(eId id){
 		//CS::propCS[id]->boolProps["shooting"] = false;
 		shootTimer = 0;
 	}
-	shootTimer += Timer::elapsed;
+	shootTimer += Timer::frame;
 	CS::propCS[id]->boolProps["holdFace"] = false;
 }
 bool shooting = false;
@@ -159,7 +157,7 @@ eId TEST(Vec2 const &pos) {
 	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->groups["bullets"] = std::vector<eId>{};
 	CS::propCS[id]->boolProps["shooting"] = false;
-	CS::propCS[id]->fProps["fireRate"] = 100;
+	CS::propCS[id]->fProps["fireRate"] = P_firerate/Timer::frame;
 	//CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
 	//CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
 	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;
@@ -172,7 +170,7 @@ eId TEST(Vec2 const &pos) {
 	// std::vector<int> f = {1,2,3,4};
 	// CS::spriteCS[id]->playAnimation(f, 8, true);
 	moveCS[id]->maxV = {5,15};
-	moveCS[id]->drag = {0.5,0.1};
+	moveCS[id]->drag = {1,1};
 	moveCS[id]->acc.y = 1;
 	//CS::collisionCS[id]->debugDraw = true;
 	//moveCS[id]->vel.y = sin(rand()%361)*moveCS[id]->maxV.y;
