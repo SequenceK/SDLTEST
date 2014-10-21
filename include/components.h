@@ -89,7 +89,7 @@ struct CollisionComponent : public Component {
 	std::map<unsigned int, bool> collideGroups;
 	std::map<eId, bool> checkedWith;
 	std::vector<eId> collidingWith;
-	std::map<eId, float> overlapingWith;
+	std::vector<eId> overlapingWith;
 	eId collidedWith;
 	bool overlaped;
 	bool collided;

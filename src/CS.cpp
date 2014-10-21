@@ -13,8 +13,7 @@
 //CS INIT//
 eId CS::_E_INDEX{0};
 eId CS::_C_INDEX{0};
-Vec2 CS::worldMax{0,0};
-Vec2 CS::worldMin{0,0};
+SDL_Rect CS::worldbounds = {0,0,0,0};
 std::map<eId, std::shared_ptr<MoveComponent>> moveCS{};
 std::map<eId, std::shared_ptr<SpriteComponent>> CS::spriteCS{};
 std::map<eId, std::shared_ptr<ControllerComponent>> CS::controllerCS{};
@@ -62,77 +61,61 @@ void CS::clear(){
 	CS::groups.clear();
 	CS::_E_INDEX = 0;
 	CS::_C_INDEX = 0;
-	worldMin = {0,0};
-	worldMax = {0,0};
+	worldbounds = {0,0,0,0};
 }
 
-//Grid CS::grid(0,0,1000,1000,50);
+Grid CS::grid(0,0,800,600,50);
 int nc=0;
 void CS::collisionUpdate(){
-	SDL_Rect worldArea;
-	worldArea.x = worldMin.x;
-	worldArea.y = worldMin.y;
-	worldArea.w = worldMax.x - worldMin.x;
-	worldArea.h = worldMax.y - worldMin.y;
-	QuadTree qt{worldArea.x, worldArea.y, worldArea.w, worldArea.h};
+	//qt.clear();
+	//qt.updateBounds(&worldbounds);
+	//std::cout << "CRASHED?!1" << std::endl;
+	grid.updateBounds(&worldbounds);
+	grid.clear();
 	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
-		qt.insert(checking->first);
+		//qt.insert(checking->first);
+		checking->second->getGridIndex(grid);
 	}
 	SDL_Rect area;
 	int n=0;
+	//std::cout << "CRASHED?!2" << std::endl;
+
 	for(auto checking = collisionCS.begin(); checking != collisionCS.end(); checking++){
-		if(!checking->second->moveable)
+		if(!CS::collisionCS[checking->first]->moveable)
 			continue;
-		std::map<eId, float> areas;
+		std::vector<eId> entities;
+		//if(!qt.getObject(entities, checking->first))
+		//	continue;
+		//std::map<eId, float> areas;
 		float maxArea=0;
 		eId maxAreaID;
-		for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
-			if(it->first == checking->first)
+		entities = grid.getEntities(checking->second->gridIndex);
+		for (auto it = entities.begin(); it != entities.end(); ++it){
+			if(*it == checking->first)
 				continue;
-			if(checking->second->checkedWith[it->first])
+			if(!CS::collisionCS[*it]->moveable && !CS::collisionCS[checking->first]->moveable)
 				continue;
-
-			it->second->checkedWith[checking->first] = true;
-			if(qt.overlap(checking->first, it->first, &area))
-			{
+			if(checkOverlap(checking->first, *it, &area)){
+				checking->second->overlapingWith.push_back(*it);
+				collisionCS[*it]->overlapingWith.push_back(checking->first);
 				checking->second->overlaped = true;
-				it->second->overlaped = true;
-				if(checking->second->solid && it->second->solid)
-				{
+				CS::collisionCS[*it]->overlaped = true;
+				if(CS::collisionCS[*it]->solid && CS::collisionCS[checking->first]->solid){
 					checking->second->collided = true;
-					it->second->collided = true;
-					areas[it->first] = area.w*area.h;
+					CS::collisionCS[*it]->collided = true;
+					if(area.w*area.h >= maxArea){
+						maxArea = area.w*area.h;
+						maxAreaID = *it;
+					}
 				}
 			}
-			n++;	
 		}
-		int done=0;
-		while(done!=2){
-			bool foundM = false;
-			done=1;
-			for(auto it = areas.begin(); it != areas.end(); it++){
-				if(it->second > maxArea){
-					maxAreaID = it->first;
-					maxArea = it->second;
-					foundM = true;
-				}
-				if(it->second != 0){
-					done--;
-				}
-			}
-			if(foundM){
-				collide(checking->first, maxAreaID);
-				checking->second->collidedWith = maxAreaID;
-				CS::collisionCS[maxAreaID]->collidedWith = checking->first;
-				areas[maxAreaID] = 0;
-				maxArea = 0;
-			}
-			done++;
-		}
+		if(maxAreaID)
+			collide(checking->first, maxAreaID);
 	}
-	qt.draw();
-	qt.clear();
-	Window::DrawRect(&worldArea, 255, 0, 0);
+	//qt.draw();
+	//grid.draw();
+	//Window::DrawRect(&CS::worldbounds, 255, 0, 0);
 	if(nc != n)
 	std::cout << n << std::endl;
 	nc = n;

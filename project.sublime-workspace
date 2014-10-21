@@ -4,534 +4,154 @@
 		"selected_items":
 		[
 			[
-				"tex",
-				"text"
+				"ela",
+				"elaspedTime"
 			],
 			[
-				"std",
-				"std::string"
+				"t",
+				"timePoint1"
 			],
 			[
-				"full",
-				"fullscreen"
-			],
-			[
-				"fas",
-				"false"
-			],
-			[
-				"Sim",
-				"SimpleIni"
-			],
-			[
-				"in",
-				"include"
-			],
-			[
-				"strin",
-				"string_ptr"
-			],
-			[
-				"null",
-				"nullptr"
-			],
-			[
-				"close",
-				"closeLuaState"
-			],
-			[
-				"lua_get",
-				"lua_getdefault"
-			],
-			[
-				"lual",
-				"luaL_openlibs"
+				"de",
+				"delay"
 			],
 			[
 				"end",
 				"endl"
 			],
 			[
-				"stat",
-				"state"
+				"x",
+				"x"
 			],
 			[
-				"fun",
-				"function"
-			],
-			[
-				"def",
-				"def	#ifndef … #define … #endif"
-			],
-			[
-				"se",
-				"sel::State"
-			],
-			[
-				"cre",
-				"createEntityID"
-			],
-			[
-				"scr",
-				"scripts"
-			],
-			[
-				"LUA",
-				"LUA_INCLUDE"
-			],
-			[
-				"Vec",
-				"Vec2"
-			],
-			[
-				"ret",
-				"return"
-			],
-			[
-				"new",
-				"newVec2"
-			],
-			[
-				"luaop",
-				"luaopen_example"
-			],
-			[
-				"player",
-				"playerImgPath"
-			],
-			[
-				"move",
-				"moveCS"
-			],
-			[
-				"fram",
-				"frames"
-			],
-			[
-				"curr",
-				"currentAnimation"
-			],
-			[
-				"Wind",
-				"Window"
-			],
-			[
-				"Time",
-				"Timer::frame"
-			],
-			[
-				"curre",
-				"currentAnimation"
-			],
-			[
-				"pla",
-				"played"
-			],
-			[
-				"mov",
-				"moveable"
-			],
-			[
-				"sprit",
-				"spriteCS"
-			],
-			[
-				"text",
-				"textures"
-			],
-			[
-				"sh",
-				"shared_ptr"
-			],
-			[
-				"dele",
-				"delete"
-			],
-			[
-				"over",
-				"overlapingWith"
-			],
-			[
-				"pos",
-				"postUpdate"
-			],
-			[
-				"delet",
-				"delete"
-			],
-			[
-				"coll",
-				"collisionCS"
-			],
-			[
-				"SDL_KEY",
-				"SDL_KEYUP"
-			],
-			[
-				"Curre",
-				"currentFrame"
-			],
-			[
-				"reset",
-				"resetVel"
-			],
-			[
-				"movem",
-				"movement"
-			],
-			[
-				"st",
-				"std::cout"
-			],
-			[
-				"spri",
-				"spriteC"
-			],
-			[
-				"ve",
-				"vel"
-			],
-			[
-				"MO",
-				"MoveComponent"
-			],
-			[
-				"edg",
-				"edgeCheckerUpdate"
-			],
-			[
-				"ove",
-				"overlaped"
-			],
-			[
-				"overla",
-				"overlaped"
-			],
-			[
-				"grou",
-				"groups"
-			],
-			[
-				"collided",
-				"collided"
-			],
-			[
-				"typ",
-				"typeinfo"
-			],
-			[
-				"Func",
-				"FuncQComponent"
-			],
-			[
-				"Prop",
-				"PropertiesComponent"
-			],
-			[
-				"hold",
-				"holdFace"
-			],
-			[
-				"hodl",
-				"holdFace"
-			],
-			[
-				"hol",
-				"holdFace"
-			],
-			[
-				"bool",
-				"boolProps"
-			],
-			[
-				"Sprite",
-				"SpriteComponent"
-			],
-			[
-				"shoo",
-				"shootTimer"
-			],
-			[
-				"he",
-				"height"
-			],
-			[
-				"mo",
-				"moveCS"
-			],
-			[
-				"collisio",
-				"collision"
-			],
-			[
-				"collis",
-				"collisionCS"
-			],
-			[
-				"col",
-				"collisionCS"
-			],
-			[
-				"coli",
-				"collided"
-			],
-			[
-				"updat",
-				"updatePosition"
-			],
-			[
-				"fla",
-				"false"
-			],
-			[
-				"fa",
-				"false"
-			],
-			[
-				"sho",
-				"shooting"
-			],
-			[
-				"stin",
-				"stringProps"
-			],
-			[
-				"fist",
-				"firstColl"
-			],
-			[
-				"string",
-				"std::string"
-			],
-			[
-				"max",
-				"maxAreaID"
-			],
-			[
-				"collid",
-				"collidedWith"
-			],
-			[
-				"che",
-				"checking"
-			],
-			[
-				"set",
-				"setScale"
-			],
-			[
-				"collide",
-				"collided"
-			],
-			[
-				"f",
-				"fProps"
-			],
-			[
-				"pro",
-				"propCS"
-			],
-			[
-				"el",
-				"elapsed"
-			],
-			[
-				"spr",
-				"spriteCS"
-			],
-			[
-				"bu",
-				"bulletUpdate"
-			],
-			[
-				"playe",
-				"playerUpdate"
-			],
-			[
-				"spi",
-				"spriteCS"
-			],
-			[
-				"Fun",
-				"FuncQComponent"
-			],
-			[
-				"Ev",
-				"SDL_Event"
-			],
-			[
-				"vec",
-				"vector	std::vector"
-			],
-			[
-				"fol",
-				"followE"
-			],
-			[
-				"cure",
-				"currentAnimation"
-			],
-			[
-				"frame",
-				"frames"
-			],
-			[
-				"functio",
-				"functions"
-			],
-			[
-				"CAme",
-				"Camera"
-			],
-			[
-				"win",
-				"winSize"
-			],
-			[
-				"foll",
-				"follow"
-			],
-			[
-				"came",
-				"cameras"
-			],
-			[
-				"foo",
-				"followC"
-			],
-			[
-				"Came",
-				"Camera"
-			],
-			[
-				"follo",
-				"followC"
-			],
-			[
-				"game",
-				"gamePos"
-			],
-			[
-				"fl",
-				"SDL_FLIP_HORIZONTAL"
-			],
-			[
-				"fli",
-				"SDL_FLIP_NONE"
-			],
-			[
-				"clip",
-				"clipRect"
-			],
-			[
-				"SDL_fl",
-				"SDL_FLIP_HORIZONTAL"
-			],
-			[
-				"area",
-				"area"
-			],
-			[
-				"are",
-				"area"
-			],
-			[
-				"SDL_I",
-				"SDL_IntersectRect"
-			],
-			[
-				"creat",
-				"createID"
-			],
-			[
-				"crea",
-				"createCamera"
-			],
-			[
-				"Move",
-				"MoveComponent"
+				"draw",
+				"drawRect"
 			],
 			[
 				"img",
 				"imgRect"
 			],
 			[
-				"collision",
-				"collisionCS"
-			],
-			[
-				"maxv",
-				"maxV"
-			],
-			[
-				"SDL_",
-				"SDL_FLIP_NONE"
-			],
-			[
-				"SDL_RE",
-				"SDL_Rect"
-			],
-			[
-				"maxare",
-				"maxAreaID"
-			],
-			[
-				"maxar",
-				"maxAreaID"
-			],
-			[
-				"maxid",
-				"maxAreaID"
-			],
-			[
-				"maxAre",
-				"maxArea"
-			],
-			[
-				"colid",
-				"collidingWith"
-			],
-			[
-				"moc",
+				"move",
 				"moveC"
 			],
 			[
-				"dx",
-				"dx2"
+				"CSYS",
+				"CSys"
 			],
 			[
-				"dy",
-				"dy2"
+				"CS",
+				"CSys"
 			],
 			[
-				"ac",
-				"acc"
+				"ma",
+				"moveC_map"
 			],
 			[
-				"maxa",
-				"maxArea"
+				"Move",
+				"moveC"
 			],
 			[
-				"colli",
-				"collided"
+				"Co",
+				"ComponentSystem"
+			],
+			[
+				"m",
+				"map	std::map"
+			],
+			[
+				"time",
+				"timePoint1"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"Sprite",
+				"SpriteComponent"
+			],
+			[
+				"vec",
+				"Vec2D"
+			],
+			[
+				"En",
+				"EntityId"
+			],
+			[
+				"wIND",
+				"Window"
+			],
+			[
+				"im",
+				"imgRect"
+			],
+			[
+				"SR",
+				"SRCDIR"
+			],
+			[
+				"SCRE",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"nu",
+				"nullptr"
+			],
+			[
+				"re",
+				"renderer"
+			],
+			[
+				"red",
+				"renderer"
+			],
+			[
+				"te",
+				"tex"
+			],
+			[
+				"SDL_REnder",
+				"SDL_RenderCopy"
+			],
+			[
+				"n",
+				"NULL"
+			],
+			[
+				"SDL_Texture",
+				"SDL_Texture"
+			],
+			[
+				"load",
+				"loadTexture"
+			],
+			[
+				"lo",
+				"logSDLError"
+			],
+			[
+				"tex",
+				"texture"
+			],
+			[
+				"sdl_crea",
+				"SDL_CreateTextureFromSurface"
+			],
+			[
+				"Crafty",
+				"crafty-release"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
-			"settings":
-			{
-				"buffer_size": 626,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 1508,
+				"buffer_size": 1577,
 				"line_ending": "Windows"
 			}
 		},
@@ -539,55 +159,7 @@
 			"file": "src/main.cpp",
 			"settings":
 			{
-				"buffer_size": 4322,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 751,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/console.cpp",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/entities.cpp",
-			"settings":
-			{
-				"buffer_size": 11322,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/components.cpp",
-			"settings":
-			{
-				"buffer_size": 10039,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/CS.cpp",
-			"settings":
-			{
-				"buffer_size": 5187,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/system.cpp",
-			"settings":
-			{
-				"buffer_size": 10757,
+				"buffer_size": 4867,
 				"line_ending": "Windows"
 			}
 		},
@@ -600,19 +172,43 @@
 			}
 		},
 		{
+			"file": "src/game.cpp",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/components.cpp",
+			"settings":
+			{
+				"buffer_size": 10964,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/entities.cpp",
+			"settings":
+			{
+				"buffer_size": 11179,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "include/entities.h",
 			"settings":
 			{
-				"buffer_size": 320,
+				"buffer_size": 362,
 				"line_ending": "Windows",
 				"name": "#ifndef ENTITIES_H"
 			}
 		},
 		{
-			"file": "include/console.h",
+			"file": "include/components.h",
 			"settings":
 			{
-				"buffer_size": 127,
+				"buffer_size": 3744,
 				"line_ending": "Windows"
 			}
 		},
@@ -625,10 +221,26 @@
 			}
 		},
 		{
+			"file": "/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
+			"settings":
+			{
+				"buffer_size": 5298,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "include/system.h",
 			"settings":
 			{
-				"buffer_size": 1457,
+				"buffer_size": 1122,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/system.cpp",
+			"settings":
+			{
+				"buffer_size": 7500,
 				"line_ending": "Windows"
 			}
 		},
@@ -636,131 +248,23 @@
 			"file": "include/CS.h",
 			"settings":
 			{
-				"buffer_size": 1563,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "include/components.h",
-			"settings":
-			{
-				"buffer_size": 3744,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "config.ini",
-			"settings":
-			{
-				"buffer_size": 175,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/MinGW/msys/1.0/home/Omar/simpleini/SimpleIni.h",
-			"settings":
-			{
-				"buffer_size": 121102,
+				"buffer_size": 1593,
 				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/User/myMake.sublime-build",
+	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 127.0,
 		"selected_items":
 		[
-			[
-				"inst",
-				"Package Control: Install Package"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
-				"clea",
-				"Build: Clean"
-			],
-			[
-				"32",
-				"Build: Run32"
-			],
-			[
-				"",
-				"About"
-			],
-			[
-				"buid",
-				"Build: build32"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
-			],
-			[
-				"packa",
-				"Package Control: Remove Package"
-			],
-			[
-				"pa",
-				"Package Control: Remove Package"
-			],
-			[
-				"disa",
-				"Package Control: Disable Package"
-			],
-			[
-				"ins",
-				"Package Control: Install Package"
-			],
-			[
-				"enable",
-				"Package Control: Enable Package"
-			],
-			[
-				"pac",
-				"Package Control: Enable Package"
-			],
-			[
-				"disable",
-				"Package Control: Disable Package"
-			],
-			[
-				"dis",
-				"Package Control: Disable Package"
-			],
-			[
-				"in",
-				"Package Control: Install Package"
-			],
-			[
-				"cle",
-				"Build: Clean"
-			],
-			[
-				"p",
-				"Package Control: Install Package"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Disable Package"
-			],
-			[
-				"clean",
-				"Build: Clean"
-			]
 		],
-		"width": 652.0
+		"width": 392.0
 	},
 	"console":
 	{
-		"height": 371.0,
-		"history":
-		[
-			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
-		]
+		"height": 371.0
 	},
 	"distraction_free":
 	{
@@ -771,89 +275,11 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/dev/SDLTEST",
-		"/C/dev/SDLTEST/bin",
-		"/C/dev/SDLTEST/data",
-		"/C/dev/SDLTEST/include",
-		"/C/dev/SDLTEST/obj",
-		"/C/dev/SDLTEST/obj32",
-		"/C/dev/SDLTEST/scripts",
-		"/C/dev/SDLTEST/src"
-	],
 	"file_history":
 	[
-		"/C/MinGW/msys/1.0/home/Omar/simpleini/test1.cpp",
-		"/C/dev/SDLTEST/scripts/myscript.sgs",
-		"/C/dev/SDLTEST/include/luaState.h",
-		"/C/Users/Omar/Desktop/SFMLTEST/src/system.cpp",
-		"/C/dev/SDLTEST/src/main.cpp",
-		"/C/sgscript/README.md",
-		"/C/dev/SDLTEST/scripts/vars.lua",
-		"/C/dev/SDLTEST/src/luaState.cpp",
-		"/C/dev/SDLTEST/trash/luatest.cpp",
-		"/C/dev/SDLTEST/include/selene/primitives.h",
-		"/C/tolua-5.2.0/INSTALL",
-		"/C/MinGW/msys/1.0/home/Omar/luna-gen/README",
-		"/C/MinGW/msys/1.0/home/Omar/luna-gen/examples/README",
-		"/C/tolua-5.2.0/README",
-		"/C/dev/SDLTEST/include/luascript.h",
-		"/C/dev/SDLTEST/src/luascript.cpp",
-		"/C/dev/SDLTEST/src/luatest.cpp",
-		"/C/Users/Omar/LuaState-master/README.md",
-		"/C/Users/Omar/LuaState-master/test/main.cpp",
-		"/C/Users/Omar/LuaState-master/test/get_test.cpp",
-		"/C/Users/Omar/LuaState-master/test/test.h",
-		"/C/dev/SDLTEST/src/example.cpp",
-		"/C/dev/SDLTEST/src/example_wrap.cxx",
-		"/C/dev/SDLTEST/src/example.i",
-		"/C/dev/SDLTEST/include/example.h",
-		"/C/Users/Omar/AppData/Local/Temp/7zE9D03.tmp/README",
-		"/C/Users/Omar/AppData/Local/Temp/7zEF981.tmp/luawrapperutil.hpp",
-		"/C/lua-5.2.3/src/luac.c",
-		"/C/dev/SDLTEST/src/min.c",
-		"/C/dev/SDLTEST/src/DELETED.txt",
-		"/C/test.cpp",
-		"/C/dev/SDLTEST/include/typedefs.h",
-		"/C/dev/SDLTEST/Makefile",
-		"/C/dev/SDLTEST/README.md",
-		"/C/dev/SDLTEST/src/CS.cpp",
-		"/Users/slouken/release/SDL/SDL2-2.0.3-source/src/main/windows/SDL_windows_main.c",
-		"/C/dev/SDLTEST/5b408044-22d4-46d4-b960-9fe790b6acb4.dmp",
-		"/C/dev/SDLTEST/bin/terminal.glue",
-		"/C/dev/SDLTEST/data/player.png",
-		"/C/dev/SDLTEST/include/cleanup.h",
-		"/C/dev/SDLTEST/src/54dab505-fca9-4088-864e-1d5afaeb74ef.dmp",
-		"/C/dev/SDLTEST/project.sublime-project",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
-		"/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
-		"/C/Users/Omar/Desktop/SFMLTEST/deleted",
-		"/C/dev/SDLTEST/data/fonts/FONTLOG.txt",
-		"/C/dev/SDLTEST/bin/LICENSE.tiff.txt",
-		"/C/Users/Omar/Desktop/SFMLTEST/src/game.cpp",
-		"/C/Users/Omar/Desktop/SFMLTEST/src/deleted controls code in update().txt",
-		"/C/Users/Omar/Desktop/smart sweepers - v1.0/main.cpp",
-		"/C/Users/Omar/Desktop/smart sweepers - v1.0/CMinesweeper.cpp",
-		"/C/Users/Omar/Desktop/smart sweepers - v1.0/Script1.aps",
-		"/C/Users/Omar/Desktop/smart sweepers - v1.0/Script1.rc",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/C++.sublime-settings",
-		"/C/dev/SDLTEST/20e9789b-f58a-439b-8b8d-3411319382ce.dmp",
-		"/C/dev/SDLTEST/fd8ca7fb-a8dc-40e7-9764-a500df7a3066.dmp",
-		"/C/dev/SDLTEST/src/game.cpp",
-		"/C/dev/SDLTEST/include/system.h",
-		"/C/dev/SDLTEST/data/hello.png",
-		"/C/dev/SDLTEST/bin/LICENSE.jpeg.txt",
-		"/C/dev/SDLTEST/data/gameover.bmp",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/Makefile/Make.sublime-build",
-		"/C/Program Files (x86)/Sublime Text 2/Pristine Packages/Makefile.sublime-package",
-		"/C/Program Files/Sublime Text 3/Packages/Makefile.sublime-package",
-		"/C/dev/SDLTEST/src/window.cpp",
-		"/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/clang_format_custom.sublime-settings",
 		"/C/dev/SDLTEST/include/window.h",
 		"/C/dev/SDLTEST/src/DELETED.cpp",
+		"/C/dev/SDLTEST/include/cleanup.h",
 		"/C/dev/SDLTEST/include/game.h",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/myMake.sublime-build",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/mingw32-make.sublime-build",
@@ -861,6 +287,7 @@
 		"/C/dev/SDLTEST/src/cleanup.h",
 		"/C/dev/SDLTEST/src/window.h",
 		"/C/dev/SDLTEST/src/Makefile",
+		"/C/dev/SDLTEST/Makefile",
 		"/C/mathart.cpp",
 		"/C/MathPic.ppm",
 		"/C/Users/Omar/AppData/Roaming/Sublime Text 2/Packages/User/Distraction Free.sublime-settings",
@@ -885,12 +312,9 @@
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 0.0,
 		"where_history":
 		[
-			"C:\\dev\\SDLTEST\\src",
-			"C:\\dev\\SDLTEST\\include",
-			"C:\\dev\\SDLTEST\\src",
 			"C:\\dev\\SDLTEST\\bin"
 		]
 	},
@@ -899,86 +323,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"get",
-			"bool",
-			"true",
-			"o",
-			"O",
-			"o",
-			"O",
-			")\n",
-			"h",
-			"CS::moveCS",
-			"new FuncQComponent(id)",
-			"new PropertiesComponent(id);",
-			"new SpriteComponent(",
-			"new SpriteComponent(\"../data/hello.png\", CS::moveCS, id)",
-			"MoveComponent*",
-			"SpriteComponent*",
-			"MoveComponent*",
-			"new CollisionComponent(",
-			"new MoveComponent(",
-			"*",
-			"&",
-			".erase(id)",
-			"setc",
-			"spriteCS",
-			"moveCS[id]",
-			"timer",
-			"el",
-			"elaps",
-			"moveC",
-			"funcQ",
-			"funcQS",
-			"Vec2<float>",
-			"imgRect",
-			"{\n",
-			"x",
-			"w",
-			"x",
-			"_INDEX",
-			"x",
-			"BIAS",
-			"width",
-			"rect",
-			"acc",
-			"collidingWith",
-			"2",
-			"x",
-			"1",
-			"c1->moveC->pos.x > c1->moveC->deltaPos.x",
-			"maxV",
-			"rect.",
-			"w",
-			"x",
-			"spee",
-			"gridH",
-			"gridW",
-			"gridY",
-			"gridX",
-			"it",
-			"x",
-			"w",
-			"x",
-			"1",
-			"auto",
-			"x",
-			"depth < maxDepth",
-			"QTs.size() > 0",
-			"int",
-			"r.",
-			"Vec2<float>",
-			"maxVel",
-			"maxVel.y",
-			"maxVel.x",
-			"%10",
-			"x",
-			"->vec",
-			"vec",
-			"->x",
-			"->y",
-			"vx",
-			"vy",
 			"CSys",
 			"test",
 			"CSys::moveCS[test]",
@@ -995,66 +339,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"moveCS",
-			"std::shared_ptr<FuncQComponent>(new FuncQComponent(id));",
-			"std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));",
-			"std::shared_ptr<SpriteComponent>(",
-			"std::shared_ptr<SpriteComponent>(new SpriteComponent(\"../data/hello.png\", CS::moveCS, id))",
-			"std::shared_ptr<MoveComponent>",
-			"std::shared_ptr<SpriteComponent>",
-			"std::shared_ptr<MoveComponent>",
-			"std::shared_ptr<CollisionComponent>(new CollisionComponent(",
-			"std::shared_ptr<MoveComponent>(new MoveComponent(",
-			">",
-			"[id]",
-			"COMP[moveC][id]",
-			"CS::moveCS[id]",
-			"Vec2",
-			"result",
-			"y",
-			"h",
-			"y",
-			"_E_INDEX",
-			"y",
-			"w",
-			"r",
-			"vel",
-			"1",
-			"y",
-			"2",
-			"Xincreased",
-			"moveC->pos.",
-			"h",
-			"y",
-			"bounds.h",
-			"bounds.w",
-			"bounds.y",
-			"bounds.x",
-			"checking",
-			"y",
-			"h",
-			"yh",
-			"y",
-			"2",
-			"it-first",
-			"unsigned int",
-			"y",
-			"QTs[0] != nullptr",
-			"unsigned int",
-			"auto",
-			"r->",
-			"Vec2f",
-			"maxV",
-			"mVy",
-			"mVx",
-			"/RAND_MAX",
-			"y",
-			"->vel",
-			"vel",
-			"->pos.x",
-			"->pos.y",
-			"vec.x",
-			"vec.y",
 			"CS",
 			"id",
 			"moveC",
@@ -1071,53 +355,23 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/Omar/AppData/Roaming/Sublime Text 3/Packages/User/myMake.sublime-build",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 626,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								338,
-								338
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages\\Better JavaScript\\JSON.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "Makefile",
-					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1508,
+						"buffer_size": 1577,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								989,
-								989
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1128,70 +382,66 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "src/main.cpp",
-					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4322,
+						"buffer_size": 4867,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2284,
-								2284
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 702.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "README.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 751,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								187,
-								187
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "src/console.cpp",
-					"semi_transient": false,
+					"buffer": 2,
+					"file": "src/window.cpp",
+					"settings":
+					{
+						"buffer_size": 3530,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/game.cpp",
 					"settings":
 					{
 						"buffer_size": 0,
@@ -1207,185 +457,82 @@
 						],
 						"settings":
 						{
-							"open_with_edit": true,
-							"syntax": "Packages/C++11/C++11.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/components.cpp",
+					"settings":
+					{
+						"buffer_size": 10964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 904.0,
+						"zoom_level": 1.0
+					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
 					"file": "src/entities.cpp",
-					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11322,
+						"buffer_size": 11179,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2319,
-								2528
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"tab_size": 2,
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1026.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "src/components.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10039,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9723,
-								9723
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 6642.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "src/CS.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5187,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3773,
-								3773
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2214.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "src/system.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10757,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10439,
-								10439
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 6865.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "src/window.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3530,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3528,
-								3528
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1350.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 10,
 					"file": "include/entities.h",
-					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 320,
+						"buffer_size": 362,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								202,
-								202
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1397,129 +544,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "include/console.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 127,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								95,
-								95
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/C Improved/C Improved.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "include/window.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2904,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								907,
-								907
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 226.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "include/system.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1457,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1416,
-								1416
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 918.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "include/CS.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1563,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								598,
-								598
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
+					"buffer": 7,
 					"file": "include/components.h",
-					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 3744,
@@ -1529,79 +558,154 @@
 						"selection":
 						[
 							[
-								976,
-								961
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 462.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 16,
-					"file": "config.ini",
-					"semi_transient": false,
+					"buffer": 8,
+					"file": "include/window.h",
 					"settings":
 					{
-						"buffer_size": 175,
+						"buffer_size": 2904,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								175,
-								175
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 126.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
-					"file": "/C/MinGW/msys/1.0/home/Omar/simpleini/SimpleIni.h",
-					"semi_transient": false,
+					"buffer": 9,
+					"file": "/C/Users/Omar/Desktop/SFMLTEST/src/components.hpp",
 					"settings":
 					{
-						"buffer_size": 121102,
+						"buffer_size": 5298,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								34574,
-								34577
+								3891,
+								3893
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 15219.0,
+						"translation.y": 1890.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "include/system.h",
+					"settings":
+					{
+						"buffer_size": 1122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/system.cpp",
+					"settings":
+					{
+						"buffer_size": 7500,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "include/CS.h",
+					"settings":
+					{
+						"buffer_size": 1593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
 					"type": "text"
 				}
 			]
@@ -1609,7 +713,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 0.0
 	},
 	"input":
 	{
@@ -1624,18 +728,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.524495677233,
 			1.0
 		],
 		"rows":
@@ -1647,24 +744,11 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 257.0
-	},
-	"output.find_results":
-	{
-		"height": 0.0
-	},
-	"output.git":
-	{
 		"height": 100.0
 	},
-	"output.unsaved_changes":
-	{
-		"height": 100.0
-	},
-	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1673,24 +757,8 @@
 		"selected_items":
 		[
 			[
-				"ex",
-				"src\\example.i"
-			],
-			[
-				"com",
-				"src\\components.cpp"
-			],
-			[
-				"cs",
-				"include\\CS.h"
-			],
-			[
 				"comp",
-				"C:\\Users\\Omar\\Desktop\\SFMLTEST\\src\\components.hpp"
-			],
-			[
-				"",
-				"src\\main.cpp"
+				"include/components.h"
 			]
 		],
 		"width": 0.0
@@ -1707,45 +775,10 @@
 		],
 		"width": 380.0
 	},
-	"select_symbol":
-	{
-		"height": 173.0,
-		"selected_items":
-		[
-			[
-				"ini",
-				"Init"
-			],
-			[
-				"inti",
-				"Init"
-			],
-			[
-				"",
-				"update"
-			],
-			[
-				"out",
-				"outOfBounds"
-			],
-			[
-				"draw",
-				"Draw"
-			]
-		],
-		"width": 392.0
-	},
-	"selected_group": 0,
-	"settings":
-	{
-	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 185.0,
-	"status_bar_visible": true,
-	"template_settings":
-	{
-	}
+	"side_bar_width": 184.0,
+	"status_bar_visible": true
 }

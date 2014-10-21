@@ -7,10 +7,10 @@
 float P_firerate{};
 
 bool testCollision(eId owner, std::string type){
-	if(CS::collisionCS[owner]->overlaped){
+	const eId shooter = CS::propCS[owner]->entities["shooter"];
+	if(CS::collisionCS[owner]->overlaped && CS::collisionCS[owner]->overlapingWith[0] != shooter){
 		// if(CS::propCS[id] == nullptr)
 		// 	return false;
-
 				return true;
 			
 	}
@@ -157,7 +157,7 @@ eId TEST(Vec2 const &pos) {
 	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->groups["bullets"] = std::vector<eId>{};
 	CS::propCS[id]->boolProps["shooting"] = false;
-	CS::propCS[id]->fProps["fireRate"] = P_firerate/Timer::frame;
+	CS::propCS[id]->fProps["fireRate"] = 1000/P_firerate;
 	//CS::propCS[id]->entities["edgeChecker"] = edgeChecker(id);
 	//CS::propCS[id]->entities["wallChecker"] = wallChecker(id);
 	CS::funcQCS[id] = std::shared_ptr<FuncQComponent>(new FuncQComponent(id));;

@@ -1,4 +1,8 @@
 
+#include <lua.hpp>
+
+
+
 #include <stdexcept>
 #include <string>
 #include <sstream>
@@ -13,12 +17,74 @@
 #include "../include/system.h"
 #include "../include/entities.h"
 #include "../include/SimpleIni.h"
+#include "../include/LuaBridge/LuaBridge.h"
 
 
 using namespace std;
+using namespace luabridge;
 
+lua_State *L;
+
+
+void foo () { cout << "TEST" << endl; }
+Vec2 createVec2(float x, float y){
+	Vec2 v = {x, y};
+	return v;
+}
+
+
+// void foo(){
+// 	cout << "TEST" << endl;
+// }
+std::string command = "";
+bool consoleOpen = false;
+eId c;
+
+void clear(){
+	CS::clear();
+	c = createCamera(0,0);
+}
+
+void setPos(eId id, Vec2 p){
+	moveCS[id]->pos = p;
+}
+
+Vec2 getMousePos(){
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	Vec2 v{x, y};
+	return v;
+}
+
+void setLua(lua_State *L){
+	getGlobalNamespace (L)
+  .beginNamespace ("game")
+	.beginClass<Vec2> ("Vec2")
+		//.addProperty("x", &Vec2::getX, &Vec2::setX)
+		//.addProperty("y", &Vec2::getY, &Vec2::setY)
+		.addData("x", &Vec2::x)
+		.addData("y", &Vec2::y)
+	.endClass()
+	.beginClass<MoveComponent> ("MoveComponent")
+		//.addProperty("x", &Vec2::getX, &Vec2::setX)
+		//.addProperty("y", &Vec2::getY, &Vec2::setY)
+		.addData("pos", &MoveComponent::pos)
+	.endClass()
+   .endNamespace ()
+    .addFunction ("mBox", mBox)
+    .addFunction ("player", &TEST)
+    .addFunction ("clear", clear)
+    .addFunction("setPos", &setPos)
+    .addFunction("getMousePos", &getMousePos)
+    .addFunction ("createVec2", &createVec2);
+}
 
 int main(int argc, char **argv){
+	L = lua_open();
+	luaL_openlibs(L);
+	//getGlobalNamespace (L);
+	setLua(L);
+
 	CSimpleIniA ini;
 	ini.SetUnicode();
 	ini.LoadFile("../config.ini");
@@ -39,14 +105,18 @@ int main(int argc, char **argv){
 	// SDL_Rect r;
 	// SDL_Texture* t;
 	// t = Window::RenderText("FPS: " + std::to_string(1000/Timer::elapsed), "../data/fonts/PressSTart2P.ttf",{255,255,255,255}, 8);
-	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h);
+	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h)
 	// r.x=1;r.y=1;
-	eId c = createCamera(0,0);
+	c = createCamera(0,0);
 	SDL_Rect textrect = {0,0,400,100};
 	//eId c2 = createCamera(400,300);
 	SDL_StartTextInput();
 	//SDL_SetTextInputRect(&textrect);
 	std::string text = "";
+	if(luaL_loadfile(L, "../scripts/test.lua")
+    	|| lua_pcall(L,0,0,0)){
+		cout << "FAILED TO LOAD LUA SCRIPT" << endl;
+	}
 	while(!quit){
 		text = "";
 		auto timePoint1(chrono::high_resolution_clock::now());
@@ -77,6 +147,22 @@ int main(int argc, char **argv){
 				switch(e.key.keysym.sym){
 					case SDLK_ESCAPE:
 						quit = true;break;
+					case SDLK_F1:
+						consoleOpen = !consoleOpen;break;
+					case SDLK_BACKSPACE:
+						if(consoleOpen){
+							command.erase(command.end()-1);
+							cout << '\b';
+						}
+						break;
+					case SDLK_RETURN:
+						if(consoleOpen){
+							luaL_dostring(L, command.c_str());
+							cout << endl;
+							command = "";
+							consoleOpen = false;
+						}
+						break;
 				}
 			}
 			if (e.type == SDL_KEYUP){
@@ -84,19 +170,26 @@ int main(int argc, char **argv){
 					case SDLK_e:
 						controll *= -1;
 						break;
-					case SDLK_r:
-						CS::clear();
-						c = createCamera(0,0);
-						break;
+					// case SDLK_r:
+					// 	if(!consoleOpen){
+					// 		CS::clear();
+					// 		c = createCamera(0,0);
+					// 	}
+					// 	break;
 				}
 			}
-			if(e.type == SDL_TEXTINPUT){
+			if(e.type == SDL_TEXTINPUT && consoleOpen){
 				text = e.text.text;
+				command += text;
 			}
-
+			if(!consoleOpen)
 			CS::eventUpdate(e);
 		}
-		//std::cout << text << std::endl;
+		if(text != ""){
+			std::cout << text;
+			
+
+		}
 		//if(rand()%10 > 5)
 		//mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;
@@ -125,7 +218,9 @@ int main(int argc, char **argv){
 		// 	SDL_Delay(delay);
 		// }r
 	}
+
 	Window::Quit();
+	//lua_close(L);
 	return 0;
 }
 

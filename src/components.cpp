@@ -64,15 +64,15 @@ CollisionComponent::CollisionComponent(int w, int h,
 	rect.w = w;
 	rect.h = h;
 	moveC = moveMap[id];
-	if(moveC->pos.x < CS::worldMin.x){
-		CS::worldMin.x = moveC->pos.x;
-	} else if(moveC->pos.x + rect.w > CS::worldMax.x){
-		CS::worldMax.x = moveC->pos.x + rect.w;
+	if(moveC->pos.x < CS::worldbounds.x){
+		CS::worldbounds.x = moveC->pos.x;
+	} else if(moveC->pos.x + rect.w > CS::worldbounds.x + CS::worldbounds.w){
+		CS::worldbounds.w = (moveC->pos.x + rect.w) - CS::worldbounds.x;
 	}
-	if(moveC->pos.y < CS::worldMin.y){
-		CS::worldMin.y = moveC->pos.y;
-	} else if(moveC->pos.y + rect.h > CS::worldMax.y){
-		CS::worldMax.y = moveC->pos.y + rect.h;
+	if(moveC->pos.y < CS::worldbounds.y){
+		CS::worldbounds.y = moveC->pos.y;
+	} else if(moveC->pos.y + rect.h > CS::worldbounds.y + CS::worldbounds.h){
+		CS::worldbounds.h = (moveC->pos.y + rect.h) - CS::worldbounds.y;
 	}
 	debugDraw = false;
 	collided = false;
@@ -84,15 +84,15 @@ CollisionComponent::CollisionComponent(int w, int h,
 }
 
 void CollisionComponent::update(){
-	if(moveC->pos.x < CS::worldMin.x){
-		CS::worldMin.x = moveC->pos.x;
-	} else if(moveC->pos.x + rect.w > CS::worldMax.x){
-		CS::worldMax.x = moveC->pos.x + rect.w;
+	if(moveC->pos.x < CS::worldbounds.x){
+		CS::worldbounds.x = moveC->pos.x;
+	} else if(moveC->pos.x + rect.w > CS::worldbounds.x + CS::worldbounds.w){
+		CS::worldbounds.w = (moveC->pos.x + rect.w) - CS::worldbounds.x;
 	}
-	if(moveC->pos.y < CS::worldMin.y){
-		CS::worldMin.y = moveC->pos.y;
-	} else if(moveC->pos.y + rect.h > CS::worldMax.y){
-		CS::worldMax.y = moveC->pos.y + rect.h;
+	if(moveC->pos.y < CS::worldbounds.y){
+		CS::worldbounds.y = moveC->pos.y;
+	} else if(moveC->pos.y + rect.h > CS::worldbounds.y + CS::worldbounds.h){
+		CS::worldbounds.h = (moveC->pos.y + rect.h) - CS::worldbounds.y;
 	}
 	rect.x = moveC->pos.x;
 	rect.y = moveC->pos.y;
@@ -105,6 +105,7 @@ void CollisionComponent::update(){
 	overlaped = false;
 	overlapingWith.clear();
 	collidingWith.clear();
+	//CS::qt.insert(owner);
 }
 
 void CollisionComponent::postUpdate(){
