@@ -20,7 +20,6 @@ struct Vec2 {
 	void setY(float yy);
 };
 
-
 class Timer {
 public:
 	static float start, end, elapsed, frame, slice;

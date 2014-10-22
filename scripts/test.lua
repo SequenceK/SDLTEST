@@ -10,7 +10,7 @@ end
 pos = createVec2(100,100);
 p = player(pos);
 
-function ptm()
+function p()
 	setPos(p,getMousePos());
 end
 

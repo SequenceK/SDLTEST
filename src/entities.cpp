@@ -36,8 +36,9 @@ eId bullet(Vec2 const &pos, eId const &oid){
 	//moveCS[id]->vel = moveCS[oid]->vel;
 	moveCS[id]->drag = {1,1};
 	moveCS[id]->maxV = {100, 100};
-	moveCS[id]->terV = {10, 10};
-	float speed =0.8;
+	moveCS[id]->terV = {15, 15};
+	moveCS[id]->vel.x = moveCS[oid]->vel.x;
+	float speed =2;
 	if(CS::spriteCS[oid]->facing == RIGHT){
 		moveCS[id]->acc.x = speed;
 		moveCS[id]->pos.x += CS::spriteCS[oid]->imgRect.w;
@@ -47,7 +48,7 @@ eId bullet(Vec2 const &pos, eId const &oid){
 		moveCS[id]->pos.x -= 0;
 	}
 	CS::spriteCS[id] = std::shared_ptr<SpriteComponent>(new SpriteComponent("../data/hello.png", moveCS, id));
-	CS::spriteCS[id]->setScale(0.1, 0.1);
+	CS::spriteCS[id]->setScale(0.4, 0.2);
 	CS::spriteCS[id]->setColor(255, 100, 255);
 	CS::propCS[id] = std::shared_ptr<PropertiesComponent>(new PropertiesComponent(id));
 	CS::propCS[id]->entities["shooter"] = oid;
@@ -165,7 +166,7 @@ eId TEST(Vec2 const &pos) {
 	void (*pUpdate)(eId, SDL_Event&) = playerEventUpdate;
 	CS::funcQCS[id]->add(pFunc);
 	CS::funcQCS[id]->addEventFunc(pUpdate);
-	CS::spriteCS[id]->setScale(1,1);
+	CS::spriteCS[id]->setScale(2,2);
 	CS::spriteCS[id]->setFrame(30,27);
 	// std::vector<int> f = {1,2,3,4};
 	// CS::spriteCS[id]->playAnimation(f, 8, true);
@@ -274,7 +275,7 @@ eId ENEMY(Vec2 const &pos) {
 	std::vector<int> f = {1,2,3,4};
 	CS::spriteCS[id]->playAnimation(f, 8, true);
 
-	moveCS[id]->maxV = {5,15};
+	moveCS[id]->maxV = {5,5};
 	moveCS[id]->drag = {0.5,0.1};
 	moveCS[id]->acc = {1, 1};
 

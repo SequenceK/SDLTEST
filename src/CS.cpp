@@ -89,6 +89,7 @@ void CS::collisionUpdate(){
 		//std::map<eId, float> areas;
 		float maxArea=0;
 		eId maxAreaID;
+		bool collided = false;
 		entities = grid.getEntities(checking->second->gridIndex);
 		for (auto it = entities.begin(); it != entities.end(); ++it){
 			if(*it == checking->first)
@@ -103,6 +104,7 @@ void CS::collisionUpdate(){
 				if(CS::collisionCS[*it]->solid && CS::collisionCS[checking->first]->solid){
 					checking->second->collided = true;
 					CS::collisionCS[*it]->collided = true;
+					collided = true;
 					if(area.w*area.h >= maxArea){
 						maxArea = area.w*area.h;
 						maxAreaID = *it;
@@ -110,7 +112,7 @@ void CS::collisionUpdate(){
 				}
 			}
 		}
-		if(maxAreaID)
+		if(collided)
 			collide(checking->first, maxAreaID);
 	}
 	//qt.draw();

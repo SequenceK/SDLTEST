@@ -66,9 +66,12 @@ void setLua(lua_State *L){
 		.addData("y", &Vec2::y)
 	.endClass()
 	.beginClass<MoveComponent> ("MoveComponent")
-		//.addProperty("x", &Vec2::getX, &Vec2::setX)
-		//.addProperty("y", &Vec2::getY, &Vec2::setY)
+		//.addData("owner", &Component::owner)
 		.addData("pos", &MoveComponent::pos)
+		.addData("vel", &MoveComponent::vel)
+		.addData("acc", &MoveComponent::acc)
+		.addData("maxVel", &MoveComponent::maxV)
+		.addData("terVel", &MoveComponent::terV)
 	.endClass()
    .endNamespace ()
     .addFunction ("mBox", mBox)
@@ -183,7 +186,7 @@ int main(int argc, char **argv){
 				command += text;
 			}
 			if(!consoleOpen)
-			CS::eventUpdate(e);
+				CS::eventUpdate(e);
 		}
 		if(text != ""){
 			std::cout << text;
