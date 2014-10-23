@@ -23,6 +23,16 @@ Components:
 * Camera
 >Camera with zoom, position, and size in addition to screen position and screen size
 
+Lua Commands:
+-------------
+Press F1 to type a command
+* createVec2(x, y) - creates a 2d Vector
+* setPos(entity id, vec2) - sets the position of an entity
+* createBoxes(x, y, no. boxes) - creates a row of boxes
+* getMousePos() - return Vec2 of mouse pos
+* mBox(x, y) - creates a box
+* player(Vec2) - creates a player
+
 TODO:
 -----
 * change how collision and overlap checking is handled
