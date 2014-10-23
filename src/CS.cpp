@@ -84,6 +84,7 @@ void CS::collisionUpdate(){
 		if(!CS::collisionCS[checking->first]->moveable)
 			continue;
 		std::vector<eId> entities;
+		std::map<float, eId> overlapedMap;
 		//if(!qt.getObject(entities, checking->first))
 		//	continue;
 		//std::map<eId, float> areas;
@@ -105,15 +106,13 @@ void CS::collisionUpdate(){
 					checking->second->collided = true;
 					CS::collisionCS[*it]->collided = true;
 					collided = true;
-					if(area.w*area.h >= maxArea){
-						maxArea = area.w*area.h;
-						maxAreaID = *it;
-					}
+					overlapedMap[area.w*area.h] = *it;
 				}
 			}
 		}
-		if(collided)
-			collide(checking->first, maxAreaID);
+		for(auto it = overlapedMap.rbegin(); it != overlapedMap.rend(); ++it)
+			collide(checking->first, it->second);
+		overlapedMap.clear();
 	}
 	//qt.draw();
 	//grid.draw();
