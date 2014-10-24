@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"delta",
+				"deltaVel"
+			],
+			[
+				"Time",
+				"Timer::dt"
+			],
+			[
 				"m",
 				"moveC"
 			],
@@ -96,10 +104,6 @@
 				"area"
 			],
 			[
-				"delta",
-				"deltaVy"
-			],
-			[
 				"maxV",
 				"maxVel"
 			],
@@ -110,10 +114,6 @@
 			[
 				"foll",
 				"followE"
-			],
-			[
-				"Time",
-				"Timer::elapsed"
 			],
 			[
 				"Tim",
@@ -539,7 +539,7 @@
 			"file": "src/main.cpp",
 			"settings":
 			{
-				"buffer_size": 6992,
+				"buffer_size": 6976,
 				"line_ending": "Windows"
 			}
 		},
@@ -563,7 +563,7 @@
 			"file": "src/entities.cpp",
 			"settings":
 			{
-				"buffer_size": 11325,
+				"buffer_size": 11335,
 				"line_ending": "Windows"
 			}
 		},
@@ -579,15 +579,18 @@
 			"file": "src/components.cpp",
 			"settings":
 			{
-				"buffer_size": 11368,
+				"buffer_size": 11778,
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": "#include \"../include/system.h\"\n#include \"../include/window.h\"\n#include \"../include/CS.h\"\n#include <vector>\n#include <map>\n#include <algorithm>\n#include <cmath>\n#include <iostream>\n#include <memory>\n#include <SDL2/SDL.h>\n\nfloat Timer::start{0};\nfloat Timer::end{0};\nfloat Timer::elapsed{0};\nfloat Timer::frame{1000.f/60.f};\nfloat Timer::slice{0.f};\ndouble Timer::t{0.0};\ndouble Timer::dt{0.01};\ndouble Timer::currentTime{0.0};\ndouble Timer::accumulator{0.0};\nfloat Timer::alpha{0.0};\n\n\n\nVec2 Vec2::operator*(float const& n){\n	x *= n;\n	y *= n;\n	return *this;\n}\n\nVec2 Vec2::operator*=(float const& n){\n	x *= n;\n	y *= n;\n	return *this;\n}\n\nVec2 Vec2::operator+=(Vec2 const& v){\n	x += v.x;\n	y += v.y;\n	return *this;\n}\n\nVec2 Vec2::operator-=(Vec2 const& v){\n	x -= v.x;\n	y -= v.y;\n	return *this;\n}\n\nbool Vec2::operator==(Vec2 const& v){\n	return (x == v.x) && (y == v.y);\n}\n\nfloat Vec2::getX() const {return x;}\nfloat Vec2::getY() const {return y;}\nvoid Vec2::setX(float xx){x = xx;}\nvoid Vec2::setY(float yy){y = yy;}\n\nbool inCamBounds(Vec2 pos, Camera* c){\n	if(pos.x < c->pos.x || pos.x > c->pos.x + c->size.x || pos.y < c->pos.y || pos.y > c->pos.y + c->size.y)\n		return false;\n	return true;\n}\n\nint DELTA = 0;\nbool outOfBounds(unsigned long id, SDL_Rect& bounds){\n	std::shared_ptr<CollisionComponent> c = CS::collisionCS[id];\n	if(c->rect.x < bounds.x || c->rect.x + c->rect.w > bounds.x + bounds.w || c->rect.y < bounds.y || c->rect.y + c->rect.h > bounds.y + bounds.h){\n		if(c->rect.x < bounds.x){\n			c->moveC->pos.x = bounds.x+DELTA;\n			c->touching |= RIGHT;\n		} else if( c->rect.x + c->rect.w > bounds.x + bounds.w) {\n			c->moveC->pos.x = bounds.x + bounds.w - c->rect.w-DELTA;\n			c->touching |= LEFT;\n		}\n		if(c->rect.y < bounds.y){\n			c->moveC->pos.y = bounds.y+DELTA; \n			c->touching |= TOP;\n		} else if( c->rect.y + c->rect.h > bounds.y + bounds.h) {\n			c->moveC->pos.y = bounds.y + bounds.h - c->rect.h-DELTA;\n			c->touching |= FLOOR;\n		}\n		return true;\n	}\n	return false;\n}\n\nbool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result){\n	SDL_Rect r1, r2;\n	r1 = CS::collisionCS[id1]->rect;\n	r2 = CS::collisionCS[id2]->rect;\n	if(SDL_IntersectRect(&r1, &r2, result))\n			return true;\n	return false;\n\n}\n\nvoid Grid::updateBounds(SDL_Rect *r){\n	bounds = *r;\n}\n\nvoid Grid::clear(){\n	activeIndexes.clear();\n}\n\nvoid Grid::draw(){\n	SDL_Rect r;\n	for(int i =0; i<((bounds.w*bounds.h)/(cellSize*cellSize));i++){\n		r = getRect(i);\n		if(activeIndexes[i].size()>0)\n			Window::DrawRect(&r, 0, 0, 255);\n		else\n			Window::DrawRect(&r, 200, 0, 0);\n	}\n}\n\nSDL_Rect Grid::getRect(const int index){\n	SDL_Rect r;\n	r.x = cellSize*index - bounds.w*floor(index/(bounds.w/cellSize));\n	r.y = floor(index/(bounds.w/cellSize))*cellSize;\n	r.w = cellSize;\n	r.h = cellSize;\n	return r;\n}\n\n\nstd::vector<unsigned long> Grid::getEntities(std::vector<int> indexes){\n	std::vector<unsigned long> result{};\n	for (auto i = indexes.begin(); i != indexes.end(); ++i)\n	{\n\n		result.insert(result.end(), activeIndexes[*i].begin(), activeIndexes[*i].end());\n	}\n	return result;\n}\n\nstd::vector<int> Grid::getIndex(unsigned long id){\n	SDL_Rect r1 = CS::collisionCS[id]->rect;\n	int xstart = int((floor(r1.x/cellSize)));\n	if(r1.x < bounds.x)\n		xstart = 0;\n	int xend = int((floor((r1.x+r1.w)/cellSize)));\n	int ystart = int((floor(r1.y/cellSize)));\n	if(r1.y < bounds.y)\n		ystart = 0;\n	int yend = int((floor((r1.y+r1.h)/cellSize)));\n	// if(r1.x > bounds.x+bounds.w || r1.x +r1.w < bounds.x || r1.y > bounds.y+bounds.h || r1.y +r1.h < bounds.y){\n	// 	return std::vector<int>(1, -1);\n	// }\n	std::vector<int> indexes;\n	int index = xstart + ystart*floor(bounds.w/cellSize);\n	//std::cout << index << std::endl;\n	for(int i=0; i<(yend-ystart+1); i++){\n		for(int g=0; g<(xend-xstart+1); g++){\n			index = xstart+g+ystart*floor(bounds.w/cellSize) + floor(bounds.w/cellSize)*i;\n			activeIndexes[index].push_back(id);\n			indexes.push_back(index);\n		}\n\n	}\n\n	return indexes;\n}\n\n\n\nvoid collide(eId e1, eId e2){\n	std::shared_ptr<CollisionComponent> c1 = CS::collisionCS[e1];\n	std::shared_ptr<CollisionComponent> c2 = CS::collisionCS[e2];\n	if(!c1->moveable && !c2->moveable)\n	{\n		return;\n	}\n\n	//create 2 rects. They are used to determine which direction the collision has taken place.\n	SDL_Rect r1, r2;\n	float dx1 = -c1->moveC->deltaPos.x + c1->moveC->pos.x;\n	float dy1 = -c1->moveC->deltaPos.y + c1->moveC->pos.y;\n	float dx2 = -c2->moveC->deltaPos.x + c2->moveC->pos.x;\n	float dy2 = -c2->moveC->deltaPos.y + c2->moveC->pos.y;\n	float absDX1 = (dx1>0)?dx1:(-dx1);\n	float absDY1 = (dy1>0)?dy1:-dy1;\n	float absDX2 = (dx2>0)?dx2:(-dx2);\n	float absDY2 = (dy2>0)?dy2:-dy2;\n	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);\n	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);\n	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);\n	r2.y = c2->moveC->pos.y - (dy2>0?dy2:0);\n	r1.w = c1->rect.w+absDX1;\n	r2.w = c2->rect.w+absDX2;\n	r1.h = c1->rect.h+absDY1;\n	r2.h = c2->rect.h+absDY2;\n	Window::DrawRect(&r1, 255,255,0);\n	Window::DrawRect(&r2, 255,255,0);\n	// SDL_Rect overlapRect;\n	// SDL_IntersectRect(&r1, &r2, &overlapRect);\n	float overlapX=0, overlapY=0;\n	int BIAS = 4;\n	SDL_Rect a;\n\n	if(dx1 != dx2)\n	{\n		float maxOverlapX = absDX1 + absDX2 + BIAS;\n		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) \n			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))\n		if(dx1 > dx2)\n		{\n			overlapX = r1.x + r1.w - r2.x;\n			if(overlapX > maxOverlapX)\n				overlapX = 0;\n			else{\n				c1->touching |= LEFT;\n				c2->touching |= RIGHT;\n			}\n		} else  {\n			overlapX = -(r2.x + r2.w - r1.x);\n			if(-overlapX > maxOverlapX)\n				overlapX = 0;\n			else{\n				c1->touching |= RIGHT;\n				c2->touching |= LEFT;\n			}\n		}\n		//std::cout << maxOverlapX << \" \" << overlapX << std::endl;\n	}\n\n	if(overlapX != 0){\n		if(!c2->moveable){\n			c1->moveC->pos.x = c1->moveC->pos.x - overlapX;\n			c1->moveC->vel.x = 0;\n		}\n		else if(!c1->moveable){\n			c2->moveC->pos.x = c2->moveC->pos.x + overlapX;\n			c2->moveC->vel.x = 0;\n		}\n	}\n	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);\n	r2.x = c2->moveC->pos.x - (dx2>0?dx2:0);\n	r1.y = c1->moveC->pos.y - (dy1>0?dy1:0);\n	r2.y = c2->moveC->pos.y - (dy2>0?dy2:0);\n	r1.w = c1->rect.w+absDX1;\n	r2.w = c2->rect.w+absDX2;\n	r1.h = c1->rect.h+absDY1;\n	r2.h = c2->rect.h+absDY2;\n\n	if(dy1 != dy2)\n	{\n		float maxOverlapY = absDY1 + absDY2 + BIAS;\n		if((r1.x < r2.x + r2.w) && (r1.x + r1.w > r2.x) \n			&& (r1.y < r2.y + r2.h) && ( r1.y + r1.h > r2.y))\n		if(dy1 > dy2)\n		{\n			overlapY = r1.y + r1.h - r2.y;\n			if(overlapY > maxOverlapY)\n				overlapY = 0;\n			else{\n				c1->touching |= FLOOR;\n				c2->touching |= TOP;\n			}\n		} else  {\n			overlapY = -(r2.y + r2.h - r1.y);\n			if(-overlapY > maxOverlapY)\n				overlapY = 0;\n			else{\n				c1->touching |= TOP;\n				c2->touching |= FLOOR;\n			}\n		}\n		//std::cout << absDY2 << \"<-2 1->\" << absDY1 << std::endl;\n	}\n\n	if(overlapY != 0){\n		if(!c2->moveable){\n			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);\n			c1->moveC->vel.y = 0;\n		}\n		else if(!c1->moveable){\n			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);\n			c2->moveC->vel.y = 0;\n		}\n	}\n	c1->updatePosition();\n	c2->updatePosition();\n}\n\nvoid seperateX(eId e1, eId e2){\n\n}\n\nvoid seperateY(eId e1, eId e2){\n\n}\n\nbool strToBool(std::string str){\n	if(str == \"False\" || str == \"0\" || str == \"false\")\n		return false;\n	else if(str == \"True\" || str == \"1\" || str == \"true\")\n		return true;\n	else{\n		std::cout << \"Value recieved not true nor false! returning false\" << std::endl;\n		return false;\n	}\n}",
 			"file": "src/system.cpp",
+			"file_size": 7723,
+			"file_write_time": 130586269475707906,
 			"settings":
 			{
-				"buffer_size": 7562,
+				"buffer_size": 7408,
 				"line_ending": "Windows"
 			}
 		},
@@ -660,7 +663,7 @@
 			"file": "include/components.h",
 			"settings":
 			{
-				"buffer_size": 3779,
+				"buffer_size": 3800,
 				"line_ending": "Windows"
 			}
 		},
@@ -1103,7 +1106,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -1160,7 +1163,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
@@ -1169,15 +1172,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6992,
+						"buffer_size": 6976,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5351,
-								5351
+								3004,
+								3004
 							]
 						],
 						"settings":
@@ -1186,10 +1189,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3497.0,
+						"translation.y": 2039.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1218,7 +1221,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1246,7 +1249,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1255,15 +1258,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11325,
+						"buffer_size": 11335,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7740,
-								7740
+								5639,
+								5639
 							]
 						],
 						"settings":
@@ -1273,10 +1276,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2365.0,
+						"translation.y": 3083.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1292,8 +1295,8 @@
 						"selection":
 						[
 							[
-								4408,
-								4269
+								4264,
+								4264
 							]
 						],
 						"settings":
@@ -1302,10 +1305,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2484.0,
+						"translation.y": 1188.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -1314,15 +1317,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11368,
+						"buffer_size": 11778,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9098,
-								9098
+								10442,
+								10442
 							]
 						],
 						"settings":
@@ -1331,11 +1334,11 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 5873.0,
+						"translation.x": 2.0,
+						"translation.y": 7781.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1344,15 +1347,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7562,
+						"buffer_size": 7408,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								391,
-								391
+								6994,
+								6994
 							]
 						],
 						"settings":
@@ -1361,10 +1364,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 4361.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1380,8 +1383,8 @@
 						"selection":
 						[
 							[
-								933,
-								933
+								1239,
+								1239
 							]
 						],
 						"settings":
@@ -1391,16 +1394,16 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 972.0,
+						"translation.y": 162.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 4,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -1429,7 +1432,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
@@ -1458,7 +1461,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 17,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -1487,7 +1490,7 @@
 						"translation.y": 709.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
@@ -1512,11 +1515,11 @@
 							"syntax": "Packages/C++11/C++11.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 5.0,
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -1532,8 +1535,8 @@
 						"selection":
 						[
 							[
-								2637,
-								2637
+								1152,
+								1152
 							]
 						],
 						"settings":
@@ -1541,10 +1544,10 @@
 							"syntax": "Packages/C++11/C++11.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1944.0,
+						"translation.y": 756.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
@@ -1572,7 +1575,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -1601,7 +1604,7 @@
 						"translation.y": 324.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
@@ -1610,15 +1613,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3779,
+						"buffer_size": 3800,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1693,
-								1693
+								789,
+								789
 							]
 						],
 						"settings":
@@ -1628,10 +1631,10 @@
 							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 972.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1659,7 +1662,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
+					"stack_index": 16,
 					"type": "text"
 				}
 			]
@@ -1793,7 +1796,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

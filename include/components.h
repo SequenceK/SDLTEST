@@ -38,6 +38,7 @@ struct MoveComponent : public Component {
 	void update();
 	void setPosition(float x, float y);
 	void resetVel();
+	void interpolate();
 	
 };
 

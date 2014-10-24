@@ -97,7 +97,7 @@ bool shooting = false;
 bool shot = false;
 
 void playerEventUpdate(eId id, SDL_Event &e){
-	float SPEED = 1;
+	float SPEED = 100;
 	if (e.type == SDL_KEYDOWN){
 		switch(e.key.keysym.sym){
 			case SDLK_d:
@@ -110,7 +110,7 @@ void playerEventUpdate(eId id, SDL_Event &e){
 				moveCS[id]->acc.x = -SPEED;break;
 			case SDLK_SPACE:
 				if(CS::collisionCS[id]->touching & FLOOR)
-					moveCS[id]->vel.y = -20;break;	
+					moveCS[id]->vel.y = -200;break;	
 			case SDLK_s:
 				moveCS[id]->vel.y = SPEED;break;
 			case SDLK_RETURN:
@@ -170,9 +170,9 @@ eId TEST(Vec2 const &pos) {
 	CS::spriteCS[id]->setFrame(30,27);
 	// std::vector<int> f = {1,2,3,4};
 	// CS::spriteCS[id]->playAnimation(f, 8, true);
-	moveCS[id]->maxV = {5,15};
-	moveCS[id]->drag = {1,1};
-	moveCS[id]->acc.y = 1;
+	moveCS[id]->maxV = {150,650};
+	moveCS[id]->drag = {120,0};
+	moveCS[id]->acc.y = 600;
 	//CS::collisionCS[id]->debugDraw = true;
 	//moveCS[id]->vel.y = sin(rand()%361)*moveCS[id]->maxV.y;
 	//moveCS[id]->vel.x = cos(rand()%361)*moveCS[id]->maxV.x;

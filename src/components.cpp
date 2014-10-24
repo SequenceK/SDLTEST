@@ -207,7 +207,7 @@ void SpriteComponent::draw(){
 }
 
 void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
-	interpolate();
+	//interpolate();
 	SDL_Rect b1, b2, cBounds, area;
 	b1 = imgRect;
 	b2 = clipRect;
@@ -280,7 +280,7 @@ void SpriteComponent::update(){
 	imgRect.x = moveC->pos.x + offset.x;
 	imgRect.y = moveC->pos.y + offset.y;
 	if(playingAnimation){
-		if(frameTimer < 1000/currentAnimation.speed && !currentAnimation.played){
+		if(frameTimer < 1/currentAnimation.speed && !currentAnimation.played){
 			currentAnimation.currentFrame = currentAnimation.frames.at(currentAnimation.currentIt);
 			int fY = floor(currentAnimation.currentFrame/(texSize.x/(clipRect.w/scale.x)));
 			clipRect.x = currentAnimation.currentFrame*clipRect.w;
@@ -288,7 +288,7 @@ void SpriteComponent::update(){
 			currentAnimation.currentIt++;
 			currentAnimation.played = true;
 		}
-		else if(frameTimer > 1000/currentAnimation.speed && currentAnimation.played){
+		else if(frameTimer > 1/currentAnimation.speed && currentAnimation.played){
 			currentAnimation.played = false;
 			frameTimer = 0;
 			if(currentAnimation.currentIt == currentAnimation.frames.size())
@@ -299,7 +299,7 @@ void SpriteComponent::update(){
 				}
 			}
 		}
-		frameTimer += Timer::frame;
+		frameTimer += Timer::dt;
 	}
 	if(facing == LEFT)
 	{
@@ -355,35 +355,35 @@ MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
 	pos = {xx, yy};
 	vel = {0.f,0.f};
 	acc = {0.f,0.f};
-	drag = {0.3f,0.3f};
-	maxV = {10,10};
-	terV = {10,10};
+	drag = {30.f,30.f};
+	maxV = {100,100};
+	terV = {100,100};
 }
 
 void MoveComponent::update(){
 	//vel = {vel.x+acc.x,vel.y+acc.y};
 	deltaVel = vel;
-	if(acc.x != 0 && abs(vel.x) < abs(terV.x)){
-		vel.x += acc.x;
+	if(acc.x != 0 ){
+		vel.x += acc.x*Timer::dt;
 
 	}
 	else if(drag.x != 0){
-		if(vel.x - drag.x > 0) {
-			vel.x = vel.x - drag.x;
-		} else if (vel.x + drag.x < 0) {
-			vel.x += drag.x;
+		if(vel.x - drag.x*Timer::dt > 0) {
+			vel.x = vel.x - drag.x*Timer::dt;
+		} else if (vel.x + drag.x*Timer::dt < 0) {
+			vel.x += drag.x*Timer::dt;
 		} else {
 			vel.x = 0;
 		}
 	}
-	if(acc.y != 0 && abs(vel.y) < abs(terV.y)){
-		vel.y += acc.y;
+	if(acc.y != 0){
+		vel.y += acc.y*Timer::dt;
 	}
 	else if(drag.y != 0){
-		if(vel.y - drag.y > 0) {
-			vel.y = vel.y - drag.y;
-		} else if (vel.y + drag.y < 0) {
-			vel.y += drag.y;
+		if(vel.y - drag.y*Timer::dt > 0) {
+			vel.y = vel.y - drag.y*Timer::dt;
+		} else if (vel.y + drag.y*Timer::dt < 0) {
+			vel.y += drag.y*Timer::dt;
 		} else {
 			vel.y = 0;
 		}
@@ -394,12 +394,17 @@ void MoveComponent::update(){
 	if (vel.y > maxV.y || vel.y < -maxV.y){
 		vel.y = (vel.y>0)?maxV.y:-maxV.y;
 	}
-	//if(vel.x != 0 || vel.y != 0)
-		deltaPos = pos;
-	pos += vel;
+	deltaPos = pos;
+	pos.x += vel.x*Timer::dt;
+	pos.y += vel.y*Timer::dt;
 }
 
-
+void MoveComponent::interpolate(){
+	pos.x = pos.x*Timer::alpha + deltaPos.x*(1.0f-Timer::alpha);
+	pos.y = pos.y*Timer::alpha + deltaPos.y*(1.0f-Timer::alpha);
+	//moveC->vel.x = moveC->vel.x*Timer::alpha + moveC->deltaVel.x*(1.0-Timer::alpha);
+	//moveC->vel.y = moveC->vel.y*Timer::alpha + moveC->deltaVel.y*(1.0-Timer::alpha);
+}
 
 void MoveComponent::setPosition(float x, float y){
 	//deltaPos = pos;

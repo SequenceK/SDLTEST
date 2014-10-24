@@ -15,7 +15,7 @@ float Timer::elapsed{0};
 float Timer::frame{1000.f/60.f};
 float Timer::slice{0.f};
 double Timer::t{0.0};
-double Timer::dt{0.016};
+double Timer::dt{0.01};
 double Timer::currentTime{0.0};
 double Timer::accumulator{0.0};
 float Timer::alpha{0.0};
@@ -189,8 +189,8 @@ void collide(eId e1, eId e2){
 	r2.w = c2->rect.w+absDX2;
 	r1.h = c1->rect.h+absDY1;
 	r2.h = c2->rect.h+absDY2;
-	// Window::DrawRect(&r1, 255,255,0);
-	// Window::DrawRect(&r2, 255,255,0);
+	Window::DrawRect(&r1, 255,255,0);
+	Window::DrawRect(&r2, 255,255,0);
 	// SDL_Rect overlapRect;
 	// SDL_IntersectRect(&r1, &r2, &overlapRect);
 	float overlapX=0, overlapY=0;
@@ -226,11 +226,11 @@ void collide(eId e1, eId e2){
 	if(overlapX != 0){
 		if(!c2->moveable){
 			c1->moveC->pos.x = c1->moveC->pos.x - overlapX;
-			c1->moveC->vel.x = c2->moveC->vel.x ;//- c1->moveC->acc.x;
+			c1->moveC->vel.x = 0;
 		}
 		else if(!c1->moveable){
 			c2->moveC->pos.x = c2->moveC->pos.x + overlapX;
-			c2->moveC->vel.x = c1->moveC->vel.x ;//- c2->moveC->acc.x;
+			c2->moveC->vel.x = 0;
 		}
 	}
 	r1.x = c1->moveC->pos.x - (dx1>0?dx1:0);
@@ -271,11 +271,11 @@ void collide(eId e1, eId e2){
 	if(overlapY != 0){
 		if(!c2->moveable){
 			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);
-			c1->moveC->vel.y = c2->moveC->vel.y;// - c1->moveC->acc.y;
+			c1->moveC->vel.y = 0;
 		}
 		else if(!c1->moveable){
 			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);
-			c2->moveC->vel.y = c1->moveC->vel.y;// - c2->moveC->acc.y;
+			c2->moveC->vel.y = 0;
 		}
 	}
 	c1->updatePosition();
