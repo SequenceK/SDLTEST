@@ -154,6 +154,11 @@ void CS::cameraUpdate(){
 	}
 }
 
+// void CS::interpolate(){
+// // 	for(auto it = moveCS.begin(); it != moveCS.end(); it++){
+// // 		it->second->interpolate();
+// // 	}
+// // }
 
 void CS::draw(){
 

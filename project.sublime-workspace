@@ -4,11 +4,131 @@
 		"selected_items":
 		[
 			[
-				"moc",
+				"m",
+				"moveC"
+			],
+			[
+				"move",
+				"moveC"
+			],
+			[
+				"alp",
+				"alpha"
+			],
+			[
+				"cure",
+				"currentTime"
+			],
+			[
+				"time",
+				"time_in_seconds"
+			],
+			[
+				"frame",
+				"frame"
+			],
+			[
+				"TIme",
+				"Timer::slice"
+			],
+			[
+				"overlap",
+				"overlapY"
+			],
+			[
+				"getPos",
+				"getPos"
+			],
+			[
+				"mo",
 				"moveCS"
 			],
 			[
+				"res",
+				"result"
+			],
+			[
+				"get",
+				"getSDLRect"
+			],
+			[
+				"Re",
+				"Rect"
+			],
+			[
+				"chec",
+				"checking"
+			],
+			[
+				"che",
+				"checkedWith"
+			],
+			[
+				"std",
+				"std::endl"
+			],
+			[
+				"sdlr",
+				"sdlr1"
+			],
+			[
 				"mov",
+				"moveC"
+			],
+			[
+				"ove",
+				"overlapedMap"
+			],
+			[
+				"overla",
+				"overlapedMap"
+			],
+			[
+				"over",
+				"overlapedMap"
+			],
+			[
+				"overl",
+				"overlapedMap"
+			],
+			[
+				"are",
+				"area"
+			],
+			[
+				"delta",
+				"deltaVy"
+			],
+			[
+				"maxV",
+				"maxVel"
+			],
+			[
+				"ve",
+				"vel"
+			],
+			[
+				"foll",
+				"followE"
+			],
+			[
+				"Time",
+				"Timer::elapsed"
+			],
+			[
+				"Tim",
+				"Timer::elapsed"
+			],
+			[
+				"Timer",
+				"Timer::slice"
+			],
+			[
+				"update",
+				"update"
+			],
+			[
+				"moc",
 				"moveCS"
 			],
 			[
@@ -16,28 +136,8 @@
 				"shooter"
 			],
 			[
-				"over",
-				"overlapingWith"
-			],
-			[
-				"overla",
-				"overlapingWith"
-			],
-			[
-				"che",
-				"checking"
-			],
-			[
-				"move",
-				"moveCS"
-			],
-			[
 				"Movem",
 				"MoveComponent"
-			],
-			[
-				"ve",
-				"Vec2"
 			],
 			[
 				"VE",
@@ -60,10 +160,6 @@
 				"collided"
 			],
 			[
-				"std",
-				"std::endl"
-			],
-			[
 				"chek",
 				"checking"
 			],
@@ -74,10 +170,6 @@
 			[
 				"for",
 				"forv	Vector For Loop"
-			],
-			[
-				"update",
-				"updateBounds"
 			],
 			[
 				"updat",
@@ -126,10 +218,6 @@
 			[
 				"ov",
 				"overlapingWith"
-			],
-			[
-				"Timer",
-				"Timer::frame"
 			],
 			[
 				"fram",
@@ -232,10 +320,6 @@
 				"Window"
 			],
 			[
-				"Time",
-				"Timer::frame"
-			],
-			[
 				"curre",
 				"currentAnimation"
 			],
@@ -304,10 +388,6 @@
 				"edgeCheckerUpdate"
 			],
 			[
-				"ove",
-				"overlaped"
-			],
-			[
 				"grou",
 				"groups"
 			],
@@ -350,10 +430,6 @@
 			[
 				"he",
 				"height"
-			],
-			[
-				"mo",
-				"moveCS"
 			],
 			[
 				"collisio",
@@ -438,82 +514,6 @@
 			[
 				"vec",
 				"vector	std::vector"
-			],
-			[
-				"fol",
-				"followE"
-			],
-			[
-				"cure",
-				"currentAnimation"
-			],
-			[
-				"frame",
-				"frames"
-			],
-			[
-				"functio",
-				"functions"
-			],
-			[
-				"CAme",
-				"Camera"
-			],
-			[
-				"win",
-				"winSize"
-			],
-			[
-				"foll",
-				"follow"
-			],
-			[
-				"came",
-				"cameras"
-			],
-			[
-				"foo",
-				"followC"
-			],
-			[
-				"Came",
-				"Camera"
-			],
-			[
-				"follo",
-				"followC"
-			],
-			[
-				"game",
-				"gamePos"
-			],
-			[
-				"fl",
-				"SDL_FLIP_HORIZONTAL"
-			],
-			[
-				"fli",
-				"SDL_FLIP_NONE"
-			],
-			[
-				"clip",
-				"clipRect"
-			],
-			[
-				"SDL_fl",
-				"SDL_FLIP_HORIZONTAL"
-			],
-			[
-				"area",
-				"area"
-			],
-			[
-				"are",
-				"area"
-			],
-			[
-				"SDL_I",
-				"SDL_IntersectRect"
 			]
 		]
 	},
@@ -536,21 +536,10 @@
 			}
 		},
 		{
-			"contents": "\n#include <lua.hpp>\n\n\n\n#include <stdexcept>\n#include <string>\n#include <sstream>\n#include <iostream>\n#include <chrono>\n\n#include <SDL2/SDL.h>\n#include <SDL2/SDL.h>\n#include \"../include/window.h\"\n#include \"../include/cleanup.h\"\n#include \"../include/CS.h\"\n#include \"../include/system.h\"\n#include \"../include/entities.h\"\n#include \"../include/SimpleIni.h\"\n#include \"../include/LuaBridge/LuaBridge.h\"\n\n\nusing namespace std;\nusing namespace luabridge;\n\nlua_State *L;\n\n\nvoid foo () { cout << \"TEST\" << endl; }\nVec2 createVec2(float x, float y){\n	Vec2 v = {x, y};\n	return v;\n}\n\n\n// void foo(){\n// 	cout << \"TEST\" << endl;\n// }\nstd::string command = \"\";\nbool consoleOpen = false;\neId c;\n\nvoid clear(){\n	CS::clear();\n	c = createCamera(0,0);\n}\n\nvoid setPos(eId id, Vec2 p){\n	moveCS[id]->pos = p;\n}\n\nVec2 getMousePos(){\n	int x, y;\n	SDL_GetMouseState(&x, &y);\n	Vec2 v{x, y};\n	return v;\n}\n\nvoid setLua(lua_State *L){\n	getGlobalNamespace (L)\n  .beginNamespace (\"game\")\n	.beginClass<Vec2> (\"Vec2\")\n		//.addProperty(\"x\", &Vec2::getX, &Vec2::setX)\n		//.addProperty(\"y\", &Vec2::getY, &Vec2::setY)\n		.addData(\"x\", &Vec2::x)\n		.addData(\"y\", &Vec2::y)\n	.endClass()\n	.beginClass<MoveComponent> (\"MoveComponent\")\n		//.addProperty(\"x\", &Vec2::getX, &Vec2::setX)\n		//.addProperty(\"y\", &Vec2::getY, &Vec2::setY)\n		.addData(\"pos\", &MoveComponent::pos)\n	.endClass()\n   .endNamespace ()\n    .addFunction (\"mBox\", mBox)\n    .addFunction (\"player\", &TEST)\n    .addFunction (\"clear\", clear)\n    .addFunction(\"setPos\", &setPos)\n    .addFunction(\"getMousePos\", &getMousePos)\n    .addFunction (\"createVec2\", &createVec2);\n}\n\nint main(int argc, char **argv){\n	L = lua_open();\n	luaL_openlibs(L);\n	//getGlobalNamespace (L);\n	setLua(L);\n\n	CSimpleIniA ini;\n	ini.SetUnicode();\n	ini.LoadFile(\"../config.ini\");\n	const char* title = ini.GetValue(\"window\",\"title\",NULL);\n	bool fullscreen = strToBool(ini.GetValue(\"window\",\"fullscreen\",NULL));\n	P_firerate = ::atof(ini.GetValue(\"player\",\"firerate\",NULL));\n	try {\n		Window::Init(title, fullscreen);\n	}\n	catch (const std::runtime_error &e){\n		std::cout << e.what() << std::endl;\n		Window::Quit();\n		return -1;\n	}\n	SDL_Event e;\n	bool quit=false;\n	int controll = 1;\n	// SDL_Rect r;\n	// SDL_Texture* t;\n	// t = Window::RenderText(\"FPS: \" + std::to_string(1000/Timer::elapsed), \"../data/fonts/PressSTart2P.ttf\",{255,255,255,255}, 8);\n	// SDL_QueryTexture(t, nullptr, nullptr, &r.w, &r.h)\n	// r.x=1;r.y=1;\n	c = createCamera(0,0);\n	SDL_Rect textrect = {0,0,400,100};\n	//eId c2 = createCamera(400,300);\n	SDL_StartTextInput();\n	//SDL_SetTextInputRect(&textrect);\n	std::string text = \"\";\n	if(luaL_loadfile(L, \"../scripts/test.lua\")\n    	|| lua_pcall(L,0,0,0)){\n		cout << \"FAILED TO LOAD LUA SCRIPT\" << endl;\n	}\n	while(!quit){\n		text = \"\";\n		auto timePoint1(chrono::high_resolution_clock::now());\n\n		while (SDL_PollEvent(&e)){\n			if (e.type == SDL_QUIT)\n				quit = true;\n			if(e.type == SDL_MOUSEWHEEL){\n				CS::cameras[c]->zoom += 0.5*e.wheel.y;\n			}\n			if(e.type == SDL_MOUSEBUTTONDOWN){\n				if(e.button.button == SDL_BUTTON_LEFT){\n					Vec2 p = CS::cameras[c]->getWorldPos({e.button.x, e.button.y});\n					mBox(p.x, p.y);\n				}\n				if(e.button.button == SDL_BUTTON_RIGHT){\n					if(controll < 0)\n							ENEMY(CS::cameras[c]->getWorldPos({e.button.x, e.button.y}));\n					else\n						CS::cameras[c]->follow(\n							TEST(CS::cameras[c]->getWorldPos({e.button.x, e.button.y})));\n				}\n				\n			}\n			if(e.type == SDL_MOUSEBUTTONUP){\n			}\n			if (e.type == SDL_KEYDOWN){\n				switch(e.key.keysym.sym){\n					case SDLK_ESCAPE:\n						quit = true;break;\n					case SDLK_F1:\n						consoleOpen = !consoleOpen;break;\n					case SDLK_BACKSPACE:\n						if(consoleOpen){\n							command.erase(command.end()-1);\n							cout << '\\b';\n						}\n						break;\n					case SDLK_RETURN:\n						if(consoleOpen){\n							luaL_dostring(L, command.c_str());\n							cout << endl;\n							command = \"\";\n							consoleOpen = false;\n						}\n						break;\n				}\n			}\n			if (e.type == SDL_KEYUP){\n				switch(e.key.keysym.sym){\n					case SDLK_e:\n						controll *= -1;\n						break;\n					// case SDLK_r:\n					// 	if(!consoleOpen){\n					// 		CS::clear();\n					// 		c = createCamera(0,0);\n					// 	}\n					// 	break;\n				}\n			}\n			if(e.type == SDL_TEXTINPUT && consoleOpen){\n				text = e.text.text;\n				command += text;\n			}\n			if(!consoleOpen)\n				CS::eventUpdate(e);\n		}\n		if(text != \"\"){\n			std::cout << text;\n			\n\n		}\n		//if(rand()%10 > 5)\n		//mBox(rand()%800, rand()%600);\n		// std::cout << CS::_E_INDEX << std::endl;\n		Timer::slice += Timer::elapsed;\n		Window::Clear();\n		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)\n		{\n			CS::update();\n			//CS::collisionUpdate();\n		}\n		//Window::Draw(t, r);\n		CS::draw();\n		Window::Present();\n		auto timePoint2(chrono::high_resolution_clock::now());\n		auto elaspedTime(timePoint2 - timePoint1);\n\n		Timer::elapsed = chrono::duration_cast<\n			chrono::duration<float, milli>>(elaspedTime).count();\n		// std::cout << (1000.f/ft) << std::endl;\n		// if(Timer::elapsed > maxTime){\n		// 	int loops = Timer::elapsed/maxTime;\n		// 	for(int i=0;i<loops;i++){\n		// 		CS::update();\n		// 	}\n		// } else {3\n		// 	SDL_Delay(delay);\n		// }r\n	}\n\n	Window::Quit();\n	//lua_close(L);\n	return 0;\n}\n\n// int main(int argc, char *argv[])\n// {\n//    // InitVideo();\n//     /* ... */\n// 	SDL_Event event;\n//     SDL_StartTextInput();\n//     char* text;\n//     char* ptext;\n//     while (true)\n//     {\n//         if (SDL_PollEvent(&event))\n//         {\n//             switch (event.type)\n//             {\n//                 case SDL_TEXTINPUT:\n//                     /* Add new text onto the end of our text */\n//                     strcat(text, event.text.text);\n//                     break;\n//                 case SDL_TEXTEDITING:\n                    \n//                     Update the composition text.\n//                     Update the cursor position.\n//                     Update the selection length (if any).\n                    \n//                     composition = event.edit.text;\n//                     cursor = event.edit.start;\n//                     selection_len = event.edit.length;\n//                     break;\n//             }\n//         }\n//         if(text == ptext){\n//         	std::string str = text;\n//         	std::cout << str << std::endl;\n//         }\n//         ptext = text;\n//        // Redraw();\n//     }\n// }",
 			"file": "src/main.cpp",
-			"file_size": 6581,
-			"file_write_time": 130583836586402385,
 			"settings":
 			{
-				"buffer_size": 6319,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 751,
+				"buffer_size": 6992,
 				"line_ending": "Windows"
 			}
 		},
@@ -563,6 +552,14 @@
 			}
 		},
 		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 1069,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "src/entities.cpp",
 			"settings":
 			{
@@ -571,18 +568,18 @@
 			}
 		},
 		{
-			"file": "src/components.cpp",
+			"file": "src/CS.cpp",
 			"settings":
 			{
-				"buffer_size": 10964,
+				"buffer_size": 5706,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/CS.cpp",
+			"file": "src/components.cpp",
 			"settings":
 			{
-				"buffer_size": 5500,
+				"buffer_size": 11368,
 				"line_ending": "Windows"
 			}
 		},
@@ -590,7 +587,7 @@
 			"file": "src/system.cpp",
 			"settings":
 			{
-				"buffer_size": 7423,
+				"buffer_size": 7562,
 				"line_ending": "Windows"
 			}
 		},
@@ -631,7 +628,15 @@
 			"file": "include/system.h",
 			"settings":
 			{
-				"buffer_size": 1334,
+				"buffer_size": 1389,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Omar/Desktop/Timestep.cpp",
+			"settings":
+			{
+				"buffer_size": 2779,
 				"line_ending": "Windows"
 			}
 		},
@@ -639,7 +644,7 @@
 			"file": "scripts/test.lua",
 			"settings":
 			{
-				"buffer_size": 197,
+				"buffer_size": 195,
 				"line_ending": "Windows"
 			}
 		},
@@ -647,7 +652,7 @@
 			"file": "include/CS.h",
 			"settings":
 			{
-				"buffer_size": 1593,
+				"buffer_size": 1621,
 				"line_ending": "Windows"
 			}
 		},
@@ -655,7 +660,7 @@
 			"file": "include/components.h",
 			"settings":
 			{
-				"buffer_size": 3740,
+				"buffer_size": 3779,
 				"line_ending": "Windows"
 			}
 		},
@@ -671,9 +676,13 @@
 	"build_system": "Packages/User/myMake.sublime-build",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"insa",
+				"Package Control: Install Package"
+			],
 			[
 				"32",
 				"Build: Run32"
@@ -776,15 +785,15 @@
 	},
 	"expanded_folders":
 	[
-		"/C/dev/SDLTEST",
-		"/C/dev/SDLTEST/include/LuaBridge/detail",
-		"/C/dev/SDLTEST/obj",
-		"/C/dev/SDLTEST/obj32",
-		"/C/dev/SDLTEST/scripts",
-		"/C/dev/SDLTEST/src"
+		"/C/dev/SDLTEST"
 	],
 	"file_history":
 	[
+		"/C/Users/Omar/AppData/Local/Temp/7zEBB81.tmp/Timestep.cpp",
+		"/C/Users/Omar/AppData/Local/Temp/7zE45B5.tmp/Windows.h",
+		"/C/Users/Omar/AppData/Local/Temp/7zE37B0.tmp/Apple.h",
+		"/C/Users/Omar/AppData/Local/Temp/7zE29BA.tmp/Timestep.cpp",
+		"/C/SDL/x86_64-w64-mingw32/include/SDL2/SDL_rect.h",
 		"/C/dev/SDLTEST/.gitignore",
 		"/C/dev/SDLTEST/5b408044-22d4-46d4-b960-9fe790b6acb4.dmp",
 		"/C/dev/SDLTEST/include/LuaBridge/detail/Namespace.h",
@@ -914,6 +923,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"y",
 			"c_str",
 			"cstr",
 			"getGlobalNamespace",
@@ -1015,6 +1025,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"x",
 			"worldbounds",
 			"moveCS",
 			"std::shared_ptr<FuncQComponent>(new FuncQComponent(id));",
@@ -1121,7 +1132,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
@@ -1137,8 +1148,8 @@
 						"selection":
 						[
 							[
-								959,
-								883
+								998,
+								998
 							]
 						],
 						"settings":
@@ -1149,7 +1160,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -1158,15 +1169,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6319,
+						"buffer_size": 6992,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4269,
-								4280
+								5351,
+								5351
 							]
 						],
 						"settings":
@@ -1175,42 +1186,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2709.0,
+						"translation.y": 3497.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "README.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 751,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								187,
-								187
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "src/console.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1235,7 +1218,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1069,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								751,
+								483
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
@@ -1251,8 +1262,8 @@
 						"selection":
 						[
 							[
-								9412,
-								9412
+								7740,
+								7740
 							]
 						],
 						"settings":
@@ -1262,27 +1273,56 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5473.0,
+						"translation.y": 2365.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "src/components.cpp",
+					"file": "src/CS.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10964,
+						"buffer_size": 5706,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2784,
-								2798
+								4408,
+								4269
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2484.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/components.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11368,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9098,
+								9098
 							]
 						],
 						"settings":
@@ -1292,39 +1332,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 174.0,
+						"translation.y": 5873.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "src/CS.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5500,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3253,
-								3253
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1441.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1333,15 +1344,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7423,
+						"buffer_size": 7562,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								789,
-								789
+								391,
+								391
 							]
 						],
 						"settings":
@@ -1350,10 +1361,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 288.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1369,8 +1380,8 @@
 						"selection":
 						[
 							[
-								3355,
-								3355
+								933,
+								933
 							]
 						],
 						"settings":
@@ -1380,16 +1391,16 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 972.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 7,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1418,7 +1429,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
@@ -1447,7 +1458,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
@@ -1476,7 +1487,7 @@
 						"translation.y": 709.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 17,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -1485,15 +1496,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1334,
+						"buffer_size": 1389,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								396,
-								396
+								473,
+								473
 							]
 						],
 						"settings":
@@ -1501,28 +1512,56 @@
 							"syntax": "Packages/C++11/C++11.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 54.0,
+						"translation.x": 5.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 14,
-					"file": "scripts/test.lua",
+					"file": "/C/Users/Omar/Desktop/Timestep.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 197,
+						"buffer_size": 2779,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1,
-								1
+								2637,
+								2637
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1944.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "scripts/test.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 195,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								195,
+								195
 							]
 						],
 						"settings":
@@ -1533,24 +1572,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 15,
+					"buffer": 16,
 					"file": "include/CS.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1593,
+						"buffer_size": 1621,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								148,
-								131
+								1210,
+								1210
 							]
 						],
 						"settings":
@@ -1559,27 +1598,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 324.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 16,
+					"buffer": 17,
 					"file": "include/components.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3740,
+						"buffer_size": 3779,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2029,
-								2029
+								1693,
+								1693
 							]
 						],
 						"settings":
@@ -1589,14 +1628,14 @@
 							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1272.0,
+						"translation.y": 972.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 18,
 					"file": "config.ini",
 					"semi_transient": false,
 					"settings":
@@ -1608,8 +1647,8 @@
 						"selection":
 						[
 							[
-								81,
-								81
+								30,
+								30
 							]
 						],
 						"settings":
@@ -1620,7 +1659,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
@@ -1754,7 +1793,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},

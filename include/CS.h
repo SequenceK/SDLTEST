@@ -34,6 +34,7 @@ public:
 
 	static void eventUpdate(SDL_Event &e);
 	static void update();
+	static void interpolate();
 	static void draw();
 	static void collisionUpdate();
 	static void cameraUpdate();

@@ -22,7 +22,8 @@ struct Vec2 {
 
 class Timer {
 public:
-	static float start, end, elapsed, frame, slice;
+	static float start, end, elapsed, frame, slice, alpha;
+	static double t, dt, currentTime, accumulator;
 };
 
 class QuadTree {

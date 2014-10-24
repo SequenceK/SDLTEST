@@ -14,6 +14,13 @@ float Timer::end{0};
 float Timer::elapsed{0};
 float Timer::frame{1000.f/60.f};
 float Timer::slice{0.f};
+double Timer::t{0.0};
+double Timer::dt{0.016};
+double Timer::currentTime{0.0};
+double Timer::accumulator{0.0};
+float Timer::alpha{0.0};
+
+
 
 Vec2 Vec2::operator*(float const& n){
 	x *= n;
@@ -43,8 +50,8 @@ bool Vec2::operator==(Vec2 const& v){
 	return (x == v.x) && (y == v.y);
 }
 
-float Vec2::getX() const{return x;}
-float Vec2::getY() const{return y;}
+float Vec2::getX() const {return x;}
+float Vec2::getY() const {return y;}
 void Vec2::setX(float xx){x = xx;}
 void Vec2::setY(float yy){y = yy;}
 

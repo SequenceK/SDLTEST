@@ -29,6 +29,7 @@ struct MoveComponent : public Component {
 	Vec2 deltaPos;
 	Vec2 acc;
 	Vec2 vel;
+	Vec2 deltaVel;
 	Vec2 drag;
 	Vec2 maxV;
 	Vec2 terV; // Terminal velocity
@@ -37,6 +38,7 @@ struct MoveComponent : public Component {
 	void update();
 	void setPosition(float x, float y);
 	void resetVel();
+	
 };
 
 //Sprite component
@@ -79,6 +81,7 @@ struct SpriteComponent : public Component {
 	void setFrame(int Width, int Height);
 	void setScale(float x, float y);
 	void setColor(Uint8 r, Uint8 g, Uint8 b);
+	void interpolate();
 	void playAnimation(std::vector<int> frames, float speed=1, bool loop=false, bool force=false);
 };
 

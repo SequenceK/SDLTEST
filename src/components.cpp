@@ -207,6 +207,7 @@ void SpriteComponent::draw(){
 }
 
 void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
+	interpolate();
 	SDL_Rect b1, b2, cBounds, area;
 	b1 = imgRect;
 	b2 = clipRect;
@@ -343,6 +344,13 @@ void SpriteComponent::playAnimation(std::vector<int> frames, float speed, bool l
 	}
 }
 
+void SpriteComponent::interpolate(){
+	imgRect.x = moveC->pos.x*Timer::alpha + moveC->deltaPos.x*(1.0f-Timer::alpha);
+	imgRect.y = moveC->pos.y*Timer::alpha + moveC->deltaPos.y*(1.0f-Timer::alpha);
+	//moveC->vel.x = moveC->vel.x*Timer::alpha + moveC->deltaVel.x*(1.0-Timer::alpha);
+	//moveC->vel.y = moveC->vel.y*Timer::alpha + moveC->deltaVel.y*(1.0-Timer::alpha);
+}
+
 MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
 	pos = {xx, yy};
 	vel = {0.f,0.f};
@@ -354,6 +362,7 @@ MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
 
 void MoveComponent::update(){
 	//vel = {vel.x+acc.x,vel.y+acc.y};
+	deltaVel = vel;
 	if(acc.x != 0 && abs(vel.x) < abs(terV.x)){
 		vel.x += acc.x;
 
@@ -385,9 +394,12 @@ void MoveComponent::update(){
 	if (vel.y > maxV.y || vel.y < -maxV.y){
 		vel.y = (vel.y>0)?maxV.y:-maxV.y;
 	}
-	deltaPos = pos;
+	//if(vel.x != 0 || vel.y != 0)
+		deltaPos = pos;
 	pos += vel;
 }
+
+
 
 void MoveComponent::setPosition(float x, float y){
 	//deltaPos = pos;

@@ -56,6 +56,12 @@ Vec2 getMousePos(){
 	return v;
 }
 
+double time_in_seconds(){
+	auto t = chrono::high_resolution_clock::now();
+	return chrono::duration_cast<
+			chrono::duration<double>>(t.time_since_epoch()).count();
+}
+
 void setLua(lua_State *L){
 	getGlobalNamespace (L)
   .beginNamespace ("game")
@@ -120,10 +126,18 @@ int main(int argc, char **argv){
     	|| lua_pcall(L,0,0,0)){
 		cout << "FAILED TO LOAD LUA SCRIPT" << endl;
 	}
+
+	Timer::currentTime = 1;
 	while(!quit){
 		text = "";
-		auto timePoint1(chrono::high_resolution_clock::now());
+		//auto timePoint1(chrono::high_resolution_clock::now());
+		double newTime = time_in_seconds();
+		double frameTime = newTime - Timer::currentTime;
+		if(frameTime > 0.25)
+			frameTime = 0.25;
+		Timer::currentTime = newTime;
 
+		Timer::accumulator += frameTime;
 		while (SDL_PollEvent(&e)){
 			if (e.type == SDL_QUIT)
 				quit = true;
@@ -196,21 +210,27 @@ int main(int argc, char **argv){
 		//if(rand()%10 > 5)
 		//mBox(rand()%800, rand()%600);
 		// std::cout << CS::_E_INDEX << std::endl;
-		Timer::slice += Timer::elapsed;
+		//Timer::slice += Timer::elapsed;
 		Window::Clear();
-		for(; Timer::slice >= Timer::frame; Timer::slice -= Timer::frame)
+		while(Timer::accumulator >= Timer::dt)
 		{
 			CS::update();
+			Timer::t += Timer::dt;
+			Timer::accumulator -= Timer::dt;
+			//cout << Timer::frame <<endl;
 			//CS::collisionUpdate();
 		}
+
+		Timer::alpha = Timer::accumulator / Timer::dt;
 		//Window::Draw(t, r);
+		//CS::interpolate();
 		CS::draw();
 		Window::Present();
-		auto timePoint2(chrono::high_resolution_clock::now());
-		auto elaspedTime(timePoint2 - timePoint1);
+		//auto timePoint2(chrono::high_resolution_clock::now());
+		//auto elaspedTime(timePoint2 - timePoint1);
 
-		Timer::elapsed = chrono::duration_cast<
-			chrono::duration<float, milli>>(elaspedTime).count();
+		//Timer::elapsed = chrono::duration_cast<
+		//	chrono::duration<float, milli>>(elaspedTime).count();
 		// std::cout << (1000.f/ft) << std::endl;
 		// if(Timer::elapsed > maxTime){
 		// 	int loops = Timer::elapsed/maxTime;
