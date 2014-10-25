@@ -47,8 +47,12 @@ void FuncQComponent::eventUpdate(SDL_Event &e){
 CollisionComponent::CollisionComponent(std::map<eId, std::shared_ptr<SpriteComponent>> &spriteMap,
 		std::map<eId, std::shared_ptr<MoveComponent>> &moveMap, eId id, bool s = true) : Component(id){
 	spriteC = spriteMap[id];
-	rect = spriteMap[id]->imgRect;
+	//rect = spriteMap[id]->imgRect;
 	moveC = moveMap[id];
+	rect.x = moveC->pos.x;
+	rect.y = moveC->pos.y;
+	rect.w = spriteC->imgRect.w;
+	rect.h = spriteC->imgRect.h;
 	debugDraw = false;
 	collided = false;
 	overlaped = false;

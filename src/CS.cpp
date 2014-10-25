@@ -76,7 +76,7 @@ void CS::collisionUpdate(){
 		//qt.insert(checking->first);
 		checking->second->getGridIndex(grid);
 	}
-	SDL_Rect area;
+	Rect area;
 	int n=0;
 	//std::cout << "CRASHED?!2" << std::endl;
 
@@ -172,7 +172,7 @@ void CS::draw(){
 	for(auto it = collisionCS.begin(); it != collisionCS.end(); it++){
 		if(it->second->debugDraw)
 			for(auto cIt = cameras.begin(); cIt != cameras.end(); cIt++){
-				SDL_Rect r = cameras.begin()->second->getScreenRect(it->second->rect);
+				SDL_Rect r = cameras.begin()->second->getScreenRect(it->second->rect.getSDLRect());
 				Window::DrawRect(&r, 100, 150, 100);
 			}
 	}

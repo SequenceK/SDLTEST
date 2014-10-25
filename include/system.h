@@ -20,6 +20,12 @@ struct Vec2 {
 	void setY(float yy);
 };
 
+struct Rect
+{
+	float x, y, w, h;
+	SDL_Rect getSDLRect();
+};
+
 class Timer {
 public:
 	static float start, end, elapsed, frame, slice, alpha;
@@ -52,7 +58,8 @@ public:
 	std::vector<unsigned long> getEntities(std::vector<int> indexes);
 };
 
-bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result);
+//bool checkOverlap(unsigned long id1, unsigned long id2, SDL_Rect* result);
+bool checkOverlap(unsigned long id1, unsigned long id2, Rect* result);
 bool outOfBounds(unsigned long id, SDL_Rect& bounds);
 void collide(unsigned long e1, unsigned long e2);
 

@@ -87,7 +87,7 @@ struct SpriteComponent : public Component {
 };
 
 struct CollisionComponent : public Component {
-	SDL_Rect rect;
+	Rect rect;
 	std::shared_ptr<MoveComponent> moveC;
 	std::shared_ptr<SpriteComponent> spriteC;
 	std::map<unsigned int, bool> collideGroups;
