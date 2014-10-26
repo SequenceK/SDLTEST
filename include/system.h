@@ -22,7 +22,7 @@ struct Vec2 {
 
 struct Rect
 {
-	float x, y, w, h;
+	double x, y, w, h;
 	SDL_Rect getSDLRect();
 };
 

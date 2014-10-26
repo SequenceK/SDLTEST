@@ -218,12 +218,14 @@ void collide(eId e1, eId e2){
 	r2.w = c2->rect.w+absDX2;
 	r1.h = c1->rect.h+absDY1;
 	r2.h = c2->rect.h+absDY2;
-	//Window::DrawRect(&r1, 255,255,0);
-	//Window::DrawRect(&r2, 255,255,0);
+	// SDL_Rect sr1 = r1.getSDLRect();
+	// SDL_Rect sr2 = r2.getSDLRect();
+	// Window::DrawRect(&sr1, 255,255,0);
+	// Window::DrawRect(&sr2, 255,255,0);
 	// SDL_Rect overlapRect;
 	// SDL_IntersectRect(&r1, &r2, &overlapRect);
 	float overlapX=0, overlapY=0;
-	int BIAS = 4;
+	int BIAS = 1;
 	SDL_Rect a;
 
 	if(dx1 != dx2)
@@ -252,17 +254,7 @@ void collide(eId e1, eId e2){
 		//std::cout << maxOverlapX << " " << overlapX << std::endl;
 	}
 
-	if(overlapX != 0){
-		if(!c2->moveable){
-			c1->moveC->pos.x = c1->moveC->pos.x - overlapX;
-			c1->moveC->vel.x = 0;
-		}
-		else if(!c1->moveable){
-			c2->moveC->pos.x = c2->moveC->pos.x + overlapX;
-			c2->moveC->vel.x = 0;
-		}
-	}
-
+	
 
 	if(dy1 != dy2)
 	{
@@ -292,14 +284,27 @@ void collide(eId e1, eId e2){
 
 	if(overlapY != 0){
 		if(!c2->moveable){
-			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY);
+			c1->moveC->setPosition(c1->moveC->pos.x, c1->moveC->pos.y-overlapY );
 			c1->moveC->vel.y = (c1->moveC->pos.y - c1->moveC->deltaPos.y);
 		}
 		else if(!c1->moveable){
 			c2->moveC->setPosition(c2->moveC->pos.x, c2->moveC->pos.y+overlapY);
-			c2->moveC->vel.y = 0;
+			c2->moveC->vel.y = (c2->moveC->pos.y - c2->moveC->deltaPos.y);
 		}
 	}
+	if(overlapX != 0){
+		if(!c2->moveable){
+			c1->moveC->pos.x = c1->moveC->pos.x - overlapX;
+			//c1->moveC->vel.x = 0;
+			c1->moveC->vel.x = (c1->moveC->pos.x - c1->moveC->deltaPos.x);
+		}
+		else if(!c1->moveable){
+			c2->moveC->pos.x = c2->moveC->pos.x + overlapX;
+			c2->moveC->vel.x = (c2->moveC->pos.x - c2->moveC->deltaPos.x);
+			//c2->moveC->vel.x = 0;
+		}
+	}
+
 	c1->updatePosition();
 	c2->updatePosition();
 }

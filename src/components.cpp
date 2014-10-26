@@ -211,7 +211,8 @@ void SpriteComponent::draw(){
 }
 
 void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
-	//interpolate();
+	interpolate();
+
 	SDL_Rect b1, b2, cBounds, area;
 	b1 = imgRect;
 	b2 = clipRect;
@@ -219,58 +220,58 @@ void SpriteComponent::CameraDraw(Vec2 pos, Vec2 size, float zoom, Vec2 gamePos){
 	imgRect.x = (imgRect.x - gamePos.x);
 	imgRect.y = (imgRect.y - gamePos.y);
 	if(SDL_IntersectRect(&imgRect, &cBounds, &area)){
-		if(imgRect.x + imgRect.w > pos.x + size.x){
-			if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_NONE){
-				imgRect.w = area.w;
-				clipRect.w = area.w/scale.x;
-			}
-			else if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_HORIZONTAL){
-				clipRect.x += (imgRect.x - (pos.x+size.x))/scale.x;
-				imgRect.w = area.w;
-				clipRect.w = area.w/scale.x;
-			}
-		}
-		else if(imgRect.x < pos.x ){
-			if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_NONE){
-				clipRect.x += (pos.x - imgRect.x)/(scale.x);
-				imgRect.x = area.x;
-				imgRect.w = area.w;
-				clipRect.w = area.w/scale.x;
-			}
-			else if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_HORIZONTAL){
-				imgRect.x = area.x;
-				imgRect.w = area.w;
-				clipRect.w = area.w/scale.x;
-			}
-		}
-		if(imgRect.y + imgRect.h > pos.y + size.y){
-			if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_NONE){
-				imgRect.h = area.h;
-				clipRect.h = area.h/scale.y;
-			}
-			else if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_VERTICAL){
-				clipRect.y += (imgRect.y - (pos.y+size.y))/(scale.y);
-				imgRect.h = area.h;
-				clipRect.h = area.h/scale.y;
-			}
-		}
-		else if(imgRect.y < pos.y ){
-			if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_NONE ){
-				clipRect.y += (pos.y - imgRect.y)/scale.y;
-				imgRect.y = area.y;
-				imgRect.h = area.h;
-				clipRect.h = area.h/scale.y;
-			}
-			else if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_VERTICAL){
-				imgRect.y = area.y;
-				imgRect.h = area.h;
-				clipRect.h = area.h/scale.y;
-			}
-		}
-		imgRect.x = floor(imgRect.x*zoom);
-		imgRect.y = floor(imgRect.y*zoom);
-		imgRect.h = floor(imgRect.h*zoom);
-		imgRect.w = floor(imgRect.w*zoom);
+		// if(imgRect.x + imgRect.w > pos.x + size.x){
+		// 	if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_NONE){
+		// 		imgRect.w = area.w;
+		// 		clipRect.w = area.w/scale.x;
+		// 	}
+		// 	else if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_HORIZONTAL){
+		// 		clipRect.x += (imgRect.x - (pos.x+size.x))/scale.x;
+		// 		imgRect.w = area.w;
+		// 		clipRect.w = area.w/scale.x;
+		// 	}
+		// }
+		// else if(imgRect.x < pos.x ){
+		// 	if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_NONE){
+		// 		clipRect.x += (pos.x - imgRect.x)/(scale.x);
+		// 		imgRect.x = area.x;
+		// 		imgRect.w = area.w;
+		// 		clipRect.w = area.w/scale.x;
+		// 	}
+		// 	else if((flip & SDL_FLIP_HORIZONTAL) == SDL_FLIP_HORIZONTAL){
+		// 		imgRect.x = area.x;
+		// 		imgRect.w = area.w;
+		// 		clipRect.w = area.w/scale.x;
+		// 	}
+		// }
+		// if(imgRect.y + imgRect.h > pos.y + size.y){
+		// 	if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_NONE){
+		// 		imgRect.h = area.h;
+		// 		clipRect.h = area.h/scale.y;
+		// 	}
+		// 	else if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_VERTICAL){
+		// 		clipRect.y += (imgRect.y - (pos.y+size.y))/(scale.y);
+		// 		imgRect.h = area.h;
+		// 		clipRect.h = area.h/scale.y;
+		// 	}
+		// }
+		// else if(imgRect.y < pos.y ){
+		// 	if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_NONE ){
+		// 		clipRect.y += (pos.y - imgRect.y)/scale.y;
+		// 		imgRect.y = area.y;
+		// 		imgRect.h = area.h;
+		// 		clipRect.h = area.h/scale.y;
+		// 	}
+		// 	else if((flip & SDL_FLIP_VERTICAL) == SDL_FLIP_VERTICAL){
+		// 		imgRect.y = area.y;
+		// 		imgRect.h = area.h;
+		// 		clipRect.h = area.h/scale.y;
+		// 	}
+		// }
+		imgRect.x = (imgRect.x*zoom);
+		imgRect.y = (imgRect.y*zoom);
+		imgRect.h = (imgRect.h*zoom);
+		imgRect.w = (imgRect.w*zoom);
 	
 		//Window::Draw(img, imgRect, &clipRect, 0,0,0,flip);
 		draw();
@@ -307,9 +308,9 @@ void SpriteComponent::update(){
 	}
 	if(facing == LEFT)
 	{
-		flip = SDL_FLIP_HORIZONTAL;
-	} else if(facing == RIGHT) {
 		flip = SDL_FLIP_NONE;
+	} else if(facing == RIGHT) {
+		flip = SDL_FLIP_HORIZONTAL;
 	}
 }
 
@@ -351,8 +352,8 @@ void SpriteComponent::playAnimation(std::vector<int> frames, float speed, bool l
 void SpriteComponent::interpolate(){
 	imgRect.x = moveC->pos.x*Timer::alpha + moveC->deltaPos.x*(1.0f-Timer::alpha);
 	imgRect.y = moveC->pos.y*Timer::alpha + moveC->deltaPos.y*(1.0f-Timer::alpha);
-	//moveC->vel.x = moveC->vel.x*Timer::alpha + moveC->deltaVel.x*(1.0-Timer::alpha);
-	//moveC->vel.y = moveC->vel.y*Timer::alpha + moveC->deltaVel.y*(1.0-Timer::alpha);
+//	moveC->vel.x = moveC->vel.x*Timer::alpha + moveC->deltaVel.x*(1.0-Timer::alpha);
+//	moveC->vel.y = moveC->vel.y*Timer::alpha + moveC->deltaVel.y*(1.0-Timer::alpha);
 }
 
 MoveComponent::MoveComponent(float xx, float yy, eId id) : Component(id) {
@@ -406,8 +407,8 @@ void MoveComponent::update(){
 void MoveComponent::interpolate(){
 	pos.x = pos.x*Timer::alpha + deltaPos.x*(1.0f-Timer::alpha);
 	pos.y = pos.y*Timer::alpha + deltaPos.y*(1.0f-Timer::alpha);
-	//moveC->vel.x = moveC->vel.x*Timer::alpha + moveC->deltaVel.x*(1.0-Timer::alpha);
-	//moveC->vel.y = moveC->vel.y*Timer::alpha + moveC->deltaVel.y*(1.0-Timer::alpha);
+	vel.x = vel.x*Timer::alpha + deltaVel.x*(1.0f-Timer::alpha);
+	vel.y = vel.y*Timer::alpha + deltaVel.y*(1.0f-Timer::alpha);
 }
 
 void MoveComponent::setPosition(float x, float y){
